@@ -1,0 +1,2616 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>IRON LIZZIE — RUNNING FROM DEADLINES</title>
+<link href="https://fonts.googleapis.com/css2?family=Bangers&family=Permanent+Marker&family=Comic+Neue:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --ink: #0a0a0a;
+  --paper: #f5f0e1;
+  --yellow: #FFE338;
+  --red: #E8142A;
+  --blue: #1A47B8;
+  --cyan: #00CFFF;
+  --green: #00D166;
+  --purple: #8B5CF6;
+  --orange: #FF6B2B;
+  --panel-bg: #fff;
+  --outline: 3px solid var(--ink);
+  --outline-thick: 4px solid var(--ink);
+  --gutter: 6px;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  background: var(--paper);
+  font-family: 'Comic Neue', cursive;
+  min-height: 100vh;
+  max-width: 500px;
+  margin: 0 auto;
+  overflow-x: hidden;
+  position: relative;
+}
+
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image: radial-gradient(circle, rgba(0,0,0,0.06) 1px, transparent 1px);
+  background-size: 5px 5px;
+  pointer-events: none;
+  z-index: 0;
+}
+
+body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background:
+    linear-gradient(90deg, rgba(139,109,71,0.12) 0%, transparent 3%, transparent 97%, rgba(139,109,71,0.12) 100%),
+    linear-gradient(180deg, rgba(139,109,71,0.08) 0%, transparent 2%, transparent 98%, rgba(139,109,71,0.08) 100%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* SPLASH SCREEN */
+.splash-screen {
+  position: fixed;
+  inset: 0;
+  z-index: 10000;
+  background: var(--ink);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: opacity 0.6s, transform 0.6s;
+}
+.splash-screen.dismissed {
+  opacity: 0;
+  transform: scale(1.1);
+  pointer-events: none;
+}
+.splash-bg {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse at 50% 40%, var(--red) 0%, transparent 60%),
+    radial-gradient(ellipse at 30% 70%, var(--blue) 0%, transparent 50%),
+    var(--ink);
+  opacity: 0.4;
+}
+.splash-rays {
+  position: absolute;
+  inset: -50%;
+  background: repeating-conic-gradient(
+    from 0deg,
+    transparent 0deg,
+    transparent 8deg,
+    rgba(255,227,56,0.06) 8deg,
+    rgba(255,227,56,0.06) 16deg
+  );
+  animation: splashSpin 30s linear infinite;
+}
+@keyframes splashSpin { to { transform: rotate(360deg); } }
+
+.splash-content {
+  position: relative;
+  z-index: 2;
+  text-align: center;
+  animation: splashPulse 2s ease-in-out infinite;
+}
+@keyframes splashPulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.02); }
+}
+.splash-issue {
+  font-family: 'Comic Neue', cursive;
+  font-weight: 700;
+  font-size: 11px;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  color: var(--yellow);
+  margin-bottom: 12px;
+}
+.splash-title {
+  font-family: 'Bangers', cursive;
+  font-size: 64px;
+  line-height: 0.85;
+  letter-spacing: 5px;
+  color: white;
+  text-shadow:
+    4px 4px 0 var(--red),
+    8px 8px 0 rgba(0,0,0,0.5);
+  margin-bottom: 8px;
+}
+.splash-sub {
+  font-family: 'Bangers', cursive;
+  font-size: 22px;
+  letter-spacing: 6px;
+  color: var(--yellow);
+  text-shadow: 2px 2px 0 var(--ink);
+  margin-bottom: 6px;
+}
+.splash-tagline {
+  font-family: 'Permanent Marker', cursive;
+  font-size: 13px;
+  letter-spacing: 2px;
+  color: var(--cyan);
+  margin-bottom: 24px;
+}
+.splash-hero-silhouette {
+  font-size: 80px;
+  filter: drop-shadow(0 0 20px var(--yellow)) drop-shadow(0 0 40px var(--red));
+  margin-bottom: 16px;
+  animation: heroFloat 3s ease-in-out infinite;
+}
+@keyframes heroFloat {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+.splash-cta {
+  font-family: 'Bangers', cursive;
+  font-size: 18px;
+  letter-spacing: 3px;
+  color: white;
+  animation: ctaBlink 1.5s ease-in-out infinite;
+}
+@keyframes ctaBlink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.3; }
+}
+.splash-corner {
+  position: absolute;
+  font-family: 'Comic Neue', cursive;
+  font-weight: 700;
+  font-size: 9px;
+  letter-spacing: 1px;
+  color: rgba(255,255,255,0.3);
+  text-transform: uppercase;
+}
+.splash-corner.tl { top: 16px; left: 16px; }
+.splash-corner.tr { top: 16px; right: 16px; }
+.splash-corner.bl { bottom: 16px; left: 16px; }
+.splash-corner.br { bottom: 16px; right: 16px; }
+
+/* MAIN WRAPPER */
+.comic-page {
+  padding: 8px;
+  position: relative;
+  z-index: 1;
+}
+
+.page-border {
+  border: 3px solid var(--ink);
+  background: white;
+  box-shadow:
+    inset 0 0 40px rgba(0,0,0,0.03),
+    8px 8px 0 rgba(0,0,0,0.15);
+  padding: var(--gutter);
+  position: relative;
+}
+
+.ink-splatter {
+  position: absolute;
+  width: 30px;
+  height: 30px;
+  background: var(--ink);
+  border-radius: 50% 40% 60% 30%;
+  opacity: 0.08;
+  pointer-events: none;
+  z-index: 0;
+}
+.ink-splatter:nth-child(1) { top: -5px; left: 20%; transform: scale(0.8) rotate(45deg); }
+.ink-splatter:nth-child(2) { top: 30%; right: -4px; transform: scale(0.5) rotate(120deg); }
+.ink-splatter:nth-child(3) { bottom: 10%; left: -3px; transform: scale(0.6) rotate(200deg); }
+
+/* MASTHEAD */
+.masthead {
+  background: var(--yellow);
+  border: var(--outline-thick);
+  border-bottom: 6px solid var(--ink);
+  padding: 14px 16px 12px;
+  margin-bottom: var(--gutter);
+  position: relative;
+  box-shadow: 4px 4px 0 var(--ink);
+  animation: panelSlam 0.5s cubic-bezier(0.34,1.56,0.64,1) both;
+  overflow: hidden;
+}
+.masthead::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  right: -20%;
+  width: 200%;
+  height: 200%;
+  background: repeating-linear-gradient(
+    -60deg,
+    transparent,
+    transparent 4px,
+    rgba(0,0,0,0.03) 4px,
+    rgba(0,0,0,0.03) 5px
+  );
+  pointer-events: none;
+}
+.masthead-vol {
+  font-family: 'Comic Neue', cursive;
+  font-weight: 700;
+  font-size: 10px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--ink);
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 4px;
+  position: relative;
+  z-index: 1;
+}
+.masthead h1 {
+  font-family: 'Bangers', cursive;
+  font-size: 56px;
+  letter-spacing: 5px;
+  line-height: 0.88;
+  color: var(--ink);
+  text-shadow: 3px 3px 0 var(--red), 6px 6px 0 rgba(0,0,0,0.1);
+  position: relative;
+  z-index: 1;
+}
+.masthead-sub {
+  font-family: 'Bangers', cursive;
+  font-size: 16px;
+  letter-spacing: 4px;
+  color: var(--red);
+  margin-top: 4px;
+  position: relative;
+  z-index: 1;
+}
+.masthead-badge {
+  position: absolute;
+  top: -2px;
+  right: 10px;
+  background: var(--red);
+  color: white;
+  font-family: 'Bangers', cursive;
+  font-size: 12px;
+  letter-spacing: 1px;
+  padding: 6px 10px 4px;
+  border: 2px solid var(--ink);
+  transform: rotate(3deg);
+  box-shadow: 2px 2px 0 var(--ink);
+  z-index: 2;
+}
+
+/* HERO STRIP */
+.hero-strip {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--gutter);
+  margin-bottom: var(--gutter);
+  animation: panelSlam 0.5s 0.05s cubic-bezier(0.34,1.56,0.64,1) both;
+}
+
+.xp-panel {
+  background: var(--blue);
+  border: var(--outline-thick);
+  border-bottom: 5px solid var(--ink);
+  padding: 10px 12px;
+  box-shadow: 3px 3px 0 var(--ink);
+  position: relative;
+  overflow: hidden;
+}
+.xp-panel::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(circle, rgba(255,255,255,0.08) 1px, transparent 1px);
+  background-size: 5px 5px;
+}
+.xp-label {
+  font-family: 'Bangers', cursive;
+  font-size: 11px;
+  letter-spacing: 2px;
+  color: var(--yellow);
+  position: relative;
+  z-index: 1;
+}
+.xp-value {
+  font-family: 'Bangers', cursive;
+  font-size: 32px;
+  color: white;
+  text-shadow: 2px 2px 0 var(--ink);
+  line-height: 1;
+  position: relative;
+  z-index: 1;
+}
+.xp-rank {
+  font-family: 'Permanent Marker', cursive;
+  font-size: 10px;
+  letter-spacing: 1px;
+  color: var(--cyan);
+  position: relative;
+  z-index: 1;
+  margin-top: 2px;
+}
+
+.villain-panel {
+  background: var(--ink);
+  border: 3px solid var(--red);
+  border-bottom: 5px solid var(--red);
+  padding: 10px 12px;
+  box-shadow: 3px 3px 0 var(--red);
+  position: relative;
+  overflow: hidden;
+}
+.villain-panel::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(circle, rgba(232,20,42,0.1) 1px, transparent 1px);
+  background-size: 5px 5px;
+}
+.villain-label {
+  font-family: 'Bangers', cursive;
+  font-size: 11px;
+  letter-spacing: 2px;
+  color: var(--red);
+  position: relative;
+  z-index: 1;
+}
+.villain-value {
+  font-family: 'Bangers', cursive;
+  font-size: 32px;
+  color: var(--yellow);
+  text-shadow: 2px 2px 0 var(--red);
+  line-height: 1;
+  position: relative;
+  z-index: 1;
+}
+.villain-name {
+  font-family: 'Permanent Marker', cursive;
+  font-size: 10px;
+  letter-spacing: 1px;
+  color: var(--red);
+  position: relative;
+  z-index: 1;
+  margin-top: 2px;
+}
+
+/* POWER METER */
+.power-panel {
+  background: linear-gradient(135deg, var(--purple) 0%, var(--blue) 100%);
+  border: var(--outline-thick);
+  border-bottom: 5px solid var(--ink);
+  padding: 10px 14px;
+  margin-bottom: var(--gutter);
+  box-shadow: 4px 4px 0 var(--ink);
+  animation: panelSlam 0.5s 0.08s cubic-bezier(0.34,1.56,0.64,1) both;
+  position: relative;
+  overflow: hidden;
+}
+.power-panel::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(circle, rgba(255,255,255,0.07) 1px, transparent 1px);
+  background-size: 5px 5px;
+}
+.power-label {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 6px;
+  position: relative;
+  z-index: 1;
+}
+.power-label span {
+  font-family: 'Bangers', cursive;
+  font-size: 16px;
+  letter-spacing: 2px;
+  color: var(--yellow);
+}
+.power-label .pct {
+  font-family: 'Bangers', cursive;
+  font-size: 28px;
+  color: white;
+  text-shadow: 2px 2px 0 var(--ink);
+}
+.power-track {
+  height: 20px;
+  background: var(--ink);
+  border: 2px solid var(--ink);
+  border-radius: 2px;
+  overflow: hidden;
+  position: relative;
+  z-index: 1;
+}
+.power-fill {
+  height: 100%;
+  background: repeating-linear-gradient(
+    90deg,
+    var(--yellow) 0px,
+    var(--yellow) 16px,
+    var(--red) 16px,
+    var(--red) 18px
+  );
+  transition: width 1.2s cubic-bezier(0.34,1.56,0.64,1);
+  position: relative;
+}
+.power-fill::after {
+  content: '\25B6\25B6\25B6';
+  position: absolute;
+  right: 4px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 8px;
+  color: var(--ink);
+  letter-spacing: -2px;
+}
+.power-markers {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 3px;
+  position: relative;
+  z-index: 1;
+}
+.power-markers span {
+  font-family: 'Comic Neue', cursive;
+  font-weight: 700;
+  font-size: 8px;
+  color: rgba(255,255,255,0.5);
+  letter-spacing: 1px;
+}
+
+/* SECTION LABELS */
+.section-label {
+  font-family: 'Bangers', cursive;
+  font-size: 12px;
+  letter-spacing: 3px;
+  color: white;
+  background: var(--ink);
+  border: 2px solid var(--ink);
+  padding: 3px 10px 2px;
+  display: inline-block;
+  margin-bottom: 5px;
+  position: relative;
+  z-index: 1;
+}
+.section-label.red { background: var(--red); }
+.section-label.blue { background: var(--blue); }
+
+/* WEEK GRID */
+.week-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 3px;
+  margin-bottom: var(--gutter);
+  position: relative;
+  z-index: 1;
+}
+.week-cell {
+  aspect-ratio: 1;
+  background: white;
+  border: 2px solid var(--ink);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: transform 0.15s, box-shadow 0.15s;
+  box-shadow: 2px 2px 0 var(--ink);
+  gap: 1px;
+  position: relative;
+  overflow: hidden;
+}
+.week-cell::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(circle, rgba(0,0,0,0.04) 1px, transparent 1px);
+  background-size: 4px 4px;
+}
+.week-cell:active { transform: scale(0.92) translate(2px,2px); box-shadow: 0 0 0 var(--ink); }
+.week-cell .cell-emoji { font-size: 18px; position: relative; z-index: 1; }
+.week-cell .cell-day { font-size: 7px; font-weight: 700; letter-spacing: 0.5px; color: var(--ink); position: relative; z-index: 1; text-transform: uppercase; }
+.week-cell.cell-done { background: var(--green); }
+.week-cell.cell-done .cell-emoji { animation: doneBounce 0.5s ease; }
+.week-cell.cell-today { background: var(--yellow); border-width: 3px; animation: cellPulse 2s infinite; }
+.week-cell.cell-active { outline: 3px solid var(--red); outline-offset: 1px; }
+.week-cell.cell-rest { background: #e8e2d6; }
+
+@keyframes cellPulse {
+  0%,100% { box-shadow: 2px 2px 0 var(--ink); }
+  50% { box-shadow: 2px 2px 0 var(--red), 4px 4px 0 var(--ink); }
+}
+@keyframes doneBounce {
+  0%,100% { transform: scale(1); }
+  40% { transform: scale(1.3); }
+  70% { transform: scale(0.9); }
+}
+
+/* SPEECH BUBBLE */
+.speech-bubble {
+  background: white;
+  border: var(--outline-thick);
+  border-radius: 18px 18px 18px 4px;
+  padding: 12px 14px;
+  margin-bottom: var(--gutter);
+  position: relative;
+  box-shadow: 4px 4px 0 var(--ink);
+  animation: panelSlam 0.4s 0.12s cubic-bezier(0.34,1.56,0.64,1) both;
+  z-index: 1;
+}
+.speech-bubble::before {
+  content: '';
+  position: absolute;
+  bottom: -16px;
+  left: 22px;
+  border: 8px solid transparent;
+  border-top: 10px solid var(--ink);
+}
+.speech-bubble::after {
+  content: '';
+  position: absolute;
+  bottom: -11px;
+  left: 24px;
+  border: 6px solid transparent;
+  border-top: 7px solid white;
+}
+.bubble-who {
+  font-family: 'Bangers', cursive;
+  font-size: 11px;
+  letter-spacing: 2px;
+  color: var(--red);
+  margin-bottom: 3px;
+  text-transform: uppercase;
+}
+.bubble-text {
+  font-family: 'Comic Neue', cursive;
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--ink);
+  line-height: 1.4;
+}
+
+/* FLOATING SFX */
+.floating-sfx {
+  position: fixed;
+  pointer-events: none;
+  z-index: 9000;
+  inset: 0;
+}
+.sfx-word {
+  position: absolute;
+  font-family: 'Bangers', cursive;
+  animation: sfxFloat 4s ease-out forwards;
+  opacity: 0;
+}
+@keyframes sfxFloat {
+  0% { opacity: 0; transform: translateY(0) scale(0.5) rotate(-10deg); }
+  15% { opacity: 0.12; transform: translateY(-20px) scale(1) rotate(-5deg); }
+  70% { opacity: 0.06; }
+  100% { opacity: 0; transform: translateY(-120px) scale(1.2) rotate(5deg); }
+}
+
+/* DAY TABS */
+.day-tabs {
+  display: flex;
+  gap: 4px;
+  overflow-x: auto;
+  padding-bottom: 4px;
+  margin-bottom: var(--gutter);
+  scrollbar-width: none;
+  position: relative;
+  z-index: 1;
+}
+.day-tabs::-webkit-scrollbar { display: none; }
+.day-tab {
+  flex-shrink: 0;
+  font-family: 'Bangers', cursive;
+  font-size: 13px;
+  letter-spacing: 1.5px;
+  padding: 5px 10px;
+  border: 2px solid var(--ink);
+  background: white;
+  color: var(--ink);
+  cursor: pointer;
+  box-shadow: 2px 2px 0 var(--ink);
+  transition: all 0.15s;
+  white-space: nowrap;
+  position: relative;
+  overflow: hidden;
+}
+.day-tab::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(circle, rgba(0,0,0,0.03) 1px, transparent 1px);
+  background-size: 4px 4px;
+}
+.day-tab:active { transform: translate(2px,2px); box-shadow: 0 0 0 var(--ink); }
+.day-tab.active { background: var(--yellow); border-width: 3px; transform: scale(1.05); }
+.day-tab.done-tab { background: var(--green); color: white; }
+
+/* WORKOUT PANEL */
+.workout-panel {
+  border: var(--outline-thick);
+  border-bottom: 6px solid var(--ink);
+  background: white;
+  box-shadow: 5px 5px 0 var(--ink);
+  margin-bottom: var(--gutter);
+  overflow: hidden;
+  position: relative;
+  z-index: 1;
+  animation: panelSlam 0.35s cubic-bezier(0.34,1.56,0.64,1) both;
+}
+
+.panel-header {
+  padding: 14px 14px 12px;
+  border-bottom: 3px solid var(--ink);
+  position: relative;
+  overflow: hidden;
+}
+.panel-header::before {
+  content: '';
+  position: absolute;
+  inset: -50%;
+  background: repeating-linear-gradient(
+    -45deg,
+    transparent,
+    transparent 6px,
+    rgba(0,0,0,0.05) 6px,
+    rgba(0,0,0,0.05) 7px
+  );
+  pointer-events: none;
+}
+.panel-header::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(circle, rgba(0,0,0,0.07) 1px, transparent 1px);
+  background-size: 5px 5px;
+  pointer-events: none;
+}
+.panel-header.run-header { background: var(--red); }
+.panel-header.strength-header { background: var(--blue); }
+.panel-header.longrun-header { background: var(--yellow); }
+.panel-header.rest-header { background: #bbb; }
+
+.header-top-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  position: relative;
+  z-index: 1;
+}
+.panel-icon {
+  font-size: 44px;
+  line-height: 1;
+  filter: drop-shadow(2px 2px 0 rgba(0,0,0,0.4));
+}
+.panel-titles { flex: 1; }
+.panel-title {
+  font-family: 'Bangers', cursive;
+  font-size: 38px;
+  letter-spacing: 3px;
+  line-height: 0.92;
+  color: white;
+  text-shadow: 3px 3px 0 var(--ink);
+}
+.panel-header.longrun-header .panel-title,
+.panel-header.rest-header .panel-title { color: var(--ink); text-shadow: 2px 2px 0 rgba(0,0,0,0.15); }
+.panel-subtitle {
+  font-family: 'Bangers', cursive;
+  font-size: 13px;
+  letter-spacing: 2px;
+  color: rgba(255,255,255,0.85);
+  margin-top: 2px;
+}
+.panel-header.longrun-header .panel-subtitle,
+.panel-header.rest-header .panel-subtitle { color: rgba(0,0,0,0.5); }
+
+.pow-badge {
+  position: absolute;
+  top: 8px;
+  right: 10px;
+  font-family: 'Bangers', cursive;
+  font-size: 20px;
+  letter-spacing: 1px;
+  padding: 14px 16px 12px;
+  border: 3px solid var(--ink);
+  transform: rotate(8deg);
+  box-shadow: 2px 2px 0 var(--ink);
+  z-index: 2;
+  line-height: 1;
+  background: var(--yellow);
+  color: var(--ink);
+  clip-path: polygon(50% 0%, 63% 10%, 80% 2%, 75% 20%, 98% 25%, 82% 38%, 100% 50%, 82% 62%, 98% 75%, 75% 80%, 80% 98%, 63% 90%, 50% 100%, 37% 90%, 20% 98%, 25% 80%, 2% 75%, 18% 62%, 0% 50%, 18% 38%, 2% 25%, 25% 20%, 20% 2%, 37% 10%);
+}
+.panel-header.longrun-header .pow-badge { background: var(--red); color: white; }
+.panel-header.strength-header .pow-badge { background: var(--cyan); }
+
+/* INTERVAL VISUAL */
+.interval-visual {
+  padding: 10px 14px;
+  border-bottom: 2px solid var(--ink);
+  background: #f9f5ed;
+  background-image: radial-gradient(circle, rgba(0,0,0,0.04) 1px, transparent 1px);
+  background-size: 5px 5px;
+}
+.interval-label {
+  font-family: 'Bangers', cursive;
+  font-size: 11px;
+  letter-spacing: 2px;
+  color: var(--ink);
+  margin-bottom: 6px;
+}
+.interval-blocks {
+  display: flex;
+  gap: 3px;
+  flex-wrap: wrap;
+  align-items: center;
+}
+.iblock {
+  height: 18px;
+  border: 1.5px solid var(--ink);
+  border-radius: 2px;
+  transition: transform 0.3s;
+}
+.iblock:hover { transform: scaleY(1.3); }
+.iblock.run { background: var(--red); width: 28px; }
+.iblock.walk { background: var(--blue); width: 14px; opacity: 0.7; }
+.interval-legend {
+  display: flex;
+  gap: 14px;
+  margin-top: 6px;
+  font-size: 10px;
+  font-weight: 700;
+  color: var(--ink);
+}
+.ileg-dot { width: 10px; height: 10px; border: 1.5px solid var(--ink); border-radius: 2px; display: inline-block; margin-right: 4px; vertical-align: middle; }
+
+/* STEPS */
+.steps-section { padding: 12px 14px; }
+.steps-title {
+  font-family: 'Bangers', cursive;
+  font-size: 15px;
+  letter-spacing: 3px;
+  color: var(--red);
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.steps-title::after { content: ''; flex: 1; height: 2px; background: var(--ink); }
+
+.step {
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+  padding: 10px 12px;
+  border: 2px solid var(--ink);
+  margin-bottom: 6px;
+  background: white;
+  cursor: pointer;
+  transition: all 0.15s;
+  box-shadow: 2px 2px 0 var(--ink);
+  position: relative;
+  overflow: hidden;
+}
+.step::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(circle, rgba(0,0,0,0.03) 1px, transparent 1px);
+  background-size: 4px 4px;
+}
+.step:active { transform: translate(2px,2px); box-shadow: 0 0 0 var(--ink); }
+.step.checked { background: var(--green); border-color: var(--ink); }
+.step.checked::before { display: none; }
+.step.checked::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(
+    45deg,
+    transparent,
+    transparent 8px,
+    rgba(255,255,255,0.15) 8px,
+    rgba(255,255,255,0.15) 9px
+  );
+  pointer-events: none;
+}
+
+.step-num {
+  width: 24px;
+  height: 24px;
+  background: var(--ink);
+  color: var(--yellow);
+  font-family: 'Bangers', cursive;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  border-radius: 2px;
+  position: relative;
+  z-index: 1;
+  transition: all 0.15s;
+}
+.step.checked .step-num { background: white; color: var(--green); font-size: 16px; }
+.step.checked .step-num::after { content: '\2713'; font-weight: 900; }
+
+.step-body { flex: 1; position: relative; z-index: 1; }
+.step-text { font-size: 13px; font-weight: 700; color: var(--ink); line-height: 1.4; }
+.step.checked .step-text { text-decoration: line-through; color: rgba(0,0,0,0.35); }
+.step-time {
+  font-family: 'Bangers', cursive;
+  font-size: 11px;
+  letter-spacing: 1px;
+  color: var(--red);
+  margin-top: 1px;
+}
+.step.checked .step-time { color: rgba(0,0,0,0.25); }
+
+/* COMPLETE BUTTON */
+.complete-wrap { padding: 0 14px 14px; }
+.complete-btn {
+  width: 100%;
+  font-family: 'Bangers', cursive;
+  font-size: 24px;
+  letter-spacing: 4px;
+  border: var(--outline-thick);
+  border-bottom: 6px solid var(--ink);
+  padding: 14px;
+  cursor: pointer;
+  transition: all 0.12s;
+  box-shadow: 4px 4px 0 var(--ink);
+  text-transform: uppercase;
+  position: relative;
+  overflow: hidden;
+}
+.complete-btn::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(circle, rgba(255,255,255,0.15) 1px, transparent 1px);
+  background-size: 5px 5px;
+}
+.complete-btn:active { transform: translate(4px,5px); box-shadow: 0 0 0 var(--ink); border-bottom: var(--outline-thick); }
+.run-btn { background: var(--red); color: white; }
+.strength-btn { background: var(--blue); color: white; }
+.long-btn { background: var(--yellow); color: var(--ink); }
+.done-btn { background: var(--green) !important; color: white !important; }
+
+/* SKIP BUTTON */
+.skip-wrap {
+  padding: 0 14px 14px;
+  text-align: center;
+}
+.skip-btn {
+  font-family: 'Comic Neue', cursive;
+  font-weight: 700;
+  font-size: 11px;
+  letter-spacing: 1px;
+  color: rgba(0,0,0,0.35);
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 4px 8px;
+  transition: color 0.15s;
+}
+.skip-btn:hover { color: var(--orange); }
+.skipped-btn {
+  background: var(--orange) !important;
+  color: white !important;
+}
+.skip-badge {
+  display: inline-block;
+  font-family: 'Bangers', cursive;
+  font-size: 10px;
+  letter-spacing: 1px;
+  padding: 2px 8px 1px;
+  background: var(--orange);
+  color: white;
+  border: 1.5px solid var(--ink);
+  margin-bottom: 4px;
+}
+.week-cell.cell-skipped {
+  background: var(--orange);
+  opacity: 0.7;
+}
+.week-cell.cell-skipped .cell-emoji {
+  filter: grayscale(0.3);
+}
+
+/* CAPTION BOX */
+.caption-box {
+  background: var(--yellow);
+  border: 2px solid var(--ink);
+  padding: 4px 10px 3px;
+  font-family: 'Permanent Marker', cursive;
+  font-size: 10px;
+  letter-spacing: 2px;
+  color: var(--ink);
+  display: inline-block;
+  margin-bottom: 5px;
+  box-shadow: 2px 2px 0 var(--ink);
+  position: relative;
+  z-index: 1;
+}
+
+/* STORY RECAP */
+.story-recap {
+  background: var(--ink);
+  border: 3px solid var(--ink);
+  padding: 12px 14px;
+  margin-top: 4px;
+  position: relative;
+  z-index: 1;
+}
+.story-recap::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(circle, rgba(255,255,255,0.04) 1px, transparent 1px);
+  background-size: 4px 4px;
+}
+.recap-title {
+  font-family: 'Bangers', cursive;
+  font-size: 14px;
+  letter-spacing: 3px;
+  color: var(--yellow);
+  margin-bottom: 8px;
+  position: relative;
+  z-index: 1;
+}
+.recap-text {
+  font-family: 'Comic Neue', cursive;
+  font-size: 12px;
+  font-weight: 700;
+  color: rgba(255,255,255,0.7);
+  line-height: 1.5;
+  position: relative;
+  z-index: 1;
+}
+.recap-text em {
+  color: var(--yellow);
+  font-style: normal;
+}
+.recap-next {
+  font-family: 'Bangers', cursive;
+  font-size: 13px;
+  letter-spacing: 2px;
+  color: var(--red);
+  margin-top: 10px;
+  position: relative;
+  z-index: 1;
+}
+
+/* PAGE NUMBER */
+.page-number {
+  text-align: center;
+  font-family: 'Comic Neue', cursive;
+  font-weight: 700;
+  font-size: 10px;
+  letter-spacing: 2px;
+  color: rgba(0,0,0,0.3);
+  margin-top: 8px;
+  padding-bottom: 12px;
+  position: relative;
+  z-index: 1;
+}
+
+/* ACHIEVEMENT TOAST */
+.achievement-toast {
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%) translateY(100px);
+  background: var(--ink);
+  border: 3px solid var(--yellow);
+  padding: 12px 20px;
+  font-family: 'Bangers', cursive;
+  font-size: 16px;
+  letter-spacing: 2px;
+  color: var(--yellow);
+  z-index: 9999;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.5);
+  transition: transform 0.5s cubic-bezier(0.34,1.56,0.64,1);
+  white-space: nowrap;
+  text-align: center;
+}
+.achievement-toast.show {
+  transform: translateX(-50%) translateY(0);
+}
+
+/* CONFETTI */
+.confetti-container { position: fixed; inset: 0; pointer-events: none; z-index: 9999; }
+
+/* ACTION WORDS */
+.action-word {
+  position: fixed;
+  font-family: 'Bangers', cursive;
+  font-size: 80px;
+  letter-spacing: 5px;
+  pointer-events: none;
+  z-index: 9998;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%,-50%) rotate(-8deg);
+  white-space: nowrap;
+  animation: actionPop 1s cubic-bezier(0.34,1.56,0.64,1) forwards;
+  -webkit-text-stroke: 3px var(--ink);
+  color: var(--yellow);
+  text-shadow:
+    4px 4px 0 var(--red),
+    -2px -2px 0 var(--ink),
+    2px -2px 0 var(--ink),
+    -2px 2px 0 var(--ink);
+}
+@keyframes actionPop {
+  0% { opacity:0; transform: translate(-50%,-50%) scale(0.1) rotate(-15deg); }
+  30% { opacity:1; transform: translate(-50%,-50%) scale(1.2) rotate(-8deg); }
+  50% { transform: translate(-50%,-50%) scale(0.95) rotate(-5deg); }
+  65% { transform: translate(-50%,-50%) scale(1.05) rotate(-8deg); }
+  80% { opacity:1; }
+  100% { opacity:0; transform: translate(-50%,-50%) scale(1.3) rotate(-8deg); }
+}
+
+.action-burst {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  width: 300px;
+  height: 300px;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+  z-index: 9997;
+  animation: burstPop 1s ease-out forwards;
+}
+@keyframes burstPop {
+  0% { opacity: 0; transform: translate(-50%, -50%) scale(0); }
+  20% { opacity: 0.8; transform: translate(-50%, -50%) scale(1); }
+  100% { opacity: 0; transform: translate(-50%, -50%) scale(1.5); }
+}
+
+@keyframes screenShake {
+  0%,100% { transform: translate(0,0); }
+  10% { transform: translate(-4px, 2px); }
+  20% { transform: translate(4px, -2px); }
+  30% { transform: translate(-2px, 4px); }
+  40% { transform: translate(2px, -4px); }
+  50% { transform: translate(-4px, 0); }
+  60% { transform: translate(4px, 2px); }
+  70% { transform: translate(-2px, -2px); }
+  80% { transform: translate(2px, 4px); }
+  90% { transform: translate(-4px, -4px); }
+}
+.shake { animation: screenShake 0.4s ease-out; }
+
+@keyframes panelSlam {
+  0% { opacity:0; transform: scale(0.8) rotate(-2deg); }
+  60% { transform: scale(1.02) rotate(0.5deg); }
+  100% { opacity:1; transform: scale(1) rotate(0deg); }
+}
+
+/* STREAK FLAMES */
+.streak-display {
+  display: flex;
+  align-items: center;
+  gap: 3px;
+  margin-top: 3px;
+}
+.streak-flame {
+  font-size: 10px;
+  animation: flameFlicker 0.6s ease-in-out infinite alternate;
+}
+.streak-flame:nth-child(2) { animation-delay: 0.1s; }
+.streak-flame:nth-child(3) { animation-delay: 0.2s; }
+.streak-flame:nth-child(4) { animation-delay: 0.15s; }
+.streak-flame:nth-child(5) { animation-delay: 0.25s; }
+@keyframes flameFlicker {
+  from { transform: scaleY(1) translateY(0); }
+  to { transform: scaleY(1.2) translateY(-1px); }
+}
+
+/* MODE TOGGLE */
+.mode-toggle-wrap {
+  padding: 10px 14px;
+  border-bottom: 2px solid var(--ink);
+  background: #f9f5ed;
+  background-image: radial-gradient(circle, rgba(0,0,0,0.04) 1px, transparent 1px);
+  background-size: 5px 5px;
+}
+.mode-toggle-label {
+  font-family: 'Bangers', cursive;
+  font-size: 11px;
+  letter-spacing: 2px;
+  color: var(--ink);
+  margin-bottom: 8px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.mode-toggle-label::after {
+  content: '';
+  flex: 1;
+  height: 2px;
+  background: var(--ink);
+}
+.mode-toggle-btns {
+  display: flex;
+  gap: 0;
+  border: 3px solid var(--ink);
+  border-radius: 3px;
+  overflow: hidden;
+  box-shadow: 3px 3px 0 var(--ink);
+}
+.mode-btn {
+  flex: 1;
+  font-family: 'Bangers', cursive;
+  font-size: 13px;
+  letter-spacing: 1.5px;
+  padding: 10px 8px 8px;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s;
+  text-align: center;
+  line-height: 1.3;
+  position: relative;
+  background: white;
+  color: var(--ink);
+}
+.mode-btn:first-child {
+  border-right: 2px solid var(--ink);
+}
+.mode-btn .mode-emoji {
+  display: block;
+  font-size: 22px;
+  margin-bottom: 2px;
+}
+.mode-btn .mode-text {
+  display: block;
+  font-size: 12px;
+  letter-spacing: 1px;
+}
+.mode-btn .mode-sub {
+  display: block;
+  font-family: 'Comic Neue', cursive;
+  font-weight: 700;
+  font-size: 9px;
+  letter-spacing: 0.5px;
+  color: rgba(0,0,0,0.4);
+  margin-top: 1px;
+}
+.mode-btn.mode-active {
+  color: white;
+}
+.mode-btn.mode-active .mode-sub {
+  color: rgba(255,255,255,0.7);
+}
+.mode-btn.outdoor-active {
+  background: var(--red);
+  box-shadow: inset 0 -3px 0 rgba(0,0,0,0.2);
+}
+.mode-btn.treadmill-active {
+  background: var(--purple);
+  box-shadow: inset 0 -3px 0 rgba(0,0,0,0.2);
+}
+.mode-btn:not(.mode-active):hover {
+  background: #f0ece0;
+}
+.mode-btn::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(circle, rgba(255,255,255,0.12) 1px, transparent 1px);
+  background-size: 4px 4px;
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+.mode-btn.mode-active::before {
+  opacity: 1;
+}
+
+/* IFIT BADGE */
+.ifit-badge {
+  display: inline-block;
+  background: var(--purple);
+  color: white;
+  font-family: 'Bangers', cursive;
+  font-size: 10px;
+  letter-spacing: 1px;
+  padding: 2px 6px 1px;
+  border: 1.5px solid var(--ink);
+  border-radius: 2px;
+  margin-left: 6px;
+  vertical-align: middle;
+}
+
+/* SWAP DAY FEATURE */
+.swap-wrap {
+  padding: 6px 14px 8px;
+  border-bottom: 2px solid var(--ink);
+  background: #faf7ef;
+  background-image: radial-gradient(circle, rgba(0,0,0,0.03) 1px, transparent 1px);
+  background-size: 4px 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+.swap-btn {
+  font-family: 'Bangers', cursive;
+  font-size: 12px;
+  letter-spacing: 2px;
+  padding: 5px 12px 4px;
+  border: 2px solid var(--ink);
+  background: var(--orange);
+  color: white;
+  cursor: pointer;
+  box-shadow: 2px 2px 0 var(--ink);
+  transition: all 0.15s;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+.swap-btn:active { transform: translate(2px,2px); box-shadow: 0 0 0 var(--ink); }
+.swap-btn:hover { background: #ff8548; }
+.swap-btn .swap-icon { font-size: 14px; }
+
+.swap-label {
+  font-family: 'Comic Neue', cursive;
+  font-weight: 700;
+  font-size: 10px;
+  letter-spacing: 1px;
+  color: var(--orange);
+  text-transform: uppercase;
+}
+
+/* SWAP MODAL OVERLAY */
+.swap-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(10,10,10,0.7);
+  z-index: 9500;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: swapFadeIn 0.2s ease-out;
+}
+@keyframes swapFadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+.swap-modal {
+  background: white;
+  border: 4px solid var(--ink);
+  border-bottom: 6px solid var(--ink);
+  box-shadow: 8px 8px 0 var(--ink);
+  max-width: 340px;
+  width: 90%;
+  padding: 0;
+  overflow: hidden;
+  animation: panelSlam 0.35s cubic-bezier(0.34,1.56,0.64,1) both;
+}
+.swap-modal-header {
+  background: var(--orange);
+  border-bottom: 3px solid var(--ink);
+  padding: 12px 14px 10px;
+  position: relative;
+}
+.swap-modal-header::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(-45deg, transparent, transparent 6px, rgba(0,0,0,0.05) 6px, rgba(0,0,0,0.05) 7px);
+  pointer-events: none;
+}
+.swap-modal-title {
+  font-family: 'Bangers', cursive;
+  font-size: 24px;
+  letter-spacing: 3px;
+  color: white;
+  text-shadow: 2px 2px 0 var(--ink);
+  position: relative;
+  z-index: 1;
+}
+.swap-modal-sub {
+  font-family: 'Comic Neue', cursive;
+  font-weight: 700;
+  font-size: 11px;
+  color: rgba(255,255,255,0.8);
+  position: relative;
+  z-index: 1;
+}
+.swap-modal-body { padding: 12px 14px; }
+.swap-option {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 12px;
+  border: 2px solid var(--ink);
+  margin-bottom: 6px;
+  cursor: pointer;
+  box-shadow: 2px 2px 0 var(--ink);
+  transition: all 0.15s;
+  background: white;
+  position: relative;
+  overflow: hidden;
+}
+.swap-option::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(circle, rgba(0,0,0,0.03) 1px, transparent 1px);
+  background-size: 4px 4px;
+}
+.swap-option:active { transform: translate(2px,2px); box-shadow: 0 0 0 var(--ink); }
+.swap-option:hover { background: var(--yellow); }
+.swap-option-emoji { font-size: 22px; position: relative; z-index: 1; }
+.swap-option-info { flex: 1; position: relative; z-index: 1; }
+.swap-option-day {
+  font-family: 'Bangers', cursive;
+  font-size: 14px;
+  letter-spacing: 1px;
+  color: var(--ink);
+}
+.swap-option-type {
+  font-family: 'Comic Neue', cursive;
+  font-weight: 700;
+  font-size: 11px;
+  color: rgba(0,0,0,0.5);
+}
+.swap-option-arrow {
+  font-family: 'Bangers', cursive;
+  font-size: 16px;
+  color: var(--orange);
+  position: relative;
+  z-index: 1;
+}
+.swap-cancel {
+  width: 100%;
+  font-family: 'Bangers', cursive;
+  font-size: 14px;
+  letter-spacing: 2px;
+  padding: 8px;
+  border: 2px solid var(--ink);
+  background: #eee;
+  color: var(--ink);
+  cursor: pointer;
+  box-shadow: 2px 2px 0 var(--ink);
+  margin-top: 4px;
+}
+.swap-cancel:active { transform: translate(2px,2px); box-shadow: 0 0 0 var(--ink); }
+.swap-cancel:hover { background: #ddd; }
+
+/* SWAP ACTIVE INDICATOR */
+.swap-indicator {
+  font-family: 'Comic Neue', cursive;
+  font-weight: 700;
+  font-size: 10px;
+  color: var(--orange);
+  letter-spacing: 1px;
+  text-align: center;
+  padding: 3px 0 0;
+}
+.swap-undo {
+  font-family: 'Bangers', cursive;
+  font-size: 11px;
+  letter-spacing: 1px;
+  padding: 3px 8px 2px;
+  border: 1.5px solid var(--ink);
+  background: white;
+  color: var(--ink);
+  cursor: pointer;
+  box-shadow: 1px 1px 0 var(--ink);
+  margin-left: 6px;
+  transition: all 0.15s;
+}
+.swap-undo:active { transform: translate(1px,1px); box-shadow: 0 0 0; }
+.swap-undo:hover { background: var(--yellow); }
+
+@media (max-width: 380px) {
+  .masthead h1 { font-size: 44px; }
+  .splash-title { font-size: 48px; }
+  .panel-title { font-size: 30px; }
+  .xp-value, .villain-value { font-size: 26px; }
+}
+</style>
+</head>
+<body>
+
+<!-- SPLASH SCREEN -->
+<div class="splash-screen" id="splashScreen" onclick="dismissSplash()">
+  <div class="splash-bg"></div>
+  <div class="splash-rays"></div>
+  <div class="splash-corner tl">MARVEL AT THE POWER OF</div>
+  <div class="splash-corner tr">EST. MARCH 2026</div>
+  <div class="splash-corner bl">ISSUE #1 OF INFINITY</div>
+  <div class="splash-corner br">APPROVED BY THE COMICS CODE</div>
+  <div class="splash-content">
+    <div class="splash-issue">PRESENTING THE INCREDIBLE</div>
+    <div class="splash-hero-silhouette">&#x1F9B8;&#x200D;&#x2640;&#xFE0F;</div>
+    <div class="splash-title">IRON<br>LIZZIE</div>
+    <div class="splash-sub">RUNNING FROM DEADLINES</div>
+    <div class="splash-tagline">"She doesn't run FROM danger -- she runs THROUGH it."</div>
+    <div class="splash-cta">-- TAP TO BEGIN YOUR ORIGIN STORY --</div>
+  </div>
+</div>
+
+<!-- MAIN COMIC PAGE -->
+<div class="confetti-container" id="confetti"></div>
+<div class="floating-sfx" id="floatingSfx"></div>
+<div class="achievement-toast" id="achievementToast"></div>
+
+<div class="comic-page">
+  <div class="page-border">
+    <div class="ink-splatter"></div>
+    <div class="ink-splatter"></div>
+    <div class="ink-splatter"></div>
+
+    <!-- MASTHEAD -->
+    <div class="masthead">
+      <div class="masthead-badge">&#x1F3C1; MAY 9 &middot; 10K</div>
+      <div class="masthead-vol">
+        <span>VOL. 1 &middot; ISSUE #<span id="issueNum">1</span></span>
+        <span id="dateDisplay">MARCH 2026</span>
+      </div>
+      <h1>IRON<br>LIZZIE</h1>
+      <div class="masthead-sub">&#x26A1; RUNNING FROM DEADLINES &#x26A1;</div>
+    </div>
+
+    <!-- HERO STRIP -->
+    <div class="hero-strip">
+      <div class="xp-panel">
+        <div class="xp-label">&#x26A1; HERO XP</div>
+        <div class="xp-value" id="xpValue">0</div>
+        <div class="xp-rank" id="xpRank">RANK: SIDEKICK</div>
+        <div class="streak-display" id="streakDisplay"></div>
+      </div>
+      <div class="villain-panel">
+        <div class="villain-label">&#x1F480; RACE DAY IN</div>
+        <div class="villain-value" id="villainCountdown">46</div>
+        <div class="villain-name" id="villainName">THE DEADLINE APPROACHES</div>
+      </div>
+    </div>
+
+    <!-- POWER METER -->
+    <div class="power-panel">
+      <div class="power-label">
+        <span>&#x26A1; POWER LEVEL</span>
+        <span class="pct" id="progressPct">0%</span>
+      </div>
+      <div class="power-track">
+        <div class="power-fill" id="progressFill" style="width:0%"></div>
+      </div>
+      <div class="power-markers">
+        <span>ORIGIN</span>
+        <span>TRAINING</span>
+        <span>HERO</span>
+        <span>LEGEND</span>
+      </div>
+    </div>
+
+    <!-- WEEK GRID -->
+    <div class="section-label">&#x1F4C5; THIS WEEK'S MISSIONS</div>
+    <div class="week-grid" id="weekGrid"></div>
+
+    <!-- SPEECH BUBBLE -->
+    <div class="speech-bubble">
+      <div class="bubble-who">&#x1F9B8;&#x200D;&#x2640;&#xFE0F; IRON LIZZIE SAYS:</div>
+      <div class="bubble-text" id="motoText">Loading mission briefing...</div>
+    </div>
+
+    <!-- DAY TABS -->
+    <div class="section-label red">&#x26A1; SELECT YOUR MISSION</div>
+    <div class="day-tabs" id="dayTabs"></div>
+
+    <!-- WORKOUT CONTENT -->
+    <div id="workoutContent"></div>
+
+    <!-- STORY RECAP -->
+    <div class="story-recap">
+      <div class="recap-title">&#x1F4D6; THE STORY SO FAR...</div>
+      <div class="recap-text" id="recapText">
+        Our hero <em>Iron Lizzie</em> has begun her quest. The 10K looms on the horizon like a supervillain's fortress. But with the Galloway method as her superpower, nothing can stop her...
+      </div>
+      <div class="recap-next" id="recapNext">NEXT ISSUE: THE TRAINING BEGINS! &rarr;</div>
+    </div>
+  </div>
+
+  <div class="page-number">-- PAGE 1 OF THE IRON LIZZIE SAGA --</div>
+</div>
+
+<script>
+var STORAGE_KEY = 'ironlizzie_v2';
+var WEEK_DAYS = ['SUN','MON','TUE','WED','THU','FRI','SAT'];
+var MONTHS = ['JAN','FEB','MAR','APR','MAY','JUN','JUL','AUG','SEP','OCT','NOV','DEC'];
+var RACE_DATE = new Date('2026-05-09T00:00:00');
+
+var ACTION_WORDS = ['POW!','ZAP!','BAM!','KA-POW!','WHAM!','SMASH!','BOOM!','KAPOW!','THWACK!','CRUNCH!','YES!!','HEROIC!'];
+var SFX_WORDS = ['*WHOOSH*','*THUD*','*CRACK*','*SWOOSH*','*ZING*','*KAPOW*','*WHAM*','*THWIP*'];
+
+var RANKS = [
+  { min: 0,   name: 'SIDEKICK',       emoji: '\uD83E\uDDB8' },
+  { min: 50,  name: 'ROOKIE HERO',    emoji: '\u26A1' },
+  { min: 150, name: 'STREET GUARDIAN', emoji: '\uD83D\uDEE1' },
+  { min: 300, name: 'CITY DEFENDER',   emoji: '\uD83C\uDFD9' },
+  { min: 500, name: 'SUPER HERO',     emoji: '\uD83D\uDCA5' },
+  { min: 750, name: 'ULTRA LEGEND',   emoji: '\uD83C\uDF1F' },
+  { min: 1000,name: 'IRON LIZZIE',    emoji: '\uD83E\uDDB8\u200D\u2640\uFE0F' },
+];
+
+var ACHIEVEMENTS = [
+  { id: 'first_mission', check: function(s){ return s.completedCount >= 1; }, text: '\uD83C\uDFC5 FIRST MISSION COMPLETE!' },
+  { id: 'three_streak',  check: function(s){ return s.streak >= 3; }, text: '\uD83D\uDD25 3-DAY STREAK! ON FIRE!' },
+  { id: 'five_streak',   check: function(s){ return s.streak >= 5; }, text: '\uD83D\uDD25\uD83D\uDD25 5-DAY STREAK! UNSTOPPABLE!' },
+  { id: 'half_way',      check: function(s){ return s.completedCount >= Math.floor(s.totalDays / 2); }, text: '\u2B50 HALFWAY HERO! 50% DONE!' },
+  { id: 'ten_done',      check: function(s){ return s.completedCount >= 10; }, text: '\uD83D\uDCAA 10 MISSIONS CRUSHED!' },
+  { id: 'long_run',      check: function(s){ return s.longRunsDone >= 1; }, text: '\uD83C\uDF05 FIRST LONG RUN CONQUERED!' },
+  { id: 'race_dist',     check: function(s){ return s.longRunsDone >= 3; }, text: '\uD83C\uDFC6 RACE DISTANCE UNLOCKED!' },
+];
+
+var STORY_BEATS = [
+  { min: 0,  text: 'Our hero <em>Iron Lizzie</em> has begun her quest. The 10K looms on the horizon like a supervillain\'s fortress. But with the Galloway method as her superpower and Harry Potter in her ears, nothing can stop her...', next: 'NEXT ISSUE: THE TRAINING BEGINS! \u2192' },
+  { min: 3,  text: '<em>Iron Lizzie</em> has completed her first missions! The citizens are watching. The Galloway intervals grow stronger with each outing. Walk breaks aren\'t weakness \u2014 they\'re her SECRET WEAPON...', next: 'NEXT ISSUE: THE STRENGTH ARC! \u2192' },
+  { min: 7,  text: 'A full week of training conquered! <em>Iron Lizzie\'s</em> power level is rising. The Dementors of self-doubt scatter before her. Each mile is a chapter in her origin story...', next: 'NEXT ISSUE: THE LONG RUN CHALLENGE! \u2192' },
+  { min: 12, text: 'The halfway point! <em>Iron Lizzie</em> stands atop the training montage of her life. She\'s run farther than she ever imagined. The 10K villain is starting to look... beatable.', next: 'NEXT ISSUE: THE FINAL TRAINING ARC! \u2192' },
+  { min: 18, text: '<em>Iron Lizzie</em> has become UNSTOPPABLE. Race distance conquered in training. The 10K is no longer a villain \u2014 it\'s a victory lap waiting to happen. May 9 belongs to HER.', next: 'THE FINALE: RACE DAY \u2192 MAY 9! \uD83C\uDFC6' },
+];
+
+var planDays = [
+  { date: '2026-03-24', type: 'run',
+    title: 'EASY GALLOWAY', icon: '\uD83C\uDFC3\u200D\u2640\uFE0F', headerClass: 'run-header', btnClass: 'run-btn',
+    pow: 'GO!', moto: 'Easy Galloway outside. Harry Potter on. Let Hogwarts carry you through every walk break. \uD83E\uDDD9\u200D\u2640\uFE0F',
+    ifitMoto: 'Treadmill day! Pick an iFit adventure \u2014 let the trainer guide you through it. Rain can\'t stop Iron Lizzie! \uD83C\uDF27\uFE0F\u2192\uD83D\uDCAA',
+    duration: '25\u201330 MIN', intervals: '60s RUN / 30s WALK', xp: 30,
+    steps: [
+      { text: 'Put Harry Potter on Audible \uD83E\uDDD9\u200D\u2640\uFE0F', time: '2 min' },
+      { text: 'Head outside \u2014 flat route, easy pace', time: '1 min' },
+      { text: 'Walk 5 min easy warmup', time: '5 min' },
+      { text: 'Intervals: 60s run, 30s walk \u2014 repeat', time: '20\u201325 min' },
+      { text: '5 min easy cooldown walk', time: '5 min' },
+      { text: 'Stretch: hip flexors + calves', time: '3 min' },
+    ],
+    ifitSteps: [
+      { text: 'Pick an iFit walk/run \u2014 25\u201330 min, easy effort \uD83C\uDF0D', time: '2 min' },
+      { text: 'Hop on the treadmill & start the workout', time: '1 min' },
+      { text: 'Follow the trainer \u2014 match the speed prompts', time: '25\u201330 min' },
+      { text: 'Cool down with the trainer or 3 min easy walk', time: '3 min' },
+      { text: 'Stretch: hip flexors + calves', time: '3 min' },
+    ]
+  },
+  { date: '2026-03-25', type: 'strength',
+    title: 'FULL BODY \u00B7 DAY A', icon: '\uD83D\uDCAA', headerClass: 'strength-header', btnClass: 'strength-btn',
+    pow: 'LIFT!', moto: 'Strength day. Movie on before you touch a single weight. NON-NEGOTIABLE. \uD83C\uDFAC',
+    duration: '45\u201360 MIN', intervals: 'LOWER FOCUS', xp: 35,
+    steps: [
+      { text: 'Pick a movie & hit play \uD83C\uDFAC', time: '30 sec' },
+      { text: 'Warm-up: Glute bridge \u00D710, BW squat \u00D710, cat-cow \u00D75', time: '3 min' },
+      { text: 'Goblet Squat \u2014 3\u00D712', time: '6 min' },
+      { text: 'Romanian Deadlift \u2014 3\u00D710', time: '6 min' },
+      { text: 'Hip Thrust \u2014 3\u00D715 \uD83D\uDD11', time: '6 min' },
+      { text: 'Lateral Band Walk \u2014 2\u00D715 each way', time: '4 min' },
+      { text: 'Step-Up \u2014 2\u00D710 each leg', time: '4 min' },
+      { text: 'Dead Bug \u2014 2\u00D710', time: '3 min' },
+      { text: 'Stretch: figure-4, hip flexor', time: '3 min' },
+    ]
+  },
+  { date: '2026-03-26', type: 'strength',
+    title: 'FULL BODY \u00B7 DAY B', icon: '\uD83D\uDCAA', headerClass: 'strength-header', btnClass: 'strength-btn',
+    pow: 'PUSH!', moto: 'Upper body day. Walk Weezer first, then garage. You always feel better after. \uD83D\uDC3E',
+    duration: '45\u201360 MIN', intervals: 'UPPER FOCUS', xp: 35,
+    steps: [
+      { text: 'Walk Weezer \uD83D\uDC3E then movie on \uD83C\uDFAC', time: '20 min' },
+      { text: 'Warm-up: Band pull-apart \u00D715, arm circles', time: '3 min' },
+      { text: 'DB Row \u2014 3\u00D712 each arm', time: '6 min' },
+      { text: 'Bench Press \u2014 3\u00D710', time: '6 min' },
+      { text: 'Overhead Press \u2014 3\u00D710', time: '5 min' },
+      { text: 'Face Pull \u2014 3\u00D715', time: '5 min' },
+      { text: 'Suitcase Carry \u2014 2\u00D730s each side', time: '3 min' },
+      { text: 'Plank \u2014 2\u00D745s', time: '3 min' },
+      { text: "Farmer's Carry \u2014 2\u00D730s", time: '3 min' },
+      { text: 'Stretch: doorway chest, thoracic rotation', time: '3 min' },
+    ]
+  },
+  { date: '2026-03-27', type: 'run',
+    title: 'MODERATE GALLOWAY', icon: '\uD83C\uDFC3\u200D\u2640\uFE0F', headerClass: 'run-header', btnClass: 'run-btn',
+    pow: 'FASTER!', moto: 'Thursday run \u2014 push the run segments just slightly. Still conversational, just more INTENTION. \uD83D\uDD25',
+    ifitMoto: 'Treadmill push day! Pick an iFit run with some hills or tempo \u2014 let the trainer bring the intensity. \uD83D\uDD25\uD83C\uDFD4\uFE0F',
+    duration: '30\u201335 MIN', intervals: '60s RUN / 30s WALK', xp: 35,
+    steps: [
+      { text: 'Harry Potter back on \uD83E\uDDD9\u200D\u2640\uFE0F', time: '1 min' },
+      { text: 'Head outside \u2014 flat route', time: '1 min' },
+      { text: '5 min warmup walk', time: '5 min' },
+      { text: 'Intervals: 60s run (slightly faster than Mon), 30s walk', time: '25 min' },
+      { text: '5 min cooldown walk', time: '5 min' },
+      { text: 'Hip flexor stretch', time: '2 min' },
+    ],
+    ifitSteps: [
+      { text: 'Pick an iFit run \u2014 30\u201335 min, moderate effort \uD83C\uDFD4\uFE0F', time: '2 min' },
+      { text: 'Hop on & start \u2014 incline ON for extra challenge', time: '1 min' },
+      { text: 'Follow the trainer \u2014 push during run segments', time: '30 min' },
+      { text: 'Cool down with trainer or 3 min easy walk', time: '3 min' },
+      { text: 'Hip flexor stretch', time: '2 min' },
+    ]
+  },
+  { date: '2026-03-28', type: 'longrun',
+    title: 'LONG RUN \u00B7 5 MI', icon: '\u2B50', headerClass: 'longrun-header', btnClass: 'long-btn',
+    pow: 'EPIC!', moto: '5 miles. Galloway. Harry Potter. The walk breaks ARE the strategy. You are Iron Lizzie. \uD83C\uDF05',
+    ifitMoto: 'Treadmill long run! Pick a scenic iFit run — 60\u201370 min. Hydrate on the belt, adventure on screen. \uD83C\uDF0D\uD83D\uDCA7',
+    duration: '~70 MIN', intervals: '60s RUN / 30s WALK', xp: 60,
+    steps: [
+      { text: 'Hydrate 16oz water before you start \uD83D\uDCA7', time: '5 min' },
+      { text: 'Harry Potter on \uD83E\uDDD9\u200D\u2640\uFE0F', time: '1 min' },
+      { text: '5\u201310 min easy warmup walk', time: '8 min' },
+      { text: 'Galloway intervals: 60s run / 30s walk', time: '50 min' },
+      { text: 'Fuel or water at mile 2.5', time: 'mid-run' },
+      { text: '10 min cooldown walk', time: '10 min' },
+      { text: 'Full stretch: calves, quads, hip flexors', time: '5 min' },
+    ],
+    ifitSteps: [
+      { text: 'Hydrate 16oz water before you start \uD83D\uDCA7', time: '5 min' },
+      { text: 'Pick an iFit scenic run \u2014 60\u201370 min \uD83C\uDF0D', time: '2 min' },
+      { text: 'Hop on & follow the trainer \u2014 easy effort', time: '1 min' },
+      { text: 'Follow along \u2014 match pace, enjoy the scenery', time: '55\u201365 min' },
+      { text: 'Water break at 30 min mark \uD83D\uDCA7', time: 'mid-run' },
+      { text: 'Cool down with trainer or 5 min walk', time: '5 min' },
+      { text: 'Full stretch: calves, quads, hip flexors', time: '5 min' },
+    ]
+  },
+  { date: '2026-03-29', type: 'rest',
+    title: 'REST DAY', icon: '\uD83D\uDE34', headerClass: 'rest-header', btnClass: '',
+    pow: 'ZZZ', moto: 'Rest IS training. Muscles grow on days like today. Charge headphones tonight. \uD83C\uDFA7',
+    duration: 'FULL REST', intervals: 'RECOVERY MODE', xp: 10,
+    steps: [
+      { text: 'Hydrate well today \uD83D\uDCA7', time: 'all day' },
+      { text: 'Light walk if you want (Weezer counts!) \uD83D\uDC3E', time: 'optional' },
+      { text: 'Charge headphones tonight \uD83C\uDFA7', time: '8 PM' },
+      { text: 'Legs up & chill \u2014 you earned it', time: 'evening' },
+    ]
+  },
+  { date: '2026-03-30', type: 'run',
+    title: 'EASY GALLOWAY', icon: '\uD83C\uDFC3\u200D\u2640\uFE0F', headerClass: 'run-header', btnClass: 'run-btn',
+    pow: 'GO!', moto: 'New week! Pick up where Harry left off. The Knight Bus is calling. \uD83D\uDE8C',
+    ifitMoto: 'Treadmill day! Pick a new iFit adventure \u2014 easy effort, enjoy the ride. \uD83C\uDF0D\uD83D\uDE8C',
+    duration: '25\u201330 MIN', intervals: '60s RUN / 30s WALK', xp: 30,
+    steps: [
+      { text: 'Harry Potter \u2014 pick up where you left off \uD83E\uDDD9\u200D\u2640\uFE0F', time: '1 min' },
+      { text: 'Head outside \u2014 flat route', time: '1 min' },
+      { text: '5 min warmup walk', time: '5 min' },
+      { text: '60s run / 30s walk \u2014 easy effort', time: '20\u201325 min' },
+      { text: '5 min cooldown walk', time: '5 min' },
+      { text: 'Stretch it out', time: '3 min' },
+    ],
+    ifitSteps: [
+      { text: 'Pick an iFit walk/run \u2014 25\u201330 min, easy effort \uD83C\uDF0D', time: '2 min' },
+      { text: 'Hop on the treadmill & start the workout', time: '1 min' },
+      { text: 'Follow the trainer \u2014 match the speed prompts', time: '25\u201330 min' },
+      { text: 'Cool down with the trainer or 3 min easy walk', time: '3 min' },
+      { text: 'Stretch it out', time: '3 min' },
+    ]
+  },
+  { date: '2026-03-31', type: 'run',
+    title: 'EASY GALLOWAY', icon: '\uD83C\uDFC3\u200D\u2640\uFE0F', headerClass: 'run-header', btnClass: 'run-btn',
+    pow: 'RUN!', moto: "Tuesday easy run. Stay in the story. Don't watch the clock. \uD83D\uDCD6",
+    ifitMoto: 'Treadmill day! Pick an iFit run \u2014 stay in the zone, let the trainer set the pace. \uD83D\uDCD6\uD83C\uDFBD',
+    duration: '25\u201330 MIN', intervals: '60s RUN / 30s WALK', xp: 30,
+    steps: [
+      { text: 'Pick up where you left off in HP \uD83E\uDDD9\u200D\u2640\uFE0F', time: '1 min' },
+      { text: 'Head outside \u2014 flat route', time: '1 min' },
+      { text: '5 min warmup walk', time: '5 min' },
+      { text: '60s run / 30s walk \u2014 conversational pace', time: '20\u201325 min' },
+      { text: '5 min cooldown walk', time: '5 min' },
+    ],
+    ifitSteps: [
+      { text: 'Pick an iFit walk/run \u2014 25\u201330 min, easy effort \uD83C\uDF0D', time: '2 min' },
+      { text: 'Hop on the treadmill & start the workout', time: '1 min' },
+      { text: 'Follow the trainer \u2014 match the speed prompts', time: '25\u201330 min' },
+      { text: 'Cool down with the trainer or 3 min easy walk', time: '3 min' },
+      { text: 'Stretch: calves + hip flexors', time: '3 min' },
+    ]
+  },
+  { date: '2026-04-01', type: 'strength',
+    title: 'FULL BODY \u00B7 DAY A', icon: '\uD83D\uDCAA', headerClass: 'strength-header', btnClass: 'strength-btn',
+    pow: 'LIFT!', moto: 'Day A lower body. Weezer walk first, then go get it. \uD83D\uDC3E\uD83D\uDCAA',
+    duration: '45\u201360 MIN', intervals: 'LOWER FOCUS', xp: 35,
+    steps: [
+      { text: 'Walk Weezer \uD83D\uDC3E then movie on \uD83C\uDFAC', time: '20 min' },
+      { text: 'Warm-up: Glute bridge \u00D710, BW squat \u00D710', time: '3 min' },
+      { text: 'Goblet Squat \u2014 3\u00D712', time: '6 min' },
+      { text: 'Romanian Deadlift \u2014 3\u00D710', time: '6 min' },
+      { text: 'Hip Thrust \u2014 3\u00D715 \uD83D\uDD11', time: '6 min' },
+      { text: 'Lateral Band Walk \u2014 2\u00D715 each', time: '4 min' },
+      { text: 'Step-Up \u2014 2\u00D710 each leg', time: '4 min' },
+      { text: 'Dead Bug \u2014 2\u00D710', time: '3 min' },
+      { text: 'Stretch: figure-4, hip flexor', time: '3 min' },
+    ]
+  },
+  { date: '2026-04-02', type: 'run',
+    title: 'MODERATE GALLOWAY', icon: '\uD83C\uDFC3\u200D\u2640\uFE0F', headerClass: 'run-header', btnClass: 'run-btn',
+    pow: 'PUSH!', moto: "Thursday push run. Run segments with more LIFE. You're getting stronger every week. \uD83D\uDCAA",
+    ifitMoto: 'Treadmill push day! Find an iFit run with hills or speed work \u2014 let the trainer push you! \uD83D\uDD25\uD83C\uDFD4\uFE0F',
+    duration: '30\u201335 MIN', intervals: '60s RUN / 30s WALK', xp: 35,
+    steps: [
+      { text: 'Harry Potter on \uD83E\uDDD9\u200D\u2640\uFE0F', time: '1 min' },
+      { text: 'Head outside \u2014 flat route', time: '1 min' },
+      { text: '5 min warmup walk', time: '5 min' },
+      { text: '60s run (push slightly) / 30s walk', time: '25 min' },
+      { text: '5 min cooldown walk', time: '5 min' },
+    ],
+    ifitSteps: [
+      { text: 'Pick an iFit run \u2014 30\u201335 min, moderate effort \uD83C\uDFD4\uFE0F', time: '2 min' },
+      { text: 'Hop on & start \u2014 incline ON for extra challenge', time: '1 min' },
+      { text: 'Follow the trainer \u2014 push during run segments', time: '30 min' },
+      { text: 'Cool down with trainer or 3 min easy walk', time: '3 min' },
+      { text: 'Stretch: hip flexors + calves', time: '2 min' },
+    ]
+  },
+  { date: '2026-04-03', type: 'strength',
+    title: 'FULL BODY \u00B7 DAY B', icon: '\uD83D\uDCAA', headerClass: 'strength-header', btnClass: 'strength-btn',
+    pow: 'STRONG!', moto: 'Last workout before long run Saturday. Upper body, movie on, feel good going in. \uD83C\uDFAC',
+    duration: '45\u201360 MIN', intervals: 'UPPER FOCUS', xp: 35,
+    steps: [
+      { text: 'Movie on \uD83C\uDFAC', time: '30 sec' },
+      { text: 'Warm-up: Band pull-apart \u00D715', time: '2 min' },
+      { text: 'DB Row \u2014 3\u00D712 each arm', time: '6 min' },
+      { text: 'Bench Press \u2014 3\u00D710', time: '6 min' },
+      { text: 'Overhead Press \u2014 3\u00D710', time: '5 min' },
+      { text: 'Face Pull \u2014 3\u00D715', time: '5 min' },
+      { text: 'Suitcase Carry \u2014 2\u00D730s each side', time: '3 min' },
+      { text: 'Plank \u2014 2\u00D745s', time: '3 min' },
+      { text: "Farmer's Carry \u2014 2\u00D730s", time: '3 min' },
+    ]
+  },
+  { date: '2026-04-04', type: 'longrun',
+    title: 'LONG RUN \u00B7 5.5 MI', icon: '\u2B50', headerClass: 'longrun-header', btnClass: 'long-btn',
+    pow: 'EPIC!!', moto: "5.5 miles. Almost race distance. Dementors can't catch you at this pace. \uD83E\uDDD9\u200D\u2640\uFE0F\uD83C\uDF05",
+    ifitMoto: 'Treadmill long run! Pick a 70\u201380 min iFit scenic run \u2014 the world is your course. Hydrate on the belt! \uD83C\uDF0D\uD83D\uDCA7',
+    duration: '~80 MIN', intervals: '60s RUN / 30s WALK', xp: 70,
+    steps: [
+      { text: 'Hydrate 16oz water \uD83D\uDCA7', time: '5 min' },
+      { text: 'Harry Potter on \uD83E\uDDD9\u200D\u2640\uFE0F', time: '1 min' },
+      { text: '8 min warmup walk', time: '8 min' },
+      { text: 'Galloway: 60s run / 30s walk', time: '55 min' },
+      { text: 'Fuel or water at mile 2.75', time: 'mid-run' },
+      { text: '10 min cooldown', time: '10 min' },
+      { text: 'Full stretch', time: '5 min' },
+    ],
+    ifitSteps: [
+      { text: 'Hydrate 16oz water \uD83D\uDCA7', time: '5 min' },
+      { text: 'Pick an iFit scenic run \u2014 70\u201380 min \uD83C\uDF0D', time: '2 min' },
+      { text: 'Hop on & follow the trainer \u2014 easy effort', time: '1 min' },
+      { text: 'Follow along \u2014 match pace, enjoy the scenery', time: '65\u201375 min' },
+      { text: 'Water break at 35 min mark \uD83D\uDCA7', time: 'mid-run' },
+      { text: 'Cool down with trainer or 5 min walk', time: '5 min' },
+      { text: 'Full stretch: calves, quads, hip flexors', time: '5 min' },
+    ]
+  },
+  { date: '2026-04-06', type: 'run',
+    title: 'EASY GALLOWAY', icon: '\uD83C\uDFC3\u200D\u2640\uFE0F', headerClass: 'run-header', btnClass: 'run-btn',
+    pow: 'GO!', moto: "Week 3! Harry Potter chapter incoming. Let's run. \uD83E\uDDD9\u200D\u2640\uFE0F",
+    ifitMoto: 'Treadmill day! New iFit adventure \u2014 explore somewhere new at easy effort. \uD83C\uDF0D\uD83E\uDDD9\u200D\u2640\uFE0F',
+    duration: '25\u201330 MIN', intervals: '60s RUN / 30s WALK', xp: 30,
+    steps: [
+      { text: 'Harry Potter on \uD83E\uDDD9\u200D\u2640\uFE0F', time: '1 min' },
+      { text: 'Head outside \u2014 flat route', time: '1 min' },
+      { text: '5 min warmup walk', time: '5 min' },
+      { text: '60s run / 30s walk \u2014 easy effort', time: '20\u201325 min' },
+      { text: '5 min cooldown walk', time: '5 min' },
+    ],
+    ifitSteps: [
+      { text: 'Pick an iFit walk/run \u2014 25\u201330 min, easy effort \uD83C\uDF0D', time: '2 min' },
+      { text: 'Hop on the treadmill & start the workout', time: '1 min' },
+      { text: 'Follow the trainer \u2014 match the speed prompts', time: '25\u201330 min' },
+      { text: 'Cool down with the trainer or 3 min easy walk', time: '3 min' },
+      { text: 'Stretch: calves + quads', time: '3 min' },
+    ]
+  },
+  { date: '2026-04-07', type: 'run',
+    title: 'EASY GALLOWAY', icon: '\uD83C\uDFC3\u200D\u2640\uFE0F', headerClass: 'run-header', btnClass: 'run-btn',
+    pow: 'RUN!', moto: 'Tuesday easy. Stay in the story. Walk breaks = power ups. \uD83C\uDFAE',
+    ifitMoto: 'Treadmill day! Pick an iFit run \u2014 walk breaks built in. Power up mode! \uD83C\uDFAE\uD83C\uDFBD',
+    duration: '25\u201330 MIN', intervals: '60s RUN / 30s WALK', xp: 30,
+    steps: [
+      { text: 'Pick up where you left off \uD83E\uDDD9\u200D\u2640\uFE0F', time: '1 min' },
+      { text: 'Head outside \u2014 flat route', time: '1 min' },
+      { text: '5 min warmup walk', time: '5 min' },
+      { text: '60s run / 30s walk', time: '20\u201325 min' },
+      { text: '5 min cooldown walk', time: '5 min' },
+    ],
+    ifitSteps: [
+      { text: 'Pick an iFit walk/run \u2014 25\u201330 min, easy effort \uD83C\uDF0D', time: '2 min' },
+      { text: 'Hop on the treadmill & start the workout', time: '1 min' },
+      { text: 'Follow the trainer \u2014 match the speed prompts', time: '25\u201330 min' },
+      { text: 'Cool down with the trainer or 3 min easy walk', time: '3 min' },
+      { text: 'Stretch: hip flexors + calves', time: '3 min' },
+    ]
+  },
+  { date: '2026-04-08', type: 'strength',
+    title: 'FULL BODY \u00B7 DAY A', icon: '\uD83D\uDCAA', headerClass: 'strength-header', btnClass: 'strength-btn',
+    pow: 'LIFT!', moto: 'Lower body power. Weezer walk first. Movie on. You know the drill. \uD83D\uDC3E\uD83C\uDFAC',
+    duration: '45\u201360 MIN', intervals: 'LOWER FOCUS', xp: 35,
+    steps: [
+      { text: 'Walk Weezer \uD83D\uDC3E then movie on \uD83C\uDFAC', time: '20 min' },
+      { text: 'Warm-up: Glute bridge \u00D710, BW squat \u00D710', time: '3 min' },
+      { text: 'Goblet Squat \u2014 3\u00D712', time: '6 min' },
+      { text: 'Romanian Deadlift \u2014 3\u00D710', time: '6 min' },
+      { text: 'Hip Thrust \u2014 3\u00D715 \uD83D\uDD11', time: '6 min' },
+      { text: 'Lateral Band Walk \u2014 2\u00D715 each', time: '4 min' },
+      { text: 'Step-Up \u2014 2\u00D710 each leg', time: '4 min' },
+      { text: 'Dead Bug \u2014 2\u00D710', time: '3 min' },
+    ]
+  },
+  { date: '2026-04-09', type: 'run',
+    title: 'MODERATE GALLOWAY', icon: '\uD83C\uDFC3\u200D\u2640\uFE0F', headerClass: 'run-header', btnClass: 'run-btn',
+    pow: 'FASTER!', moto: "Thursday push. Run with PURPOSE. Dementors are behind you. Don't look back. \uD83C\uDFC3\u200D\u2640\uFE0F\uD83D\uDCA8",
+    ifitMoto: 'Treadmill push day! Pick an iFit hill or tempo run \u2014 let the trainer chase the Dementors away! \uD83D\uDD25\uD83D\uDCA8',
+    duration: '30\u201335 MIN', intervals: '60s RUN / 30s WALK', xp: 35,
+    steps: [
+      { text: 'Harry Potter on \uD83E\uDDD9\u200D\u2640\uFE0F', time: '1 min' },
+      { text: 'Head outside \u2014 flat route', time: '1 min' },
+      { text: '5 min warmup walk', time: '5 min' },
+      { text: '60s run (push!) / 30s walk', time: '25 min' },
+      { text: '5 min cooldown walk', time: '5 min' },
+    ],
+    ifitSteps: [
+      { text: 'Pick an iFit run \u2014 30\u201335 min, moderate effort \uD83C\uDFD4\uFE0F', time: '2 min' },
+      { text: 'Hop on & start \u2014 incline ON for extra challenge', time: '1 min' },
+      { text: 'Follow the trainer \u2014 push during run segments', time: '30 min' },
+      { text: 'Cool down with trainer or 3 min easy walk', time: '3 min' },
+      { text: 'Stretch: hip flexors + calves', time: '2 min' },
+    ]
+  },
+  { date: '2026-04-10', type: 'strength',
+    title: 'FULL BODY \u00B7 DAY B', icon: '\uD83D\uDCAA', headerClass: 'strength-header', btnClass: 'strength-btn',
+    pow: 'PULL!', moto: 'Upper body. Last session before 6-mile Saturday. Show up strong. \uD83D\uDCAA\uD83C\uDFAC',
+    duration: '45\u201360 MIN', intervals: 'UPPER FOCUS', xp: 35,
+    steps: [
+      { text: 'Movie on \uD83C\uDFAC', time: '30 sec' },
+      { text: 'Warm-up: Band pull-apart \u00D715', time: '2 min' },
+      { text: 'DB Row \u2014 3\u00D712 each arm', time: '6 min' },
+      { text: 'Bench Press \u2014 3\u00D710', time: '6 min' },
+      { text: 'Overhead Press \u2014 3\u00D710', time: '5 min' },
+      { text: 'Face Pull \u2014 3\u00D715', time: '5 min' },
+      { text: 'Suitcase Carry \u2014 2\u00D730s each side', time: '3 min' },
+      { text: 'Plank \u2014 2\u00D745s', time: '3 min' },
+    ]
+  },
+  { date: '2026-04-11', type: 'longrun',
+    title: 'LONG RUN \u00B7 6 MI', icon: '\u2B50', headerClass: 'longrun-header', btnClass: 'long-btn',
+    pow: 'RACE DIST!!', moto: '6 MILES = RACE DISTANCE! You just ran the 10K in training. Whatever happens May 9, you already did it. \uD83C\uDFC6',
+    ifitMoto: 'RACE DISTANCE on the treadmill! Pick a 80\u201390 min iFit epic run \u2014 you just crushed 10K in training! \uD83C\uDFC6\uD83C\uDF0D',
+    duration: '~90 MIN', intervals: '60s RUN / 30s WALK', xp: 100,
+    steps: [
+      { text: 'Hydrate 16oz + light snack \uD83D\uDCA7', time: '10 min' },
+      { text: 'Harry Potter on \u2014 celebrate with your best chapter \uD83E\uDDD9\u200D\u2640\uFE0F', time: '1 min' },
+      { text: '8 min warmup walk', time: '8 min' },
+      { text: 'Galloway: 60s run / 30s walk \u2014 all the way', time: '65 min' },
+      { text: 'Fuel at mile 3 \u2014 non-negotiable', time: 'mid-run' },
+      { text: '10 min cooldown walk', time: '10 min' },
+      { text: 'Full stretch: quads, calves, IT band, hip flexors', time: '5 min' },
+    ],
+    ifitSteps: [
+      { text: 'Hydrate 16oz + light snack \uD83D\uDCA7', time: '10 min' },
+      { text: 'Pick an iFit epic scenic run \u2014 80\u201390 min \uD83C\uDF0D\uD83C\uDFC6', time: '2 min' },
+      { text: 'Hop on & follow the trainer \u2014 steady effort', time: '1 min' },
+      { text: 'Follow along \u2014 match pace, soak in the scenery', time: '75\u201385 min' },
+      { text: 'Water break at 40 min mark \uD83D\uDCA7', time: 'mid-run' },
+      { text: 'Cool down with trainer or 5 min walk', time: '5 min' },
+      { text: 'Full stretch: quads, calves, IT band, hip flexors', time: '5 min' },
+    ]
+  },
+];
+
+// STATE
+function loadState() {
+  try { return JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}'); } catch(e) { return {}; }
+}
+function saveState(s) {
+  try { localStorage.setItem(STORAGE_KEY, JSON.stringify(s)); } catch(e) {}
+}
+
+var state = loadState();
+var activeDate = planDays[0].date;
+
+var today = new Date().toISOString().split('T')[0];
+var todayPlan = planDays.find(function(d){ return d.date === today; });
+if (todayPlan) activeDate = today;
+else {
+  var upcoming = planDays.find(function(d){ return d.date >= today; });
+  if (upcoming) activeDate = upcoming.date;
+}
+
+// SPLASH
+function dismissSplash() {
+  var splash = document.getElementById('splashScreen');
+  splash.classList.add('dismissed');
+  setTimeout(function(){ splash.style.display = 'none'; }, 700);
+  setTimeout(spawnAmbientSfx, 1000);
+}
+if (state._splashSeen) {
+  document.getElementById('splashScreen').style.display = 'none';
+} else {
+  state._splashSeen = true;
+  saveState(state);
+}
+
+// DAY SWAP SYSTEM
+// Swaps are stored as state._swaps = { 'dateA': 'dateB', 'dateB': 'dateA' }
+// This means "the workout originally on dateA is now on dateB" and vice versa.
+function getSwaps() {
+  return (state._swaps) || {};
+}
+
+function getDayForDate(dateStr) {
+  // Follow the swap chain: if dateStr is swapped, return the planDay whose original date is the swap target
+  var swaps = getSwaps();
+  var originalDate = swaps[dateStr] || dateStr;
+  return planDays.find(function(d){ return d.date === originalDate; });
+}
+
+function getOriginalDayForDate(dateStr) {
+  return planDays.find(function(d){ return d.date === dateStr; });
+}
+
+function isDateSwapped(dateStr) {
+  var swaps = getSwaps();
+  return swaps[dateStr] && swaps[dateStr] !== dateStr;
+}
+
+function swapDays(dateA, dateB) {
+  if (!state._swaps) state._swaps = {};
+  // Resolve current swap chain first
+  var swaps = state._swaps;
+  var realA = swaps[dateA] || dateA;
+  var realB = swaps[dateB] || dateB;
+  // Perform the swap
+  swaps[dateA] = realB;
+  swaps[dateB] = realA;
+  // Also swap completion state
+  var stateA = state[dateA] || {};
+  var stateB = state[dateB] || {};
+  // Preserve mode but swap done/steps
+  var tempDone = stateA.done;
+  var tempSteps = stateA.steps;
+  var tempMode = stateA.mode;
+  stateA.done = stateB.done;
+  stateA.steps = stateB.steps;
+  stateA.mode = stateB.mode;
+  stateB.done = tempDone;
+  stateB.steps = tempSteps;
+  stateB.mode = tempMode;
+  state[dateA] = stateA;
+  state[dateB] = stateB;
+  saveState(state);
+}
+
+function undoSwap(dateStr) {
+  if (!state._swaps) return;
+  var swaps = state._swaps;
+  var partnerDate = swaps[dateStr];
+  if (!partnerDate) return;
+  // Undo by swapping them back
+  swapDays(dateStr, partnerDate);
+  // Now clear swap entries since they're back to original
+  delete state._swaps[dateStr];
+  delete state._swaps[partnerDate];
+  saveState(state);
+}
+
+function getWeekDatesForDate(dateStr) {
+  var d = new Date(dateStr + 'T12:00:00');
+  var dayOfWeek = d.getDay();
+  var weekStart = new Date(d);
+  weekStart.setDate(d.getDate() - dayOfWeek);
+  var dates = [];
+  for (var i = 0; i < 7; i++) {
+    var wd = new Date(weekStart);
+    wd.setDate(weekStart.getDate() + i);
+    dates.push(wd.toISOString().split('T')[0]);
+  }
+  return dates;
+}
+
+function showSwapModal(fromDate) {
+  // Remove any existing modal
+  var existing = document.querySelector('.swap-overlay');
+  if (existing) existing.remove();
+
+  var weekDates = getWeekDatesForDate(fromDate);
+  var fromDay = getDayForDate(fromDate);
+  var fromDateObj = new Date(fromDate + 'T12:00:00');
+
+  var optionsHTML = '';
+  weekDates.forEach(function(ds) {
+    if (ds === fromDate) return;
+    var day = getDayForDate(ds);
+    if (!day) return;
+    var dObj = new Date(ds + 'T12:00:00');
+    var dayName = WEEK_DAYS[dObj.getDay()];
+    var emoji = '\u2014';
+    if (day.type === 'run') emoji = '\uD83C\uDFC3\u200D\u2640\uFE0F';
+    else if (day.type === 'longrun') emoji = '\u2B50';
+    else if (day.type === 'strength') emoji = '\uD83D\uDCAA';
+    else if (day.type === 'rest') emoji = '\uD83D\uDE34';
+    optionsHTML += '<div class="swap-option" data-swap-date="' + ds + '">' +
+      '<div class="swap-option-emoji">' + emoji + '</div>' +
+      '<div class="swap-option-info">' +
+        '<div class="swap-option-day">' + dayName + ' ' + dObj.getDate() + '</div>' +
+        '<div class="swap-option-type">' + day.title + '</div>' +
+      '</div>' +
+      '<div class="swap-option-arrow">\u21C4</div>' +
+    '</div>';
+  });
+
+  var overlay = document.createElement('div');
+  overlay.className = 'swap-overlay';
+  overlay.innerHTML = '<div class="swap-modal">' +
+    '<div class="swap-modal-header">' +
+      '<div class="swap-modal-title">\uD83D\uDD00 SWAP DAY</div>' +
+      '<div class="swap-modal-sub">Move ' + WEEK_DAYS[fromDateObj.getDay()] + '\'s workout to another day</div>' +
+    '</div>' +
+    '<div class="swap-modal-body">' +
+      optionsHTML +
+      '<button class="swap-cancel">\u2716 CANCEL</button>' +
+    '</div>' +
+  '</div>';
+
+  document.body.appendChild(overlay);
+
+  // Close on overlay click
+  overlay.addEventListener('click', function(e) {
+    if (e.target === overlay) overlay.remove();
+  });
+
+  // Cancel button
+  overlay.querySelector('.swap-cancel').addEventListener('click', function() {
+    overlay.remove();
+  });
+
+  // Swap option clicks
+  overlay.querySelectorAll('.swap-option').forEach(function(opt) {
+    opt.addEventListener('click', function() {
+      var targetDate = opt.dataset.swapDate;
+      swapDays(fromDate, targetDate);
+      overlay.remove();
+      renderAll();
+    });
+  });
+}
+
+// CALCULATIONS
+function getCompletedCount() {
+  return planDays.filter(function(d){ return state[d.date] && state[d.date].done; }).length;
+}
+
+function getTotalXP() {
+  var xp = 0;
+  planDays.forEach(function(d) {
+    if (state[d.date] && state[d.date].done) {
+      var swappedDay = getDayForDate(d.date);
+      xp += (swappedDay ? swappedDay.xp : d.xp) || 30;
+    }
+  });
+  return xp;
+}
+
+function getRank(xp) {
+  var rank = RANKS[0];
+  for (var i = 0; i < RANKS.length; i++) {
+    if (xp >= RANKS[i].min) rank = RANKS[i];
+  }
+  return rank;
+}
+
+function getStreak() {
+  var streak = 0;
+  var sorted = planDays.slice().sort(function(a,b){ return b.date.localeCompare(a.date); });
+  for (var i = 0; i < sorted.length; i++) {
+    if (sorted[i].date > today) continue;
+    if (state[sorted[i].date] && (state[sorted[i].date].done || state[sorted[i].date].skipped)) streak++;
+    else break;
+  }
+  return streak;
+}
+
+function getDaysUntilRace() {
+  var now = new Date();
+  var diff = RACE_DATE - now;
+  return Math.max(0, Math.ceil(diff / (1000 * 60 * 60 * 24)));
+}
+
+function getWeekNumber() {
+  var start = new Date(planDays[0].date);
+  var current = new Date(activeDate);
+  return Math.floor((current - start) / (7 * 24 * 60 * 60 * 1000)) + 1;
+}
+
+// RENDER PROGRESS
+function renderProgress() {
+  var completed = getCompletedCount();
+  var total = planDays.length;
+  var pct = Math.round((completed / total) * 100);
+  document.getElementById('progressPct').textContent = pct + '%';
+  document.getElementById('progressFill').style.width = pct + '%';
+}
+
+// RENDER HERO STRIP
+function renderHeroStrip() {
+  var xp = getTotalXP();
+  var rank = getRank(xp);
+  var streak = getStreak();
+  var daysLeft = getDaysUntilRace();
+
+  document.getElementById('xpValue').textContent = xp + ' XP';
+  document.getElementById('xpRank').textContent = 'RANK: ' + rank.emoji + ' ' + rank.name;
+
+  var streakEl = document.getElementById('streakDisplay');
+  if (streak > 0) {
+    var flames = '';
+    var flameCount = Math.min(streak, 7);
+    for (var i = 0; i < flameCount; i++) flames += '<span class="streak-flame">\uD83D\uDD25</span>';
+    streakEl.innerHTML = '<span style="font-family:Comic Neue;font-weight:700;font-size:9px;color:var(--yellow);letter-spacing:1px;">' + streak + ' DAY STREAK</span> ' + flames;
+  } else {
+    streakEl.innerHTML = '<span style="font-family:Comic Neue;font-weight:700;font-size:9px;color:rgba(255,255,255,0.4);letter-spacing:1px;">START YOUR STREAK!</span>';
+  }
+
+  document.getElementById('villainCountdown').textContent = daysLeft + ' DAYS';
+  if (daysLeft <= 7) {
+    document.getElementById('villainName').textContent = '\u26A0\uFE0F THE FINAL BATTLE IS NEAR';
+  } else if (daysLeft <= 21) {
+    document.getElementById('villainName').textContent = '\uD83D\uDD25 THE DEADLINE CLOSES IN';
+  } else {
+    document.getElementById('villainName').textContent = '\uD83D\uDC80 THE DEADLINE APPROACHES';
+  }
+
+  document.getElementById('issueNum').textContent = getWeekNumber();
+  var d = new Date(activeDate + 'T12:00:00');
+  document.getElementById('dateDisplay').textContent = MONTHS[d.getMonth()] + ' ' + d.getFullYear();
+}
+
+// RENDER WEEK GRID
+function renderWeekGrid() {
+  var grid = document.getElementById('weekGrid');
+  grid.innerHTML = '';
+
+  var active = new Date(activeDate + 'T12:00:00');
+  var dayOfWeek = active.getDay();
+  var weekStart = new Date(active);
+  weekStart.setDate(active.getDate() - dayOfWeek);
+
+  for (var i = 0; i < 7; i++) {
+    var d = new Date(weekStart);
+    d.setDate(weekStart.getDate() + i);
+    var ds = d.toISOString().split('T')[0];
+    var day = getDayForDate(ds);
+    var hasOriginalPlan = getOriginalDayForDate(ds);
+    var isDone = state[ds] && state[ds].done;
+    var isSkipped = state[ds] && state[ds].skipped;
+    var isToday = ds === today;
+    var isActive = ds === activeDate;
+    var isSwapped = isDateSwapped(ds);
+
+    var cell = document.createElement('div');
+    cell.className = 'week-cell' +
+      (isDone ? ' cell-done' : '') +
+      (isSkipped ? ' cell-skipped' : '') +
+      (isToday ? ' cell-today' : '') +
+      (isActive ? ' cell-active' : '') +
+      (!hasOriginalPlan ? ' cell-rest' : '');
+
+    var emoji = '\u2014';
+    if (day) {
+      if (isDone) emoji = '\u2705';
+      else if (isSkipped) emoji = '\u23ED\uFE0F';
+      else if (day.type === 'run') emoji = '\uD83C\uDFC3\u200D\u2640\uFE0F';
+      else if (day.type === 'longrun') emoji = '\u2B50';
+      else if (day.type === 'strength') emoji = '\uD83D\uDCAA';
+      else if (day.type === 'rest') emoji = '\uD83D\uDE34';
+    }
+
+    var swapMarker = isSwapped ? '<span style="position:absolute;top:1px;right:2px;font-size:8px;">\uD83D\uDD00</span>' : '';
+    cell.innerHTML = swapMarker + '<span class="cell-emoji">' + emoji + '</span><span class="cell-day">' + WEEK_DAYS[d.getDay()] + '</span>';
+    if (hasOriginalPlan) {
+      (function(dateStr){
+        cell.addEventListener('click', function(){ activeDate = dateStr; renderAll(); });
+      })(ds);
+    }
+    grid.appendChild(cell);
+  }
+}
+
+// RENDER MOTO
+function renderMoto() {
+  var day = getDayForDate(activeDate);
+  if (!day) return;
+  var mode = (state[activeDate] && state[activeDate].mode) || 'outdoor';
+  var motoText = (mode === 'treadmill' && day.ifitMoto) ? day.ifitMoto : day.moto;
+  document.getElementById('motoText').textContent = motoText;
+}
+
+// RENDER TABS
+function renderTabs() {
+  var tabs = document.getElementById('dayTabs');
+  tabs.innerHTML = '';
+  planDays.forEach(function(day) {
+    var isDone = state[day.date] && state[day.date].done;
+    var isSkipped = state[day.date] && state[day.date].skipped;
+    var isActive = day.date === activeDate;
+    var swapped = isDateSwapped(day.date);
+    var tab = document.createElement('button');
+    tab.className = 'day-tab' + (isActive ? ' active' : '') + (isDone && !isActive ? ' done-tab' : '') + (isSkipped && !isActive ? ' done-tab' : '');
+    if (isSkipped && !isActive) tab.style.background = 'var(--orange)';
+    var d = new Date(day.date + 'T12:00:00');
+    var label = WEEK_DAYS[d.getDay()].slice(0,3) + ' ' + d.getDate();
+    tab.textContent = (isDone ? '\u2713 ' : '') + (isSkipped ? '\u23ED ' : '') + (swapped ? '\uD83D\uDD00 ' : '') + label;
+    tab.addEventListener('click', function() {
+      activeDate = day.date;
+      renderAll();
+      setTimeout(function(){ tab.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' }); }, 50);
+    });
+    tabs.appendChild(tab);
+  });
+
+  setTimeout(function() {
+    var activeTab = tabs.querySelector('.active');
+    if (activeTab) activeTab.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
+  }, 100);
+}
+
+// RENDER WORKOUT
+function renderWorkout() {
+  var day = getDayForDate(activeDate);
+  var content = document.getElementById('workoutContent');
+  content.innerHTML = '';
+  if (!day) return;
+
+  var isDone = state[activeDate] && state[activeDate].done;
+  var isSkipped = state[activeDate] && state[activeDate].skipped;
+  var checkedSteps = (state[activeDate] && state[activeDate].steps) || {};
+  var hasIfitOption = day.ifitSteps && day.ifitSteps.length > 0;
+  var currentMode = (state[activeDate] && state[activeDate].mode) || 'outdoor';
+
+  // MODE TOGGLE (only for run/longrun days with iFit data)
+  var toggleHTML = '';
+  if (hasIfitOption) {
+    toggleHTML = '<div class="mode-toggle-wrap">' +
+      '<div class="mode-toggle-label">\uD83C\uDF26\uFE0F CHOOSE YOUR ADVENTURE</div>' +
+      '<div class="mode-toggle-btns">' +
+        '<button class="mode-btn ' + (currentMode === 'outdoor' ? 'mode-active outdoor-active' : '') + '" data-mode="outdoor">' +
+          '<span class="mode-emoji">\uD83C\uDF33</span>' +
+          '<span class="mode-text">OUTDOOR</span>' +
+          '<span class="mode-sub">Galloway Intervals</span>' +
+        '</button>' +
+        '<button class="mode-btn ' + (currentMode === 'treadmill' ? 'mode-active treadmill-active' : '') + '" data-mode="treadmill">' +
+          '<span class="mode-emoji">\uD83C\uDFBD</span>' +
+          '<span class="mode-text">TREADMILL</span>' +
+          '<span class="mode-sub">iFit Guided Run</span>' +
+        '</button>' +
+      '</div>' +
+    '</div>';
+  }
+
+  // INTERVAL VISUAL (only for outdoor mode)
+  var intervalHTML = '';
+  if ((day.type === 'run' || day.type === 'longrun') && currentMode === 'outdoor') {
+    var reps = day.type === 'longrun' ? 8 : 5;
+    var blocks = '';
+    for (var i = 0; i < reps; i++) {
+      blocks += '<div class="iblock run"></div><div class="iblock walk"></div>';
+    }
+    blocks += '<span style="font-family:Bangers,cursive;font-size:18px;color:var(--ink);align-self:center;margin-left:4px">\u00B7\u00B7\u00B7</span>';
+    intervalHTML = '<div class="interval-visual">' +
+      '<div class="interval-label">\u26A1 INTERVAL PATTERN:</div>' +
+      '<div class="interval-blocks">' + blocks + '</div>' +
+      '<div class="interval-legend">' +
+        '<span><span class="ileg-dot" style="background:var(--red)"></span>60s RUN</span>' +
+        '<span><span class="ileg-dot" style="background:var(--blue);opacity:0.7"></span>30s WALK</span>' +
+      '</div>' +
+    '</div>';
+  }
+
+  // iFit BADGE (treadmill mode)
+  var ifitBadgeHTML = '';
+  if (hasIfitOption && currentMode === 'treadmill') {
+    ifitBadgeHTML = '<div class="ifit-badge">\uD83C\uDFBD iFIT GUIDED RUN \u2014 Choose Your Own Adventure!</div>';
+  }
+
+  // SELECT STEPS based on mode
+  var activeSteps = (currentMode === 'treadmill' && day.ifitSteps) ? day.ifitSteps : day.steps;
+  var subtitleText = day.duration + ' \u00B7 ' + (hasIfitOption && currentMode === 'treadmill' ? 'iFIT GUIDED' : day.intervals);
+
+  var stepsHTML = activeSteps.map(function(step, i) {
+    var isChecked = checkedSteps[i];
+    return '<div class="step ' + (isChecked ? 'checked' : '') + '" data-step="' + i + '">' +
+      '<div class="step-num">' + (isChecked ? '' : (i+1)) + '</div>' +
+      '<div class="step-body">' +
+        '<div class="step-text">' + step.text + '</div>' +
+        '<div class="step-time">' + step.time + '</div>' +
+      '</div>' +
+    '</div>';
+  }).join('');
+
+  var xpBadge = '<div style="text-align:center;padding:8px 14px 4px;font-family:Bangers,cursive;font-size:12px;letter-spacing:2px;color:' + (isDone ? 'var(--green)' : isSkipped ? 'var(--orange)' : 'rgba(0,0,0,0.3)') + ';">' +
+    (isDone ? '\u2705 +' + (day.xp || 30) + ' XP EARNED!' : isSkipped ? '\u23ED SKIPPED \u2014 0 XP' : '\u26A1 COMPLETE FOR +' + (day.xp || 30) + ' XP') +
+  '</div>';
+
+  var btnHTML = '';
+  if (isSkipped) {
+    btnHTML = '<div class="complete-wrap"><button class="complete-btn skipped-btn" id="completeBtn">' +
+      '\u23ED\uFE0F MISSION SKIPPED' +
+    '</button></div>' +
+    '<div class="skip-wrap"><button class="skip-btn" id="unskipBtn">\u21A9 UNDO SKIP \u2014 I changed my mind!</button></div>';
+  } else if (day.type !== 'rest') {
+    btnHTML = '<div class="complete-wrap"><button class="complete-btn ' + (isDone ? 'done-btn' : day.btnClass) + '" id="completeBtn">' +
+      (isDone ? '\u2705 MISSION COMPLETE!' : '\u26A1 MISSION ACCOMPLISHED!') +
+    '</button></div>' +
+    (isDone ? '' : '<div class="skip-wrap"><button class="skip-btn" id="skipBtn">\u23ED Skip this mission \u2014 life happens!</button></div>');
+  } else {
+    btnHTML = '<div class="complete-wrap"><button class="complete-btn ' + (isDone ? 'done-btn' : '') + '" id="completeBtn" style="' + (isDone ? '' : 'background:#bbb;color:var(--ink);') + '">' +
+      (isDone ? '\u2705 REST LOGGED!' : '\uD83D\uDE34 LOG REST DAY') +
+    '</button></div>';
+  }
+
+  // SWAP DAY BUTTON
+  var swapHTML = '';
+  var swapped = isDateSwapped(activeDate);
+  if (swapped) {
+    var swaps = getSwaps();
+    var partnerDate = swaps[activeDate];
+    var partnerDateObj = new Date(partnerDate + 'T12:00:00');
+    var originalDay = getOriginalDayForDate(activeDate);
+    swapHTML = '<div class="swap-wrap">' +
+      '<div class="swap-indicator">\uD83D\uDD00 SWAPPED FROM ' + WEEK_DAYS[partnerDateObj.getDay()] + ' ' + partnerDateObj.getDate() +
+        ' <span style="color:rgba(0,0,0,0.35);">(was ' + (originalDay ? originalDay.title : '—') + ')</span>' +
+      '</div>' +
+      '<button class="swap-undo" id="swapUndoBtn">\u21A9 UNDO</button>' +
+    '</div>';
+  } else {
+    swapHTML = '<div class="swap-wrap">' +
+      '<div class="swap-label">\uD83D\uDCC5 BUSY DAY?</div>' +
+      '<button class="swap-btn" id="swapDayBtn"><span class="swap-icon">\uD83D\uDD00</span> SWAP DAY</button>' +
+    '</div>';
+  }
+
+  content.innerHTML = '<div class="workout-panel">' +
+    '<div class="panel-header ' + day.headerClass + '">' +
+      '<div class="pow-badge">' + day.pow + '</div>' +
+      '<div class="header-top-row">' +
+        '<div class="panel-icon">' + day.icon + '</div>' +
+        '<div class="panel-titles">' +
+          '<div class="panel-title">' + day.title + '</div>' +
+          '<div class="panel-subtitle">' + subtitleText + '</div>' +
+        '</div>' +
+      '</div>' +
+    '</div>' +
+    swapHTML +
+    toggleHTML +
+    ifitBadgeHTML +
+    intervalHTML +
+    '<div class="steps-section">' +
+      '<div class="steps-title">\uD83D\uDCCB MISSION BRIEFING</div>' +
+      stepsHTML +
+    '</div>' +
+    xpBadge +
+    btnHTML +
+  '</div>';
+
+  // MODE TOGGLE LISTENERS
+  content.querySelectorAll('.mode-btn').forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      var newMode = btn.dataset.mode;
+      if (!state[activeDate]) state[activeDate] = {};
+      // Reset step checks when switching modes
+      if (state[activeDate].mode !== newMode) {
+        state[activeDate].steps = {};
+      }
+      state[activeDate].mode = newMode;
+      saveState(state);
+      renderMoto();
+      renderWorkout();
+    });
+  });
+
+  // SWAP DAY LISTENERS
+  var swapBtn = document.getElementById('swapDayBtn');
+  if (swapBtn) {
+    swapBtn.addEventListener('click', function() {
+      showSwapModal(activeDate);
+    });
+  }
+  var undoBtn = document.getElementById('swapUndoBtn');
+  if (undoBtn) {
+    undoBtn.addEventListener('click', function() {
+      undoSwap(activeDate);
+      renderAll();
+    });
+  }
+
+  content.querySelectorAll('.step').forEach(function(el) {
+    el.addEventListener('click', function() {
+      var i = parseInt(el.dataset.step);
+      if (!state[activeDate]) state[activeDate] = {};
+      if (!state[activeDate].steps) state[activeDate].steps = {};
+      state[activeDate].steps[i] = !state[activeDate].steps[i];
+      saveState(state);
+      if (state[activeDate].steps[i]) spawnMiniSfx(el);
+      renderWorkout();
+    });
+  });
+
+  var btn = document.getElementById('completeBtn');
+  if (btn && !isSkipped) {
+    btn.addEventListener('click', function() {
+      if (!state[activeDate]) state[activeDate] = {};
+      var wasNotDone = !state[activeDate].done;
+      state[activeDate].done = !state[activeDate].done;
+      saveState(state);
+      if (state[activeDate].done && wasNotDone) {
+        fireActionWord();
+        fireConfetti();
+        shakeScreen();
+        checkAchievements();
+      }
+      renderAll();
+    });
+  }
+
+  // SKIP / UNSKIP LISTENERS
+  var skipBtn = document.getElementById('skipBtn');
+  if (skipBtn) {
+    skipBtn.addEventListener('click', function() {
+      if (!state[activeDate]) state[activeDate] = {};
+      state[activeDate].skipped = true;
+      state[activeDate].done = false;
+      state[activeDate].steps = {};
+      saveState(state);
+      renderAll();
+    });
+  }
+  var unskipBtn = document.getElementById('unskipBtn');
+  if (unskipBtn) {
+    unskipBtn.addEventListener('click', function() {
+      if (!state[activeDate]) state[activeDate] = {};
+      state[activeDate].skipped = false;
+      saveState(state);
+      renderAll();
+    });
+  }
+}
+
+// RENDER STORY RECAP
+function renderStoryRecap() {
+  var completed = getCompletedCount();
+  var beat = STORY_BEATS[0];
+  for (var i = 0; i < STORY_BEATS.length; i++) {
+    if (completed >= STORY_BEATS[i].min) beat = STORY_BEATS[i];
+  }
+  document.getElementById('recapText').innerHTML = beat.text;
+  document.getElementById('recapNext').textContent = beat.next;
+}
+
+// RENDER ALL
+function renderAll() {
+  renderProgress();
+  renderHeroStrip();
+  renderWeekGrid();
+  renderMoto();
+  renderTabs();
+  renderWorkout();
+  renderStoryRecap();
+}
+
+// EFFECTS
+function fireActionWord() {
+  var word = ACTION_WORDS[Math.floor(Math.random() * ACTION_WORDS.length)];
+  var colors = ['var(--yellow)','var(--red)','var(--cyan)'];
+  
+  var burst = document.createElement('div');
+  burst.className = 'action-burst';
+  burst.innerHTML = '<svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"><polygon points="100,10 120,75 190,75 130,115 150,180 100,140 50,180 70,115 10,75 80,75" fill="' + colors[Math.floor(Math.random()*colors.length)] + '" stroke="var(--ink)" stroke-width="3"/></svg>';
+  document.body.appendChild(burst);
+  setTimeout(function(){ burst.remove(); }, 1100);
+
+  var el = document.createElement('div');
+  el.className = 'action-word';
+  el.textContent = word;
+  document.body.appendChild(el);
+  setTimeout(function(){ el.remove(); }, 1100);
+}
+
+function fireConfetti() {
+  var container = document.getElementById('confetti');
+  container.innerHTML = '';
+  var colors = ['#FFE338','#E8142A','#1A47B8','#00D166','#00CFFF','#8B5CF6','#FF6B2B','#fff'];
+  var shapes = ['\u25A0','\u25CF','\u25B2','\u2605','\u25C6','\u26A1','\uD83D\uDCA5'];
+  for (var i = 0; i < 60; i++) {
+    var piece = document.createElement('div');
+    var x = Math.random() * 100;
+    var size = 10 + Math.random() * 16;
+    var duration = 1 + Math.random() * 2;
+    var delay = Math.random() * 0.5;
+    var spin = Math.random() * 720;
+    piece.style.cssText = 'position:absolute;left:' + x + '%;top:-20px;color:' + colors[Math.floor(Math.random()*colors.length)] + ';font-size:' + size + 'px;font-family:Bangers,cursive;opacity:0;animation:confettiFall ' + duration + 's ' + delay + 's ease-in forwards;transform:rotate(' + spin + 'deg);text-shadow:1px 1px 0 rgba(0,0,0,0.3);';
+    piece.textContent = shapes[Math.floor(Math.random()*shapes.length)];
+    container.appendChild(piece);
+  }
+  setTimeout(function(){ container.innerHTML = ''; }, 4000);
+}
+
+function shakeScreen() {
+  document.body.classList.add('shake');
+  setTimeout(function(){ document.body.classList.remove('shake'); }, 400);
+}
+
+function spawnMiniSfx(el) {
+  var sfx = document.createElement('div');
+  var words = ['\u2713','\u2714','\uD83D\uDCA5','\u26A1','\u2728'];
+  sfx.style.cssText = 'position:absolute;right:-5px;top:-10px;font-size:16px;font-family:Bangers,cursive;pointer-events:none;z-index:10;animation:miniPop 0.5s ease-out forwards;';
+  sfx.textContent = words[Math.floor(Math.random()*words.length)];
+  el.style.position = 'relative';
+  el.appendChild(sfx);
+  setTimeout(function(){ sfx.remove(); }, 600);
+}
+
+function spawnAmbientSfx() {
+  var container = document.getElementById('floatingSfx');
+  setInterval(function() {
+    if (Math.random() > 0.3) return;
+    var word = SFX_WORDS[Math.floor(Math.random() * SFX_WORDS.length)];
+    var el = document.createElement('div');
+    el.className = 'sfx-word';
+    el.textContent = word;
+    var sfxColors = ['var(--red)','var(--blue)','var(--purple)','var(--ink)'];
+    el.style.cssText = 'left:' + (10 + Math.random() * 80) + '%;top:' + (20 + Math.random() * 60) + '%;font-size:' + (14 + Math.random() * 12) + 'px;color:' + sfxColors[Math.floor(Math.random()*sfxColors.length)] + ';letter-spacing:2px;';
+    container.appendChild(el);
+    setTimeout(function(){ el.remove(); }, 4500);
+  }, 5000);
+}
+
+// ACHIEVEMENTS
+function checkAchievements() {
+  var stats = {
+    completedCount: getCompletedCount(),
+    streak: getStreak(),
+    totalDays: planDays.length,
+    longRunsDone: planDays.filter(function(d){ var sd = getDayForDate(d.date); return sd && sd.type === 'longrun' && state[d.date] && state[d.date].done; }).length,
+  };
+
+  if (!state._achievements) state._achievements = {};
+
+  for (var i = 0; i < ACHIEVEMENTS.length; i++) {
+    var ach = ACHIEVEMENTS[i];
+    if (!state._achievements[ach.id] && ach.check(stats)) {
+      state._achievements[ach.id] = true;
+      saveState(state);
+      showAchievement(ach.text);
+      return;
+    }
+  }
+}
+
+function showAchievement(text) {
+  var toast = document.getElementById('achievementToast');
+  toast.textContent = text;
+  toast.classList.add('show');
+  setTimeout(function(){ toast.classList.remove('show'); }, 3500);
+}
+
+// DYNAMIC CSS
+var dynamicStyles = document.createElement('style');
+dynamicStyles.textContent = '@keyframes confettiFall{0%{opacity:1;transform:translateY(0) rotate(0deg);}100%{opacity:0;transform:translateY(100vh) rotate(720deg);}}@keyframes miniPop{0%{opacity:1;transform:scale(0.5) translateY(0);}100%{opacity:0;transform:scale(1.5) translateY(-20px);}}';
+document.head.appendChild(dynamicStyles);
+
+// INIT
+renderAll();
+if (state._splashSeen) {
+  setTimeout(spawnAmbientSfx, 2000);
+}
+</script>
+</body>
+</html>
