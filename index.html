@@ -29,7 +29,7 @@
 }
 
 * { box-sizing: border-box; margin: 0; padding: 0; }
-
+,z
 body {
   background: var(--paper);
   font-family: 'Comic Neue', cursive;
@@ -2298,7 +2298,7 @@ body::after {
   background: #5ba85a;
   box-shadow: inset 0 -3px 0 rgba(0,0,0,0.2);
 }
-.mode-btn.treadmill-active {
+.mode-btn.indoor-active {
   background: #3a7abf;
   color: #fff;
   box-shadow: inset 0 -3px 0 rgba(0,0,0,0.2);
@@ -3162,6 +3162,151 @@ body::after {
 }
 .pace-legend span { display: flex; align-items: center; gap: 4px; }
 .pace-leg-dot { width: 8px; height: 8px; border-radius: 2px; display: inline-block; border: 1px solid rgba(0,0,0,0.15); }
+
+/* ===== WEEZER THE SUPERHERO DACHSHUND ===== */
+.splash-weezer-photo {
+  width: 140px;
+  height: 140px;
+  object-fit: cover;
+  object-position: center 18%;
+  border-radius: 50%;
+  border: 4px solid var(--yellow);
+  box-shadow: 0 0 0 4px var(--ink), 0 0 30px var(--yellow), 0 0 60px rgba(232,20,42,0.5);
+  margin-bottom: 12px;
+  animation: heroFloat 3s ease-in-out infinite;
+  display: block;
+}
+/* Sidekick panel below hero-strip */
+.weezer-panel {
+  border: var(--outline-thick);
+  border-bottom: 5px solid var(--ink);
+  background: var(--ink);
+  margin-bottom: var(--gutter);
+  box-shadow: 4px 4px 0 var(--ink);
+  overflow: hidden;
+  display: flex;
+  align-items: stretch;
+  animation: panelSlam 0.5s 0.08s cubic-bezier(0.34,1.56,0.64,1) both;
+}
+.weezer-photo-col {
+  flex: 0 0 105px;
+  position: relative;
+  overflow: hidden;
+}
+.weezer-photo-col img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 20%;
+  display: block;
+}
+.weezer-photo-corner {
+  position: absolute;
+  bottom: 4px;
+  right: 4px;
+  font-family: 'Bangers', cursive;
+  font-size: 9px;
+  color: white;
+  background: rgba(0,0,0,0.65);
+  padding: 1px 5px;
+  letter-spacing: 1px;
+}
+.weezer-text-col {
+  flex: 1;
+  padding: 10px 12px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  background: repeating-linear-gradient(-55deg, transparent, transparent 3px, rgba(255,227,56,0.03) 3px, rgba(255,227,56,0.03) 4px);
+}
+.weezer-panel-label {
+  font-family: 'Bangers', cursive;
+  font-size: 10px;
+  letter-spacing: 3px;
+  color: var(--yellow);
+  margin-bottom: 2px;
+}
+.weezer-panel-name {
+  font-family: 'Bangers', cursive;
+  font-size: 32px;
+  letter-spacing: 4px;
+  color: white;
+  text-shadow: 3px 3px 0 var(--red);
+  line-height: 1;
+  margin-bottom: 4px;
+}
+.weezer-panel-tagline {
+  font-family: 'Permanent Marker', cursive;
+  font-size: 10px;
+  color: var(--cyan);
+  line-height: 1.35;
+  margin-bottom: 6px;
+}
+.weezer-badge {
+  display: inline-block;
+  background: var(--yellow);
+  color: var(--ink);
+  font-family: 'Bangers', cursive;
+  font-size: 10px;
+  letter-spacing: 1.5px;
+  padding: 2px 8px;
+  border: 1.5px solid rgba(0,0,0,0.25);
+  align-self: flex-start;
+}
+/* Speech bubble with Weezer avatar */
+.weezer-speech-row {
+  display: flex;
+  align-items: flex-end;
+  gap: 8px;
+  margin-bottom: var(--gutter);
+}
+.weezer-avatar-wrap {
+  flex: 0 0 54px;
+}
+.weezer-avatar-wrap img {
+  width: 54px;
+  height: 54px;
+  object-fit: cover;
+  object-position: center 18%;
+  border-radius: 50%;
+  border: 3px solid var(--ink);
+  box-shadow: 3px 3px 0 var(--ink);
+  display: block;
+}
+.weezer-speech-row .speech-bubble {
+  flex: 1;
+  margin-bottom: 0;
+  animation: none;
+}
+/* Weezer avatar in side-quest widget */
+.wsq-weezer-avatar {
+  width: 30px;
+  height: 30px;
+  object-fit: cover;
+  object-position: center 18%;
+  border-radius: 50%;
+  border: 2px solid rgba(255,255,255,0.85);
+  vertical-align: middle;
+  flex-shrink: 0;
+}
+.wsq-dog-photo {
+  width: 34px;
+  height: 34px;
+  object-fit: cover;
+  object-position: center 18%;
+  border-radius: 50%;
+  border: 2.5px solid var(--yellow);
+  box-shadow: 2px 2px 0 rgba(0,0,0,0.25);
+  animation: wsqWag 1.2s ease-in-out infinite alternate;
+  flex-shrink: 0;
+}
+.splash-weezer-credit {
+  font-family: 'Permanent Marker', cursive;
+  font-size: 11px;
+  letter-spacing: 1px;
+  color: rgba(255,227,56,0.7);
+  margin-bottom: 18px;
+}
 </style>
 </head>
 <body>
@@ -3176,10 +3321,11 @@ body::after {
   <div class="splash-corner br">APPROVED BY THE COMICS CODE</div>
   <div class="splash-content">
     <div class="splash-issue">PRESENTING THE INCREDIBLE</div>
-    <div class="splash-hero-silhouette">&#x1F9B8;&#x200D;&#x2640;&#xFE0F;</div>
+    <img src="Weezer%20the%20Super%20Hero.png" class="splash-weezer-photo" alt="Weezer to the rescue!" />
     <div class="splash-title">IRON LIZZIE</div>
     <div class="splash-sub">HALF MARATHON QUEST</div>
     <div class="splash-tagline">"She doesn't run FROM the deadline — she runs THROUGH it."</div>
+    <div class="splash-weezer-credit">&#x1F43E; Weezer approves this message &#x1F43E;</div>
     <div class="splash-cta">-- TAP TO BEGIN YOUR ORIGIN STORY --</div>
   </div>
 </div>
@@ -3224,6 +3370,20 @@ body::after {
       </div>
     </div>
 
+    <!-- WEEZER SIDEKICK PANEL -->
+    <div class="weezer-panel">
+      <div class="weezer-photo-col">
+        <img src="Weezer%20the%20Super%20Hero.png" alt="Weezer the Superhero Dachshund" />
+        <div class="weezer-photo-corner">WEEZER</div>
+      </div>
+      <div class="weezer-text-col">
+        <div class="weezer-panel-label">&#x1F43E; OFFICIAL SIDEKICK</div>
+        <div class="weezer-panel-name">WEEZER</div>
+        <div class="weezer-panel-tagline">Not all heroes wear capes.<br>Some have short legs &amp; a lot of courage.</div>
+        <div class="weezer-badge">&#x1F9B4; REPORTING FOR DUTY</div>
+      </div>
+    </div>
+
     <!-- POWER METER -->
     <div class="power-panel">
       <div class="power-label">
@@ -3242,16 +3402,21 @@ body::after {
     </div>
 
     <!-- WEEK GRID -->
-    <div class="section-label">&#x1F4C5; THIS WEEK'S MISSIONS</div>
+    <div class="section-label">&#x1F4C5;&#x1F43E; THIS WEEK'S MISSIONS</div>
     <div class="week-grid" id="weekGrid"></div>
 
     <!-- WEEKLY STATS -->
     <div id="weekStats"></div>
 
     <!-- SPEECH BUBBLE -->
-    <div class="speech-bubble">
-      <div class="bubble-who">&#x1F9B8;&#x200D;&#x2640;&#xFE0F; IRON LIZZIE SAYS:</div>
-      <div class="bubble-text" id="motoText">Loading mission briefing...</div>
+    <div class="weezer-speech-row">
+      <div class="weezer-avatar-wrap">
+        <img src="Weezer%20the%20Super%20Hero.png" alt="Weezer" />
+      </div>
+      <div class="speech-bubble">
+        <div class="bubble-who">&#x1F9B8;&#x200D;&#x2640;&#xFE0F; IRON LIZZIE &amp; WEEZER SAY:</div>
+        <div class="bubble-text" id="motoText">Loading mission briefing...</div>
+      </div>
     </div>
 
     <!-- IRON LIZZIE SAYS QUOTE BOX -->
@@ -3261,7 +3426,7 @@ body::after {
     <div id="missionReveal"></div>
 
     <!-- DAY TABS -->
-    <div class="section-label red">&#x26A1; SELECT YOUR MISSION</div>
+    <div class="section-label red">&#x26A1; SELECT YOUR MISSION &#x1F43E;</div>
     <div class="day-tabs" id="dayTabs"></div>
 
     <!-- WORKOUT CONTENT -->
@@ -3271,7 +3436,7 @@ body::after {
     <div class="story-recap">
       <div class="recap-title">&#x1F4D6; THE STORY SO FAR...</div>
       <div class="recap-text" id="recapText">
-        <em>Iron Lizzie</em> has begun her quest. The Treadmill Half Marathon on October 24th looms like a supervillain's fortress. One hero. One goal. Let's go.
+        <em>Iron Lizzie</em> has begun her quest. The Half Marathon on October 24th looms like a supervillain's fortress. One hero. One sidekick dachshund. The Galloway method is her secret weapon. Let's go.
       </div>
       <div class="recap-next" id="recapNext">NEXT ISSUE: THE TRAINING BEGINS! &rarr;</div>
     </div>
@@ -4502,7 +4667,7 @@ function saveState(s) {
 
 var state = loadState();
 var activeDate = planDays[0].date;
-var venueMode = 'treadmill';
+var venueMode = state._venue || 'outdoor';
 
 var today = new Date().toISOString().split('T')[0];
 var todayPlan = planDays.find(function(d){ return d.date === today; });
@@ -4675,7 +4840,7 @@ function getTotalXP() {
       if (day.type === 'run' || day.type === 'longrun') {
         var venue = state[d.date].venue || 'outdoor'; // default outdoor for old saves
         if (venue === 'outdoor')   xp += 10; // +10 OUTSIDE RUN BONUS
-        if (venue === 'treadmill') xp += 10; // +10 TREADMILL RUN BONUS
+        if (venue === 'indoor')    xp += 10; // +10 INDOOR RUN BONUS
       }
       // Long runs: extra +25 — they're the hardest session of the week
       if (day.type === 'longrun') xp += 25;
@@ -4826,8 +4991,7 @@ function renderWeekGrid() {
 function renderMoto() {
   var day = getDayForDate(activeDate);
   if (!day) return;
-  var mode = (state[activeDate] && state[activeDate].mode) || 'galloway';
-  var motoText = (mode === 'steady' && day.steadyMoto) ? day.steadyMoto : day.moto;
+  var motoText = day.moto;
   document.getElementById('motoText').textContent = motoText;
 }
 
@@ -4888,15 +5052,29 @@ function generateTreadmillSteps(day, mode) {
     { text: 'Set treadmill incline to 1% (simulates outdoor running resistance)', time: '1 min' },
     { text: 'Warmup walk at 3.0 mph', time: '5 min' }
   ];
-  if (mode === 'galloway') {
-    steps.push({ text: 'Galloway (' + interval + '): run at ' + runSpd + ' mph \u2192 drop to ' + walkSpd + ' mph for walk breaks. Complete ' + dist + '.', time: day.duration });
-  } else {
-    steps.push({ text: 'Steady run at ' + runSpd + ' mph for ' + dist, time: day.duration });
-  }
+  steps.push({ text: 'Galloway (' + interval + '): run at ' + runSpd + ' mph \u2192 drop to ' + walkSpd + ' mph for walk breaks. Complete ' + dist + '.', time: day.duration });
   if (isLong) {
     steps.push({ text: '\uD83D\uDCA7 Sip water every 20 min \u2014 fuel every 3 miles if using gels/chews', time: 'during' });
   }
   steps.push({ text: 'Cooldown walk at 3.0 mph, drop incline to 0%', time: '5 min' });
+  steps.push({ text: 'Stretch: calves, quads & hip flexors \uD83E\uDDB5', time: '5 min' });
+  return steps;
+}
+
+// Generate outdoor steps for Galloway runs
+function generateOutdoorSteps(day) {
+  var interval = day.intervals || '60s RUN / 30s WALK';
+  var dist = day.distance || day.duration;
+  var isLong = day.type === 'longrun';
+  var steps = [
+    { text: 'Head outside on a flat route \u2014 comfortable shoes, charged headphones \uD83C\uDFA7', time: '2 min' },
+    { text: 'Warmup walk \u2014 easy effort, let your legs wake up', time: '5 min' },
+    { text: 'Galloway (' + interval + '): run at a conversational pace \u2192 walk briskly during walk breaks. Complete ' + dist + '.', time: day.duration }
+  ];
+  if (isLong) {
+    steps.push({ text: '\uD83D\uDCA7 Bring water \u2014 sip every 20 min. Fuel every 3 miles if using gels/chews.', time: 'during' });
+  }
+  steps.push({ text: 'Cooldown walk \u2014 easy, let heart rate come down', time: '5 min' });
   steps.push({ text: 'Stretch: calves, quads & hip flexors \uD83E\uDDB5', time: '5 min' });
   return steps;
 }
@@ -5031,56 +5209,42 @@ function renderWorkout() {
     }
   }
   // ─────────────────────────────────────────────────────────────
-  var hasRunMode = day.steadySteps && day.steadySteps.length > 0;
-  var currentMode = (state[activeDate] && state[activeDate].mode) || 'galloway';
   var isRunDay = (day.type === 'run' || day.type === 'longrun');
+  var currentVenue = venueMode; // 'outdoor' or 'indoor'
 
-  // RUN STYLE TOGGLE (galloway / steady)
-  var toggleHTML = '';
-  if (hasRunMode) {
-    toggleHTML = '<div class="mode-toggle-wrap">' +
-      '<div class="mode-toggle-label">\uD83C\uDFC3 CHOOSE YOUR STYLE</div>' +
+  // VENUE TOGGLE (outdoor / treadmill)
+  var venueHTML = '';
+  if (isRunDay) {
+    venueHTML = '<div class="mode-toggle-wrap">' +
+      '<div class="mode-toggle-label">\uD83C\uDF0D WHERE ARE YOU RUNNING?</div>' +
       '<div class="mode-toggle-btns">' +
-        '<button class="mode-btn ' + (currentMode === 'galloway' ? 'mode-active galloway-active' : '') + '" data-mode="galloway">' +
-          '<span class="mode-emoji">\u23F1\uFE0F</span>' +
-          '<span class="mode-text">GALLOWAY</span>' +
-          '<span class="mode-sub">Run / Walk Intervals</span>' +
+        '<button class="mode-btn ' + (currentVenue === 'outdoor' ? 'mode-active outdoor-active' : '') + '" data-venue="outdoor">' +
+          '<span class="mode-emoji">\uD83C\uDF3F</span>' +
+          '<span class="mode-text">OUTDOOR</span>' +
+          '<span class="mode-sub">Roads \u00B7 Trails \u00B7 Fresh Air</span>' +
         '</button>' +
-        '<button class="mode-btn ' + (currentMode === 'steady' ? 'mode-active steady-active' : '') + '" data-mode="steady">' +
-          '<span class="mode-emoji">\uD83C\uDFC3\u200D\u2640\uFE0F</span>' +
-          '<span class="mode-text">STEADY STATE</span>' +
-          '<span class="mode-sub">One Comfortable Pace</span>' +
+        '<button class="mode-btn ' + (currentVenue === 'indoor' ? 'mode-active indoor-active' : '') + '" data-venue="indoor">' +
+          '<span class="mode-emoji">\uD83C\uDFE0</span>' +
+          '<span class="mode-text">INDOOR</span>' +
+          '<span class="mode-sub">Treadmill \u00B7 Indoor Track \u00B7 Gym</span>' +
         '</button>' +
       '</div>' +
     '</div>';
   }
 
-  // VENUE — Always treadmill
-  var venueHTML = '';
-  if (isRunDay) {
-    venueHTML = '<div class="venue-toggle-wrap">' +
-      '<div style="display:flex;align-items:center;gap:10px;padding:4px 0;">' +
-        '<span style="font-size:24px;">\uD83C\uDFCB\uFE0F\u200D\u2640\uFE0F</span>' +
-        '<div><div style="font-family:Bangers,cursive;font-size:15px;letter-spacing:2px;color:var(--blue);">TREADMILL RUN</div>' +
-        '<div style="font-family:\'Comic Neue\',cursive;font-size:11px;font-weight:700;color:rgba(0,0,0,0.5);">Incline 1% &middot; Speeds listed in mph</div></div>' +
-      '</div></div>';
-  }
-
-  // INTERVAL VISUAL
+  // INTERVAL VISUAL — Galloway always
   var intervalHTML = '';
-  if (isRunDay && currentMode === 'galloway') {
+  if (isRunDay) {
     var reps = day.type === 'longrun' ? 8 : 5;
     var blocks = '';
     for (var r = 0; r < reps; r++) { blocks += '<div class="iblock run"></div><div class="iblock walk"></div>'; }
     blocks += '<span style="font-family:Bangers,cursive;font-size:18px;color:var(--ink);align-self:center;margin-left:4px">\u00B7\u00B7\u00B7</span>';
-    intervalHTML = '<div class="interval-visual"><div class="interval-label">\u26A1 INTERVAL PATTERN:</div><div class="interval-blocks">' + blocks + '</div><div class="interval-legend"><span><span class="ileg-dot" style="background:var(--red)"></span>RUN</span><span><span class="ileg-dot" style="background:var(--blue);opacity:0.7"></span>WALK</span></div></div>';
-  } else if (isRunDay && currentMode === 'steady') {
-    intervalHTML = '<div class="interval-visual"><div class="interval-label">\uD83C\uDFC3\u200D\u2640\uFE0F STEADY STATE:</div><div class="interval-blocks"><div class="iblock steady"></div></div><div class="interval-legend"><span><span class="ileg-dot" style="background:var(--green)"></span>ONE COMFORTABLE PACE</span></div></div>';
+    intervalHTML = '<div class="interval-visual"><div class="interval-label">\u26A1 GALLOWAY INTERVALS:</div><div class="interval-blocks">' + blocks + '</div><div class="interval-legend"><span><span class="ileg-dot" style="background:var(--red)"></span>RUN</span><span><span class="ileg-dot" style="background:var(--blue);opacity:0.7"></span>WALK</span></div></div>';
   }
 
   // GALLOWAY SURPRISE ME
   var surpriseMeHTML = '';
-  if (isRunDay && currentMode === 'galloway') {
+  if (isRunDay) {
     surpriseMeHTML =
       '<div class="gal-surprise-wrap" id="galSurpriseWrap">' +
         '<button class="gal-surprise-btn" id="galSurpriseBtn">' +
@@ -5096,19 +5260,19 @@ function renderWorkout() {
     distBadgeHTML = '<div style="text-align:center;padding:6px 14px 2px;"><span style="display:inline-block;background:var(--ink);color:var(--yellow);font-family:Bangers,cursive;font-size:14px;letter-spacing:2px;padding:4px 14px 3px;border:2px solid var(--ink);box-shadow:2px 2px 0 var(--ink);">\uD83D\uDCCF ' + day.distance.toUpperCase() + '</span></div>';
   }
 
-  // SELECT STEPS — always treadmill for run days
+  // SELECT STEPS — outdoor or treadmill
   var activeSteps;
   if (isRunDay) {
-    activeSteps = generateTreadmillSteps(day, currentMode);
+    activeSteps = currentVenue === 'outdoor' ? generateOutdoorSteps(day) : generateTreadmillSteps(day, 'galloway'); // indoor uses treadmill steps
   } else {
     activeSteps = day.steps;
   }
 
-  var venueLabel = isRunDay ? ' \u00B7 \uD83C\uDFCB\uFE0F TREADMILL' : '';
-  var subtitleText = day.duration + (day.distance ? ' \u00B7 ' + day.distance : '') + (hasRunMode ? ' \u00B7 ' + (currentMode === 'steady' ? 'STEADY STATE' : 'GALLOWAY') : '') + venueLabel;
+  var venueLabel = isRunDay ? (currentVenue === 'outdoor' ? ' \u00B7 \uD83C\uDF3F OUTDOOR' : ' \u00B7 \uD83C\uDFE0 INDOOR') : '';
+  var subtitleText = day.duration + (day.distance ? ' \u00B7 ' + day.distance : '') + ' \u00B7 GALLOWAY' + venueLabel;
 
-  // Treadmill pace table (run days only, treadmill venue, must have a distance)
-  var paceTableHTML = (isRunDay && day.distance) ? generatePaceTableHTML(day) : '';
+  // Pace table — indoor only
+  var paceTableHTML = (isRunDay && currentVenue === 'indoor' && day.distance) ? generatePaceTableHTML(day) : '';
 
   var stepsHTML = activeSteps.map(function(step, i) {
     var isChecked = checkedSteps[i];
@@ -5147,7 +5311,7 @@ function renderWorkout() {
     swapHTML = '<div class="swap-wrap"><div class="swap-label">\uD83D\uDCC5 BUSY DAY?</div><button class="swap-btn" id="swapDayBtn"><span class="swap-icon">\uD83D\uDD00</span> SWAP DAY</button></div>';
   }
 
-  content.innerHTML = '<div class="workout-panel"><div class="panel-header ' + day.headerClass + '"><div class="pow-badge">' + day.pow + '</div><div class="header-top-row"><div class="panel-icon">' + day.icon + '</div><div class="panel-titles"><div class="panel-title">' + day.title + '</div><div class="panel-subtitle">' + subtitleText + '</div></div></div></div>' + swapHTML + venueHTML + paceTableHTML + toggleHTML + intervalHTML + surpriseMeHTML + distBadgeHTML + '<div class="steps-section"><div class="steps-title">\uD83D\uDCCB MISSION BRIEFING</div>' + stepsHTML + '</div>' + xpBadge + journalHTML + btnHTML + '</div>';
+  content.innerHTML = '<div class="workout-panel"><div class="panel-header ' + day.headerClass + '"><div class="pow-badge">' + day.pow + '</div><div class="header-top-row"><div class="panel-icon">' + day.icon + '</div><div class="panel-titles"><div class="panel-title">' + day.title + '</div><div class="panel-subtitle">' + subtitleText + '</div></div></div></div>' + swapHTML + venueHTML + paceTableHTML + intervalHTML + surpriseMeHTML + distBadgeHTML + '<div class="steps-section"><div class="steps-title">\uD83D\uDCCB MISSION BRIEFING</div>' + stepsHTML + '</div>' + xpBadge + journalHTML + btnHTML + '</div>';
 
   // VENUE TOGGLE LISTENERS
   content.querySelectorAll('[data-venue]').forEach(function(btn) {
@@ -6369,9 +6533,9 @@ function renderWeezerSideQuest() {
       '<div class="wsq-wrap">' +
         '<div class="wsq-trigger-row">' +
           '<div class="wsq-trigger-label">' +
-            '<span class="wsq-dog-emoji">\uD83D\uDC36</span>' +
+            '<img src="Weezer%20the%20Super%20Hero.png" class="wsq-dog-photo" alt="Weezer" />' +
             'WEEZER SIDE QUEST' +
-            '<span class="wsq-dog-emoji">\uD83D\uDC36</span>' +
+            '<img src="Weezer%20the%20Super%20Hero.png" class="wsq-dog-photo" alt="Weezer" />' +
           '</div>' +
           '<button class="wsq-trigger-btn" id="wsqBtn">ROLL A DOG MISSION</button>' +
         '</div>' +
@@ -6398,7 +6562,7 @@ function showWeezerQuest(animate) {
 
         '<div class="wsq-card-header">' +
           '<div class="wsq-header-left">' +
-            '<span class="wsq-header-dog">\uD83D\uDC15</span>' +
+            '<img src="Weezer%20the%20Super%20Hero.png" class="wsq-weezer-avatar" alt="Weezer" />' +
             '<span class="wsq-header-title">WEEZER SIDE QUEST</span>' +
           '</div>' +
           '<button class="wsq-reroll-btn" id="wsqRerollBtn">\uD83C\uDFB2 NEW QUEST</button>' +
@@ -6622,7 +6786,7 @@ function checkAchievements() {
       // venue-based counts
       var venue = st.venue || 'outdoor';
       if (venue === 'outdoor')   outsideRunsDone++;
-      if (venue === 'treadmill') treadmillRunsDone++;
+      if (venue === 'indoor')    treadmillRunsDone++;
 
       // accidental long run: actual ≥ planned + 1 mile on a non-longrun day
       if (day.type === 'run' && journal && journal.actualDist) {
