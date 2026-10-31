@@ -1,5 +1,5 @@
-var CACHE = 'ironlizzie-v6';
-var FILES = ['./', './index.html', './manifest.json', './icon-192.svg', './icon-512.svg'];
+var CACHE = 'ironlizzie-v7';
+var FILES = ['./', './index.html', './manifest.json', './icon-192.png', './icon-512.png', './apple-touch-icon.png'];
 
 self.addEventListener('install', function(e) {
   e.waitUntil(
