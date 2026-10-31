@@ -4892,7 +4892,12 @@ for (var weekIndex = 0; weekIndex < planDays.length; weekIndex += 7) {
     wednesday.title = wednesday.title.replace(' + LIGHT STRENGTH', ' + ' + wednesday.strengthWorkout.title);
   }
 
-  if (saturday && saturday.type === 'rest') setSaturdayStrength(saturday, aFirst ? 'A' : 'B');
+  if (saturday && saturday.type === 'rest') {
+    // Weeks 1-9: Saturday repeats that week's regular Tuesday session (A/B keep alternating:
+    // Tue A, Wed B, Sat A, then Tue B, Wed A, Sat B...). Taper week keeps the light circuit.
+    if (hasThursdayStrength) applyPlanDay(saturday, copyPlanDay(tuesday));
+    else setSaturdayStrength(saturday, aFirst ? 'A' : 'B');
+  }
 }
 
 // STATE

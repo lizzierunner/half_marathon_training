@@ -23,13 +23,13 @@ Iron Lizzie is a personal training app for a half marathon on January 9, 2027. E
 
 ### 🏃‍♀️ Training Plan
 - **76-day plan** (Oct 26, 2026 – Jan 9, 2027) built on the *Another Mother Runner: Finish It* framework, morphed into Galloway-style intervals
-- Runs on Monday, Wednesday, and Friday, with the Friday long run; strength on Tuesday, Wednesday, and Saturday, with a light Wednesday double and Saturday recovery session
+- Runs on Monday, Wednesday, and Friday, with the Friday long run; strength on Tuesday, Wednesday, and Saturday, with a light Wednesday double and a full Saturday strength session
 - Full 11-week periodization: Base (W1–3) → Build (W4–6) → Peak (W7–9) → Taper (W10) → Race Week (W11)
 - Long runs progress 6 → 7 → 8 → 7 → 8 → 9 → 8 → 10 → **11-mile peak** → 8-mile taper → 13.1
 - Cutback weeks, strong-finish sessions, and race-effort midweek runs at correct training points
 
 ### 💪 Strength Programming
-- 32 alternating strength sessions across Tuesday, Wednesday, and Saturday: A/B/A in odd weeks, B/A/B in even weeks; Saturday sessions stay light after the long run
+- 32 alternating strength sessions across Tuesday, Wednesday, and Saturday: A/B/A in odd weeks, B/A/B in even weeks; Saturday repeats that week's regular session (weeks 1–9) and goes light only in taper week
 - Strength A (squat/push/shoulder) alternates with Strength B (hinge/pull/hip)
 - Every exercise has a **bodyweight alternative** for travel or fatigue days
 - Phased correctly: 3×12 base → 4×8 build → 4×5–6 peak → 3×10 light taper → race week activation only
