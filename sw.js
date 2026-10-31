@@ -1,5 +1,5 @@
-var CACHE = 'ironlizzie-v7';
-var FILES = ['./', './index.html', './manifest.json', './icon-192.png', './icon-512.png', './apple-touch-icon.png'];
+var CACHE = 'ironlizzie-v8';
+var FILES = ['./', './index.html', './manifest.json', './icon-192.png', './icon-512.png', './apple-touch-icon.png', './weezer-panel-1.jpg', './weezer-panel-2.jpg', './weezer-panel-3.jpg', './weezer-panel-4.jpg'];
 
 self.addEventListener('install', function(e) {
   e.waitUntil(

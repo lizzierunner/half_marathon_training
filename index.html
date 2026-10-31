@@ -3320,7 +3320,7 @@ body::after {
 .fh-theme-sub { font-family: 'Comic Neue', cursive; font-weight: 700; font-size: 12px; color: #fff; margin-top: 2px; line-height: 1.35; }
 .fh-buddy { display: flex; align-items: center; gap: 10px; background: #fff; border: 3px solid var(--ink); padding: 8px 10px; box-shadow: 3px 3px 0 var(--ink); margin-bottom: 8px; }
 .fh-avatar { position: relative; flex-shrink: 0; width: 64px; height: 64px; }
-.fh-avatar img { width: 64px; height: 64px; object-fit: cover; object-position: center 18%; border-radius: 50%; border: 3px solid var(--yellow); box-shadow: 2px 2px 0 rgba(0,0,0,0.3); }
+.fh-avatar img { width: 64px; height: 64px; object-fit: cover; object-position: center 22%; border-radius: 50%; border: 3px solid var(--yellow); box-shadow: 2px 2px 0 rgba(0,0,0,0.3); }
 .fh-avatar.zoom img { animation: fhZoom 0.5s ease-in-out infinite alternate; }
 .fh-avatar.wait img { animation: wsqWag 1.4s ease-in-out infinite alternate; }
 @keyframes fhZoom { from { transform: translateY(0) rotate(-6deg); } to { transform: translateY(-6px) rotate(6deg); } }
@@ -3337,6 +3337,10 @@ body.focus-mode .fh-nav { display: flex; }
 .fh-nav-btn:disabled { opacity: 0.3; cursor: not-allowed; }
 .fh-nav-label { flex: 1; text-align: center; font-family: 'Bangers', cursive; font-size: 18px; letter-spacing: 1.5px; color: var(--ink); }
 .fh-nav-label button { font-family: 'Comic Neue', cursive; font-weight: 700; font-size: 11px; background: none; border: none; text-decoration: underline; cursor: pointer; color: var(--blue); display: block; margin: 0 auto; min-height: 28px; }
+
+.fh-panel { text-align: center; margin: 0 0 8px; animation: fsPop 0.45s cubic-bezier(.34,1.56,.64,1); }
+.fh-panel img { width: 48%; max-width: 190px; border: 4px solid var(--ink); box-shadow: 4px 4px 0 var(--ink); transform: rotate(-1.5deg); }
+.fh-panel-cap { font-family: 'Bangers', cursive; letter-spacing: 2px; font-size: 14px; color: var(--green); margin-top: 6px; }
 
 /* focus mode: hide everything except today's card */
 body.focus-mode .weezer-panel,
@@ -7143,6 +7147,22 @@ var WEEK_THEMES = [
   { emoji: '🏁', name: 'RACE WEEK',           villain: 'The Deadline Itself', vibe: 'Victory songs only' }
 ];
 
+// Four comic panels of Weezer (split from Super Weezer.png)
+var WEEZER_PANELS = [
+  { src: 'weezer-panel-1.jpg', alt: 'Weezer on a rooftop at night: Fighter of bad guys, chewer of chaos, saver of walks' },
+  { src: 'weezer-panel-2.jpg', alt: 'Weezer flying: Faster than a squirrel, tougher than a chew toy' },
+  { src: 'weezer-panel-3.jpg', alt: 'Weezer at sunset: Sometimes the smallest heroes make the biggest impact' },
+  { src: 'weezer-panel-4.jpg', alt: 'Weezer in the control room: Justice, treats, nap, repeat' }
+];
+
+// Which Weezer picture matches the mood right now
+function weezerMoodPic(done, isRest, hr) {
+  if (done) return WEEZER_PANELS[1];           // flying = zoomies
+  if (isRest || hr >= 21) return WEEZER_PANELS[2]; // sunset = rest / winding down
+  if (hr < 12) return WEEZER_PANELS[3];        // control room = ready for the day's plan
+  return WEEZER_PANELS[0];                      // rooftop = on watch
+}
+
 var STICKERS = [
   { id: 'cap',      emoji: '🧢', name: 'Dad Hat Weezer',        rarity: 'common' },
   { id: 'shades',   emoji: '🕶️', name: 'Cool Shades',     rarity: 'common' },
@@ -7389,7 +7409,7 @@ function openStartFlow() {
     var canMin = !!document.getElementById('dontWannaBtn');
     ov.innerHTML = '<div class="sf-modal"><div class="sf-title">🎉 ' + START_MINUTES + ' MINUTES DOWN!</div>' +
       '<div class="sf-sub">You started. That\'s the whole battle.</div>' + bonusLine +
-      '<div class="sf-weezer"><img src="Weezer%20the%20Super%20Hero.png" alt="Weezer" /><div class="sf-say">Wanna keep going? I have SO much energy. (Either answer is okay.)</div></div>' +
+      '<div class="sf-weezer"><img src="weezer-panel-2.jpg" alt="Weezer flying" /><div class="sf-say">Wanna keep going? I have SO much energy. (Either answer is okay.)</div></div>' +
       '<button class="sf-big-btn" id="sfKeep">KEEP GOING 💪</button>' +
       (canMin ? '<button class="sf-big-btn alt" id="sfMin">SWITCH TO MINIMUM MISSION</button>' : '') +
       '<button class="sf-link" id="sfEnough">that\'s enough for now</button></div>';
@@ -7510,13 +7530,17 @@ function renderFocusHome() {
   var dayLabel = WEEK_DAYS[d.getDay()] + ' ' + MONTHS[d.getMonth()] + ' ' + d.getDate();
 
   var mood = st.done ? 'zoom' : (activeDate === today ? 'wait' : '');
+  var dayInfo = getDayForDate(activeDate) || {};
+  var moodPic = weezerMoodPic(!!st.done, dayInfo.type === 'rest', new Date().getHours());
+  var rewardPanel = st.done ? pickStable(WEEZER_PANELS, activeDate) : null;
 
   el.innerHTML =
     '<div class="fh-theme"><div class="fh-theme-top">' + theme.emoji + ' WEEK ' + wk + ': ' + theme.name + '</div>' +
       '<div class="fh-theme-sub">Villain: ' + theme.villain + ' · Run vibe: ' + theme.vibe + '</div></div>' +
-    '<div class="fh-buddy"><div class="fh-avatar ' + mood + '"><img src="Weezer%20the%20Super%20Hero.png" alt="Weezer" />' +
+    '<div class="fh-buddy"><div class="fh-avatar ' + mood + '"><img src="' + moodPic.src + '" alt="' + moodPic.alt + '" />' +
       (eq ? '<span class="fh-costume">' + eq.emoji + '</span>' : '') + '</div>' +
       '<div class="fh-say">' + weezerLine(info) + '</div></div>' +
+    (rewardPanel ? '<div class="fh-panel"><img src="' + rewardPanel.src + '" alt="' + rewardPanel.alt + '" /><div class="fh-panel-cap">\uD83D\uDC3E WEEZER APPROVES THIS WORKOUT</div></div>' : '') +
     '<div class="fh-nav"><button class="fh-nav-btn" data-act="prev"' + (prevDate ? '' : ' disabled') + ' aria-label="Previous day">‹</button>' +
       '<div class="fh-nav-label">' + dayLabel + (activeDate === today ? ' · TODAY' : '') +
         (activeDate !== today ? '<button data-act="today">jump to today</button>' : '') + '</div>' +
