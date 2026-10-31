@@ -2,7 +2,7 @@
 
 > *"She doesn't run FROM the deadline — she runs THROUGH it."*
 
-A fully interactive, comic book–styled progressive web app that turns a 10-week half marathon training plan into an immersive superhero origin story. Built as a **single HTML file** with no frameworks, no build tools, and no dependencies beyond Google Fonts.
+A fully interactive, comic book–styled progressive web app that turns an 11-week half marathon training plan into an immersive superhero origin story. Built as a **single HTML file** with no frameworks, no build tools, and no dependencies beyond Google Fonts.
 
 **[▶ Live Demo →](https://lizzierunner.github.io/lizzies_training_plan/)**
 
@@ -10,10 +10,10 @@ A fully interactive, comic book–styled progressive web app that turns a 10-wee
 
 ## What It Does
 
-Iron Lizzie is a personal training app for a real half marathon on August 9, 2026. Every feature exists because *I actually needed it* while training:
+Iron Lizzie is a personal training app for a half marathon on January 9, 2027. Every feature exists because *I actually needed it* while training:
 
 - I run Galloway (run/walk intervals) **and** sometimes steady-state — so both modes are supported
-- I train outdoors and on a treadmill in a garage gym — so venue toggles with auto-generated treadmill steps
+- I run outdoors by default and use the treadmill as a per-workout backup, with auto-generated treadmill steps
 - I do compound barbell lifting alongside my running — so full phased strength programming
 - I wanted the app on my phone's home screen, not a browser tab — so it's a PWA
 
@@ -22,13 +22,14 @@ Iron Lizzie is a personal training app for a real half marathon on August 9, 202
 ## Feature Set
 
 ### 🏃‍♀️ Training Plan
-- **77-day plan** (May 25 – Aug 9, 2026) built on the *Another Mother Runner: Finish It* framework, morphed into Galloway-style intervals
-- Full 10-week periodization: Base (W1–3) → Build (W4–6) → Peak (W7–9) → Taper (W10) → Race Week
+- **76-day plan** (Oct 26, 2026 – Jan 9, 2027) built on the *Another Mother Runner: Finish It* framework, morphed into Galloway-style intervals
+- Runs on Monday, Wednesday, and Friday, with the Friday long run; strength on Tuesday, Wednesday, and Saturday, with a light Wednesday double and Saturday recovery session
+- Full 11-week periodization: Base (W1–3) → Build (W4–6) → Peak (W7–9) → Taper (W10) → Race Week (W11)
 - Long runs progress 6 → 7 → 8 → 7 → 8 → 9 → 8 → 10 → **11-mile peak** → 8-mile taper → 13.1
 - Cutback weeks, strong-finish sessions, and race-effort midweek runs at correct training points
 
 ### 💪 Strength Programming
-- 21 strength sessions across 4 phases, each with full exercise lists, sets/reps, and timing
+- 32 alternating strength sessions across Tuesday, Wednesday, and Saturday: A/B/A in odd weeks, B/A/B in even weeks; Saturday sessions stay light after the long run
 - Strength A (squat/push/shoulder) alternates with Strength B (hinge/pull/hip)
 - Every exercise has a **bodyweight alternative** for travel or fatigue days
 - Phased correctly: 3×12 base → 4×8 build → 4×5–6 peak → 3×10 light taper → race week activation only
@@ -52,7 +53,7 @@ Iron Lizzie is a personal training app for a real half marathon on August 9, 202
 - Completion % bar with flavor text that escalates from *"chapter hasn't been written yet"* to *"UNSTOPPABLE. The villain trembles."*
 
 ### 🏋️‍♀️ Treadmill Mode
-- Venue toggle (🌲 Outside / 🏋️ Treadmill) persisted to localStorage
+- Outdoor is the default; treadmill backup choices are saved per workout
 - Treadmill mode auto-generates workout steps with 1% incline and mph-based pacing cues
 - **Pace table**: expandable 4.5–7.5 mph grid with exact finish times for that day's distance, color-coded by effort zone (easy / moderate / tempo)
 
@@ -74,7 +75,7 @@ Iron Lizzie is a personal training app for a real half marathon on August 9, 202
 - 🔊/🔇 toggle in masthead, preference saved to localStorage
 
 ### 🗓️ Day Management
-- Day tabs scroll horizontally across all 77 days
+- Day tabs scroll horizontally across all 76 days
 - **Swap Day** — move any workout to another day within the week, with undo support
 - Skip Day — marks a day skipped (orange indicator), no XP penalty
 - All state persisted to localStorage across sessions and page refreshes
@@ -92,12 +93,11 @@ Iron Lizzie is a personal training app for a real half marathon on August 9, 202
 This is a **constraint-as-craft** decision. No build toolchain, no `node_modules`, no deployment pipeline — just `index.html`. It made the PWA trivial to cache, forced disciplined CSS architecture using custom properties, and means anyone can inspect the entire source in one place.
 
 ### State Management
-All state lives in `localStorage` under the key `ironlizzie_hm_v1`. The state object tracks:
+Current state lives in `localStorage` under the key `ironlizzie_hm_v2`. The previous `ironlizzie_hm_v1` data is left intact; training progress starts fresh while sound, splash, and install preferences are carried forward. Venue choice is saved per workout, with outdoor as the default. The state object tracks:
 
 ```js
 {
-  [date]: { done, skipped, steps, mode, timer },  // per-day workout state
-  _venue: 'outdoor' | 'treadmill',
+  [date]: { done, skipped, steps, mode, timer, venue },  // per-day workout and venue state
   _swaps: { [date]: swappedDate },
   _sfx: true | false,
   journal: { [date]: { feel, note, actualDist, ts } },
@@ -157,7 +157,7 @@ python3 -m http.server 8080
 
 ## The Story Behind It
 
-I'm training for a virtual half marathon on August 9, 2026. I couldn't find a training app that matched how I actually train — Galloway intervals, garage gym compound lifting, switching between outdoor runs and treadmill sessions, tracking how I *feel* not just whether I checked a box.
+I'm training for a virtual half marathon on January 9, 2027. I couldn't find a training app that matched how I actually train — Galloway intervals, garage gym compound lifting, switching between outdoor runs and treadmill sessions, tracking how I *feel* not just whether I checked a box.
 
 So I built one. Then I gave it a comic book aesthetic because I like Bangers font and confetti and POW! badges. Then I added XP and ranks because why not. Then it had a service worker. Then the countdown clock was ticking every second.
 

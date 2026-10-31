@@ -196,6 +196,10 @@ body::after {
   font-size: 18px;
   letter-spacing: 3px;
   color: white;
+  border: 0;
+  padding: 8px 12px;
+  background: transparent;
+  cursor: pointer;
   animation: ctaBlink 1.5s ease-in-out infinite;
 }
 @keyframes ctaBlink {
@@ -3326,7 +3330,7 @@ body::after {
     <div class="splash-sub">HALF MARATHON QUEST</div>
     <div class="splash-tagline">"She doesn't run FROM the deadline — she runs THROUGH it."</div>
     <div class="splash-weezer-credit">&#x1F43E; Weezer approves this message &#x1F43E;</div>
-    <div class="splash-cta">-- TAP TO BEGIN YOUR ORIGIN STORY --</div>
+    <button class="splash-cta" type="button">-- TAP TO BEGIN YOUR ORIGIN STORY --</button>
   </div>
 </div>
 
@@ -3345,7 +3349,7 @@ body::after {
     <div class="masthead">
       <button class="sfx-toggle" id="sfxToggle" title="Toggle sound effects">🔊</button>
       <button class="print-btn" id="printPlanBtn" title="Print / Save PDF Training Plan">🖨️</button>
-      <div class="masthead-badge" id="mastheadBadge">&#x1F3CB;&#xFE0F; OCT 24 &middot; TREADMILL HALF MARATHON</div>
+      <div class="masthead-badge" id="mastheadBadge">&#x1F3CB;&#xFE0F; JAN 9 &middot; TREADMILL HALF MARATHON</div>
       <div class="masthead-vol">
         <span>VOL. 1 &middot; ISSUE #<span id="issueNum">1</span></span>
         <span id="dateDisplay">MAY 2026</span>
@@ -3366,7 +3370,7 @@ body::after {
           <div class="villain-label">&#x1F3C1; HALF MARATHON IN</div>
           <div class="villain-value" id="villainCountdown">--d</div>
           <div class="villain-clock" id="villainClock">--:--:--</div>
-          <div class="villain-name" id="villainName">OCT 24 — THE DEADLINE APPROACHES</div>
+          <div class="villain-name" id="villainName">JAN 9 — THE DEADLINE APPROACHES</div>
       </div>
     </div>
 
@@ -3436,7 +3440,7 @@ body::after {
     <div class="story-recap">
       <div class="recap-title">&#x1F4D6; THE STORY SO FAR...</div>
       <div class="recap-text" id="recapText">
-        <em>Iron Lizzie</em> has begun her quest. The Half Marathon on October 24th looms like a supervillain's fortress. One hero. One sidekick dachshund. The Galloway method is her secret weapon. Let's go.
+        <em>Iron Lizzie</em> has begun her quest. The Half Marathon on January 9th looms like a supervillain's fortress. One hero. One sidekick dachshund. The Galloway method is her secret weapon. Let's go.
       </div>
       <div class="recap-next" id="recapNext">NEXT ISSUE: THE TRAINING BEGINS! &rarr;</div>
     </div>
@@ -3460,10 +3464,10 @@ body::after {
 </div>
 
 <script>
-var STORAGE_KEY = 'ironlizzie_hm_v1';
+var STORAGE_KEY = 'ironlizzie_hm_v2';
 var WEEK_DAYS = ['SUN','MON','TUE','WED','THU','FRI','SAT'];
 var MONTHS = ['JAN','FEB','MAR','APR','MAY','JUN','JUL','AUG','SEP','OCT','NOV','DEC'];
-var RACE_DATE = new Date('2026-10-24T00:00:00');
+var RACE_DATE = new Date('2027-01-09T00:00:00');
 
 var ACTION_WORDS = ['POW!','ZAP!','BAM!','KA-POW!','WHAM!','SMASH!','BOOM!','KAPOW!','THWACK!','CRUNCH!','YES!!','HEROIC!'];
 var SFX_WORDS = ['*WHOOSH*','*THUD*','*CRACK*','*SWOOSH*','*ZING*','*KAPOW*','*WHAM*','*THWIP*'];
@@ -3616,7 +3620,7 @@ var IRON_LIZZIE_QUOTES = [
   { q: "The Blue Album goes from track 1 to track 10 in exactly one solid easy run. This is not a coincidence. Rivers Cuomo is a running coach.", who: "Iron Lizzie" },
   { q: "Weezer (the dog) has completed more miles than she knows. She thinks she's just investigating smells. That's also valid training.", who: "Iron Lizzie" },
   // Half marathon countdown
-  { q: "October 24th is not a deadline. It's the day the story ends. And you are writing it right now, one treadmill mile at a time.", who: "Iron Lizzie" },
+  { q: "January 9th is not a deadline. It's the day the story ends. And you are writing it right now, one treadmill mile at a time.", who: "Iron Lizzie" },
   { q: "A half marathon is 13.1 miles. You've already run more than that in training. The race is just doing it in one go with snacks.", who: "Iron Lizzie" },
   { q: "The half marathon will feel hard. That's not a sign you're failing. That's just what hard things feel like. You've felt hard things before.", who: "Iron Lizzie" },
   { q: "Mile 10 will feel like the end of the world. Miles 11–13 will feel like you invented running. Trust the process.", who: "Iron Lizzie, race day dispatch" },
@@ -3704,15 +3708,15 @@ var ACHIEVEMENTS = [
 ];
 
 var STORY_BEATS = [
-  { min: 0,  text: '<em>Iron Lizzie</em> has taken on the Treadmill Half Marathon quest. October 24th looms like a supervillain\'s fortress. One hero. One treadmill. The Galloway method is her secret weapon...', next: 'NEXT ISSUE: THE TRAINING BEGINS! \u2192' },
+  { min: 0,  text: '<em>Iron Lizzie</em> has taken on the Treadmill Half Marathon quest. January 9th looms like a supervillain\'s fortress. One hero. One treadmill. The Galloway method is her secret weapon...', next: 'NEXT ISSUE: THE TRAINING BEGINS! \u2192' },
   { min: 5,  text: '<em>Iron Lizzie</em> has found her rhythm! Run-walk-run. The intervals are stacking up. Strength days are building race-ready legs. The citizens cheer her on...', next: 'NEXT ISSUE: THE STRENGTH ARC! \u2192' },
   { min: 14, text: 'Weeks conquered! <em>Iron Lizzie\'s</em> power level is rising. Each Friday long run is a new chapter. Self-doubt scatters before her. The fortress walls are crumbling...', next: 'NEXT ISSUE: THE LONG RUN CHALLENGE! \u2192' },
-  { min: 28, text: 'The halfway point! <em>Iron Lizzie</em> stands atop the training montage of her life. She\'s run farther than she ever imagined. October 24th is starting to look... BEATABLE.', next: 'NEXT ISSUE: THE FINAL BUILD! \u2192' },
-  { min: 42, text: '<em>Iron Lizzie</em> has become UNSTOPPABLE. Long runs conquered. Legs strong. Galloway locked in. October 24th belongs to HER.', next: 'THE FINALE: TREADMILL HALF MARATHON \u2192 OCT 24! \uD83C\uDFC6' },
+  { min: 28, text: 'The halfway point! <em>Iron Lizzie</em> stands atop the training montage of her life. She\'s run farther than she ever imagined. January 9th is starting to look... BEATABLE.', next: 'NEXT ISSUE: THE FINAL BUILD! \u2192' },
+  { min: 42, text: '<em>Iron Lizzie</em> has become UNSTOPPABLE. Long runs conquered. Legs strong. Galloway locked in. January 9th belongs to HER.', next: 'THE FINALE: TREADMILL HALF MARATHON \u2192 JAN 9! \uD83C\uDFC6' },
 ];
 
-// ===== IRON LIZZIE HALF MARATHON PLAN: May 25 - Aug 9, 2026 =====
-// Mon/Wed = Galloway run | Fri = Long Run | Tue/Thu = Strength A/B | Sat/Sun = Rest
+// ===== IRON LIZZIE HALF MARATHON PLAN: Oct 26, 2026 - Jan 9, 2027 =====
+// Mon/Wed = Galloway run | Fri = Long Run | Tue/Wed/Sat = Strength
 var planDays = [
   // === WEEK 1 (Aug 10–16) — 60s/30s, 5.0 mph ===
   { date: '2026-08-10', type: 'run', title: 'EASY RUN', icon: '🏃‍♀️', headerClass: 'run-header', btnClass: 'run-btn',
@@ -4657,9 +4661,135 @@ var planDays = [
     ] },
 ];
 
+var planDateOffset = Math.round((new Date('2026-10-26T12:00:00') - new Date(planDays[0].date + 'T12:00:00')) / 86400000);
+planDays.forEach(function(day) {
+  var shiftedDate = new Date(day.date + 'T12:00:00');
+  shiftedDate.setDate(shiftedDate.getDate() + planDateOffset);
+  day.date = shiftedDate.toISOString().split('T')[0];
+});
+
+function setRestDay(day, note) {
+  day.type = 'rest';
+  day.title = 'REST DAY';
+  day.icon = '😴';
+  day.headerClass = 'rest-header';
+  day.btnClass = '';
+  day.pow = 'RECOVER';
+  day.moto = note;
+  day.distance = '';
+  day.duration = 'REST';
+  day.intervals = 'RECOVERY';
+  day.xp = 10;
+  day.steps = [{ text: 'Rest, hydrate, and let your legs recover', time: 'all day' }];
+}
+
+function copyPlanDay(day) {
+  var copy = {};
+  for (var key in day) {
+    if (Object.prototype.hasOwnProperty.call(day, key)) copy[key] = day[key];
+  }
+  if (day.steps) copy.steps = day.steps.slice();
+  return copy;
+}
+
+function applyPlanDay(target, source) {
+  var date = target.date;
+  for (var key in target) {
+    if (Object.prototype.hasOwnProperty.call(target, key) && key !== 'date') delete target[key];
+  }
+  for (var sourceKey in source) {
+    if (Object.prototype.hasOwnProperty.call(source, sourceKey) && sourceKey !== 'date') target[sourceKey] = source[sourceKey];
+  }
+  target.date = date;
+}
+
+function setSaturdayStrength(day, strengthType) {
+  day.type = 'strength';
+  day.title = 'STRENGTH ' + strengthType + ' (LIGHT)';
+  day.icon = '💪';
+  day.headerClass = 'strength-header';
+  day.btnClass = 'strength-btn';
+  day.pow = 'LIGHT CIRCUIT';
+  day.moto = 'Keep this A/B session light after Friday’s long run. Use easy resistance and stop well before fatigue.';
+  day.distance = '';
+  day.duration = '20–25 min';
+  day.intervals = 'LIGHT CIRCUIT';
+  day.xp = 25;
+  if (strengthType === 'A') {
+    day.steps = [
+      { text: 'Box squat 2×8 — bodyweight or very light load, smooth repetitions', time: '4 min', bw: 'Sit-to-stand 2×8' },
+      { text: 'Incline push-ups 2×10 — stop well before fatigue', time: '4 min', bw: 'Wall push-ups 2×10' },
+      { text: 'Light shoulder press 2×10 — keep the effort easy', time: '4 min', bw: 'Wall slides 2×10' },
+      { text: 'Dead bug 2×8 each side — keep your lower back gently down', time: '4 min' },
+      { text: 'Gentle calf and hip-flexor mobility — no forcing the stretch', time: '5 min' }
+    ];
+  } else {
+    day.steps = [
+      { text: 'Hip hinge 2×10 — bodyweight only, practice the movement', time: '4 min', bw: 'Standing hip hinge 2×10' },
+      { text: 'Band row 2×12 — squeeze shoulder blades, keep the effort easy', time: '4 min', bw: 'Prone W raises 2×10' },
+      { text: 'Glute bridge 2×10 — bodyweight only, no fatigue', time: '4 min' },
+      { text: 'Bird dog 2×8 each side — move slowly and stay balanced', time: '4 min' },
+      { text: 'Gentle calf and hip-flexor mobility — no forcing the stretch', time: '5 min' }
+    ];
+  }
+}
+
+for (var weekIndex = 0; weekIndex < planDays.length; weekIndex += 7) {
+  var tuesday = planDays[weekIndex + 1];
+  var wednesday = planDays[weekIndex + 2];
+  var thursday = planDays[weekIndex + 3];
+  var saturday = planDays[weekIndex + 5];
+  var hasThursdayStrength = thursday && thursday.type === 'strength';
+  var aFirst = Math.floor(weekIndex / 7) % 2 === 0;
+
+  if (wednesday && hasThursdayStrength) {
+    var strengthA = copyPlanDay(tuesday);
+    var strengthB = copyPlanDay(thursday);
+    var tuesdayWorkout = aFirst ? strengthA : strengthB;
+    var wednesdayWorkout = aFirst ? strengthB : strengthA;
+    applyPlanDay(tuesday, tuesdayWorkout);
+    wednesday.strengthWorkout = wednesdayWorkout;
+    wednesday.title += ' + ' + wednesdayWorkout.title;
+    wednesday.xp += wednesdayWorkout.xp || 0;
+    setRestDay(thursday, 'Recovery day after the Wednesday run and strength double.');
+  }
+
+  if (wednesday && !wednesday.strengthWorkout) {
+    wednesday.strengthWorkout = {
+      title: 'STRENGTH B (LIGHT)',
+      xp: 15,
+      steps: [
+        { text: 'Easy band row 2×10 — keep this gentle and controlled', time: '3 min' },
+        { text: 'Glute bridge 2×10 — bodyweight only, no fatigue', time: '3 min' },
+        { text: 'Dead bug 2×6 each side, then stop while you feel fresh', time: '4 min' }
+      ]
+    };
+    wednesday.title += ' + LIGHT STRENGTH';
+    wednesday.xp += wednesday.strengthWorkout.xp;
+  }
+
+  if (tuesday && !hasThursdayStrength) {
+    tuesday.title = aFirst ? 'STRENGTH A (LIGHT)' : 'STRENGTH B (LIGHT)';
+    wednesday.strengthWorkout.title = aFirst ? 'STRENGTH B (LIGHT)' : 'STRENGTH A (LIGHT)';
+    wednesday.title = wednesday.title.replace(' + LIGHT STRENGTH', ' + ' + wednesday.strengthWorkout.title);
+  }
+
+  if (saturday && saturday.type === 'rest') setSaturdayStrength(saturday, aFirst ? 'A' : 'B');
+}
+
 // STATE
 function loadState() {
-  try { return JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}'); } catch(e) { return {}; }
+  try {
+    var savedState = localStorage.getItem(STORAGE_KEY);
+    if (savedState) return JSON.parse(savedState);
+    var previousState = JSON.parse(localStorage.getItem('ironlizzie_hm_v1') || 'null');
+    if (!previousState) return {};
+    return {
+      _sfx: previousState._sfx,
+      _splashSeen: !!previousState._splashSeen,
+      _installDismissed: !!previousState._installDismissed
+    };
+  } catch(e) { return {}; }
 }
 function saveState(s) {
   try { localStorage.setItem(STORAGE_KEY, JSON.stringify(s)); } catch(e) {}
@@ -4667,7 +4797,7 @@ function saveState(s) {
 
 var state = loadState();
 var activeDate = planDays[0].date;
-var venueMode = state._venue || 'outdoor';
+var venueMode = 'outdoor';
 
 var today = new Date().toISOString().split('T')[0];
 var todayPlan = planDays.find(function(d){ return d.date === today; });
@@ -5210,23 +5340,24 @@ function renderWorkout() {
   }
   // ─────────────────────────────────────────────────────────────
   var isRunDay = (day.type === 'run' || day.type === 'longrun');
-  var currentVenue = venueMode; // 'outdoor' or 'indoor'
+  var currentVenue = (state[activeDate] && state[activeDate].venue) || 'outdoor';
+  venueMode = currentVenue;
 
   // VENUE TOGGLE (outdoor / treadmill)
   var venueHTML = '';
   if (isRunDay) {
     venueHTML = '<div class="mode-toggle-wrap">' +
-      '<div class="mode-toggle-label">\uD83C\uDF0D WHERE ARE YOU RUNNING?</div>' +
+      '<div class="mode-toggle-label">\uD83C\uDF0D OUTDOOR DEFAULT \u00B7 TREADMILL BACKUP</div>' +
       '<div class="mode-toggle-btns">' +
         '<button class="mode-btn ' + (currentVenue === 'outdoor' ? 'mode-active outdoor-active' : '') + '" data-venue="outdoor">' +
           '<span class="mode-emoji">\uD83C\uDF3F</span>' +
           '<span class="mode-text">OUTDOOR</span>' +
-          '<span class="mode-sub">Roads \u00B7 Trails \u00B7 Fresh Air</span>' +
+          '<span class="mode-sub">DEFAULT \u00B7 Roads \u00B7 Trails</span>' +
         '</button>' +
         '<button class="mode-btn ' + (currentVenue === 'indoor' ? 'mode-active indoor-active' : '') + '" data-venue="indoor">' +
           '<span class="mode-emoji">\uD83C\uDFE0</span>' +
-          '<span class="mode-text">INDOOR</span>' +
-          '<span class="mode-sub">Treadmill \u00B7 Indoor Track \u00B7 Gym</span>' +
+          '<span class="mode-text">TREADMILL</span>' +
+          '<span class="mode-sub">BACKUP \u00B7 Indoor Track \u00B7 Gym</span>' +
         '</button>' +
       '</div>' +
     '</div>';
@@ -5239,7 +5370,9 @@ function renderWorkout() {
     var blocks = '';
     for (var r = 0; r < reps; r++) { blocks += '<div class="iblock run"></div><div class="iblock walk"></div>'; }
     blocks += '<span style="font-family:Bangers,cursive;font-size:18px;color:var(--ink);align-self:center;margin-left:4px">\u00B7\u00B7\u00B7</span>';
-    intervalHTML = '<div class="interval-visual"><div class="interval-label">\u26A1 GALLOWAY INTERVALS:</div><div class="interval-blocks">' + blocks + '</div><div class="interval-legend"><span><span class="ileg-dot" style="background:var(--red)"></span>RUN</span><span><span class="ileg-dot" style="background:var(--blue);opacity:0.7"></span>WALK</span></div></div>';
+    var runLegend = currentVenue === 'indoor' ? 'RUN \u00B7 ' + (day.runSpeed || '5.5') + ' MPH' : 'RUN';
+    var walkLegend = currentVenue === 'indoor' ? 'WALK \u00B7 ' + (day.walkSpeed || '3.0') + ' MPH' : 'WALK';
+    intervalHTML = '<div class="interval-visual"><div class="interval-label">\u26A1 GALLOWAY INTERVALS:</div><div class="interval-blocks">' + blocks + '</div><div class="interval-legend"><span><span class="ileg-dot" style="background:var(--red)"></span>' + runLegend + '</span><span><span class="ileg-dot" style="background:var(--blue);opacity:0.7"></span>' + walkLegend + '</span></div></div>';
   }
 
   // GALLOWAY SURPRISE ME
@@ -5267,9 +5400,14 @@ function renderWorkout() {
   } else {
     activeSteps = day.steps;
   }
+  var strengthStartIndex = -1;
+  if (day.strengthWorkout && day.strengthWorkout.steps) {
+    strengthStartIndex = activeSteps.length;
+    activeSteps = activeSteps.concat(day.strengthWorkout.steps);
+  }
 
   var venueLabel = isRunDay ? (currentVenue === 'outdoor' ? ' \u00B7 \uD83C\uDF3F OUTDOOR' : ' \u00B7 \uD83C\uDFE0 INDOOR') : '';
-  var subtitleText = day.duration + (day.distance ? ' \u00B7 ' + day.distance : '') + ' \u00B7 GALLOWAY' + venueLabel;
+  var subtitleText = day.duration + (day.distance ? ' \u00B7 ' + day.distance : '') + ' \u00B7 GALLOWAY' + venueLabel + (day.strengthWorkout ? ' \u00B7 PLUS ' + day.strengthWorkout.title : '');
 
   // Pace table — indoor only
   var paceTableHTML = (isRunDay && currentVenue === 'indoor' && day.distance) ? generatePaceTableHTML(day) : '';
@@ -5277,7 +5415,8 @@ function renderWorkout() {
   var stepsHTML = activeSteps.map(function(step, i) {
     var isChecked = checkedSteps[i];
     var bwHTML = step.bw ? '<div class="bw-alt">' + step.bw + '</div>' : '';
-    return '<div class="step ' + (isChecked ? 'checked' : '') + '" data-step="' + i + '"><div class="step-num">' + (isChecked ? '' : (i+1)) + '</div><div class="step-body"><div class="step-text">' + step.text + '</div>' + bwHTML + '<div class="step-time">' + step.time + '</div></div></div>';
+    var sectionTitle = i === strengthStartIndex ? '<div class="steps-title">\uD83D\uDCAA ' + day.strengthWorkout.title + '</div>' : '';
+    return sectionTitle + '<div class="step ' + (isChecked ? 'checked' : '') + '" data-step="' + i + '"><div class="step-num">' + (isChecked ? '' : (i+1)) + '</div><div class="step-body"><div class="step-text">' + step.text + '</div>' + bwHTML + '<div class="step-time">' + step.time + '</div></div></div>';
   }).join('');
 
   var xpBadge = '<div style="text-align:center;padding:8px 14px 4px;font-family:Bangers,cursive;font-size:12px;letter-spacing:2px;color:' + (isDone ? 'var(--green)' : isSkipped ? 'var(--orange)' : 'rgba(0,0,0,0.3)') + ';">' +
@@ -5317,7 +5456,8 @@ function renderWorkout() {
   content.querySelectorAll('[data-venue]').forEach(function(btn) {
     btn.addEventListener('click', function() {
       venueMode = btn.dataset.venue;
-      state._venue = venueMode;
+      if (!state[activeDate]) state[activeDate] = {};
+      state[activeDate].venue = venueMode;
       saveState(state);
       paceTableOpen = false;
       renderWorkout();
@@ -5563,7 +5703,7 @@ var MILESTONES = [
   { id: 'run_10mi',     emoji: '\uD83D\uDD1F', title: 'DOUBLE DIGITS!\nLET\'S GO!!', sub: 'TEN miles. If that isn\'t superhero energy, nothing is. 13.1 is RIGHT THERE. You\'ve got this.', banner: '\uD83D\uDD25 LEGENDARY MILESTONE', check: function(s){ return s.maxLongRun >= 10; } },
   { id: 'halfway',      emoji: '\u2B50',        title: 'HALFWAY\nHERO!',           sub: 'Over the mountain. You\'ve already proven you can do this. The second half is all downhill... kind of.', banner: '\u2B50 50% COMPLETE',             check: function(s){ return s.completedCount >= Math.floor(s.totalDays / 2); } },
   { id: 'peak_week',    emoji: '\uD83C\uDFD4\uFE0F', title: 'PEAK WEEK!\nFINAL BOSS\nUNLOCKED',     sub: 'This is the highest you\'ll climb. 11 miles on Friday. After this — taper, then race day.',           banner: '\uD83C\uDFD4\uFE0F PEAK WEEK BEGINS',   check: function(s){ return s.inPeakWeek; } },
-  { id: 'race_week',    emoji: '\uD83C\uDFC1',  title: 'RACE WEEK!\nFINAL BOSS\nMODE ACTIVATED', sub: 'YOU TRAINED FOR THIS. 10 weeks. Hundreds of miles. Oct 24 is YOUR day. Go get that treadmill medal.', banner: '\uD83C\uDFC1 RACE WEEK \u2014 LET\'S GO!', check: function(s){ return s.inRaceWeek; } },
+  { id: 'race_week',    emoji: '\uD83C\uDFC1',  title: 'RACE WEEK!\nFINAL BOSS\nMODE ACTIVATED', sub: 'YOU TRAINED FOR THIS. 11 weeks. Hundreds of miles. Jan 9 is YOUR day. Go get that treadmill medal.', banner: '\uD83C\uDFC1 RACE WEEK \u2014 LET\'S GO!', check: function(s){ return s.inRaceWeek; } },
 ];
 
 function getMilestoneStats() {
@@ -5581,7 +5721,7 @@ function getMilestoneStats() {
     completedCount: completedCount, longRunsDone: longRunsDone, maxLongRun: maxLongRun,
     totalDays: planDays.length,
     inPeakWeek: today >= '2026-10-05' && today <= '2026-10-11',
-    inRaceWeek: today >= '2026-10-19' && today <= '2026-10-24',
+    inRaceWeek: today >= '2027-01-04' && today <= '2027-01-09',
   };
 }
 
@@ -6330,7 +6470,7 @@ function printPlan() {
     '@media print{body{padding:10px}table{page-break-inside:auto}tr{page-break-inside:avoid}.week-header{page-break-before:auto}}' +
     '</style></head><body>' +
     '<div class="print-header"><h1>&#x26A1; IRON LIZZIE &#x26A1;</h1><h2>HALF MARATHON TRAINING PLAN</h2>' +
-    '<div class="print-meta">May 25 \u2013 Aug 9, 2026 &nbsp;&middot;&nbsp; 11 Weeks &nbsp;&middot;&nbsp; Race Day: AUG 9, 2026 &nbsp;&middot;&nbsp; Printed: ' + printDate + '</div></div>' +
+    '<div class="print-meta">Oct 26, 2026 \u2013 Jan 9, 2027 &nbsp;&middot;&nbsp; 11 Weeks &nbsp;&middot;&nbsp; Race Day: JAN 9, 2027 &nbsp;&middot;&nbsp; Printed: ' + printDate + '</div></div>' +
     '<div class="summary-bar"><span>&#x1F3C1; ' + planDays.length + ' DAYS</span><span>&#x1F3C3; ' + totalMiles.toFixed(1) + ' MI PLANNED</span><span>&#x26A1; ' + totalXP + ' XP</span><span>&#x2705; ' + doneCount + ' DONE</span></div>' +
     '<table><thead><tr><th>DATE</th><th>TYPE</th><th></th><th>WORKOUT</th><th>DIST</th><th>DURATION</th><th>XP</th><th>STATUS / NOTES</th></tr></thead>' +
     '<tbody>' + rowsHTML + '</tbody></table>' +
