@@ -1,4 +1,4 @@
-var CACHE = 'ironlizzie-v4';
+var CACHE = 'ironlizzie-v5';
 var FILES = ['./', './index.html', './manifest.json', './icon-192.svg', './icon-512.svg'];
 
 self.addEventListener('install', function(e) {

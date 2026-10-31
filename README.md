@@ -40,6 +40,15 @@ Iron Lizzie is a personal training app for a half marathon on January 9, 2027. E
 - **9 achievements** — first mission, streak milestones, long run count, halfway point
 - **7 milestone unlock panels** — full-screen dramatic comic panels at key moments (first long run, 8 miles, 10 miles, halfway, peak week, race week), each firing with spring animation
 
+### 🧠 ADHD-Friendly Layer
+- **Focus mode (default)** — the home screen shows just today's card: one step at a time with a progress bar, ‹ › day navigation, and a "show everything" toggle for the full comic page
+- **🚀 Just Start — 5 minutes** — launch checklist → 3-2-1-GO → 5-minute commitment timer with Weezer check-ins (screen stays awake). Finishing earns +5 XP and an easy off-ramp to the minimum mission
+- **Loot drops** — completing a mission can drop a Weezer costume (17 to collect, 4 rarities), a Lucky Star (+5–15 XP) or a Critical Hit (+25 XP). Long runs always drop; three dry rolls in a row can't happen
+- **Weezer's Wardrobe** — collect and equip costumes; Weezer's speech bubble changes with time of day, streak and progress
+- **Forgiving streaks** — rest days count automatically, today stays open until the day ends, and earning a 🛡️ shield (every 5 workouts, max 2) covers a missed day. A broken streak reads "fresh page", not "failed"
+- **One-tap debrief** — tap a feeling and you're done; the extra fields are optional behind "add details"
+- **Weekly story arcs** — each week has its own villain and run-vibe suggestion to keep things fresh
+
 ### 📓 Mission Debrief Journal
 - Auto-appears 0.9s after completing any workout
 - 5-emoji feel scale (ROUGH → TOUGH → GOOD → STRONG → ON FIRE)

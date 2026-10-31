@@ -3311,6 +3311,121 @@ body::after {
   color: rgba(255,227,56,0.7);
   margin-bottom: 18px;
 }
+
+/* ===== ADHD-FRIENDLY LAYER ===== */
+#focusHome { margin: 10px 0 6px; }
+.fh-theme { background: var(--ink); color: var(--yellow); border: 3px solid var(--ink); padding: 8px 12px; margin-bottom: 8px; box-shadow: 3px 3px 0 rgba(0,0,0,0.25); }
+.fh-theme-top { font-family: 'Bangers', cursive; font-size: 17px; letter-spacing: 1.5px; }
+.fh-theme-sub { font-family: 'Comic Neue', cursive; font-weight: 700; font-size: 12px; color: #fff; margin-top: 2px; line-height: 1.35; }
+.fh-buddy { display: flex; align-items: center; gap: 10px; background: #fff; border: 3px solid var(--ink); padding: 8px 10px; box-shadow: 3px 3px 0 var(--ink); margin-bottom: 8px; }
+.fh-avatar { position: relative; flex-shrink: 0; width: 64px; height: 64px; }
+.fh-avatar img { width: 64px; height: 64px; object-fit: cover; object-position: center 18%; border-radius: 50%; border: 3px solid var(--yellow); box-shadow: 2px 2px 0 rgba(0,0,0,0.3); }
+.fh-avatar.zoom img { animation: fhZoom 0.5s ease-in-out infinite alternate; }
+.fh-avatar.wait img { animation: wsqWag 1.4s ease-in-out infinite alternate; }
+@keyframes fhZoom { from { transform: translateY(0) rotate(-6deg); } to { transform: translateY(-6px) rotate(6deg); } }
+.fh-costume { position: absolute; right: -6px; top: -8px; font-size: 24px; filter: drop-shadow(1px 1px 0 rgba(0,0,0,0.35)); }
+.fh-say { flex: 1; font-family: 'Comic Neue', cursive; font-weight: 700; font-size: 14px; line-height: 1.35; color: var(--ink); }
+.fh-chips { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 8px; }
+.fh-chip { font-family: 'Bangers', cursive; letter-spacing: 1px; font-size: 14px; min-height: 44px; padding: 6px 12px; background: var(--yellow); color: var(--ink); border: 3px solid var(--ink); box-shadow: 2px 2px 0 var(--ink); cursor: pointer; }
+.fh-chip:active { transform: translate(2px,2px); box-shadow: none; }
+.fh-chip.quiet { background: #fff; }
+.fh-chip.info { background: var(--cyan); cursor: default; }
+.fh-nav { display: none; align-items: center; gap: 8px; margin-bottom: 8px; }
+body.focus-mode .fh-nav { display: flex; }
+.fh-nav-btn { min-width: 52px; min-height: 48px; font-family: 'Bangers', cursive; font-size: 24px; background: #fff; border: 3px solid var(--ink); box-shadow: 2px 2px 0 var(--ink); cursor: pointer; }
+.fh-nav-btn:disabled { opacity: 0.3; cursor: not-allowed; }
+.fh-nav-label { flex: 1; text-align: center; font-family: 'Bangers', cursive; font-size: 18px; letter-spacing: 1.5px; color: var(--ink); }
+.fh-nav-label button { font-family: 'Comic Neue', cursive; font-weight: 700; font-size: 11px; background: none; border: none; text-decoration: underline; cursor: pointer; color: var(--blue); display: block; margin: 0 auto; min-height: 28px; }
+
+/* focus mode: hide everything except today's card */
+body.focus-mode .weezer-panel,
+body.focus-mode .power-panel,
+body.focus-mode .section-label,
+body.focus-mode .week-grid,
+body.focus-mode #weekStats,
+body.focus-mode .weezer-speech-row,
+body.focus-mode #quoteBox,
+body.focus-mode #missionReveal,
+body.focus-mode .day-tabs,
+body.focus-mode .story-recap,
+body.focus-mode .history-log-wrap,
+body.focus-mode #adventureJournal,
+body.focus-mode #boredBox,
+body.focus-mode #weezerSideQuestBox,
+body.focus-mode .page-number,
+body.focus-mode .masthead-badge,
+body.focus-mode .masthead-vol,
+body.focus-mode .masthead-sub,
+body.focus-mode .villain-panel .villain-name,
+body.focus-mode .swap-wrap,
+body.focus-mode .gal-surprise-wrap,
+body.focus-mode .interval-visual { display: none !important; }
+
+/* one step at a time */
+.step.fs-hidden, .steps-title.fs-hidden { display: none !important; }
+.step.fs-current { padding: 18px 14px; box-shadow: 4px 4px 0 var(--ink); animation: fsPop 0.35s cubic-bezier(.34,1.56,.64,1); }
+.step.fs-current .step-text { font-size: 17px; }
+@keyframes fsPop { from { transform: scale(0.94); opacity: 0.4; } to { transform: scale(1); opacity: 1; } }
+.fs-progress { margin-bottom: 10px; }
+.fs-prog-text { font-family: 'Bangers', cursive; letter-spacing: 2px; font-size: 15px; color: var(--ink); display: flex; justify-content: space-between; align-items: center; }
+.fs-prog-track { height: 12px; background: #ddd; border: 2.5px solid var(--ink); margin-top: 4px; }
+.fs-prog-fill { height: 100%; background: var(--green); transition: width 0.4s cubic-bezier(.34,1.56,.64,1); }
+.fs-showall { font-family: 'Comic Neue', cursive; font-weight: 700; font-size: 11px; background: none; border: none; text-decoration: underline; cursor: pointer; color: var(--blue); min-height: 32px; }
+.fs-alldone { text-align: center; font-family: 'Bangers', cursive; font-size: 20px; letter-spacing: 1.5px; color: var(--green); padding: 10px 0 4px; }
+.fs-hint { text-align: center; font-family: 'Comic Neue', cursive; font-weight: 700; font-size: 11px; color: rgba(0,0,0,0.4); margin-top: 6px; }
+
+/* just-start button */
+.sf-start-wrap { padding: 12px 14px 2px; text-align: center; }
+.sf-start-btn { width: 100%; min-height: 60px; font-family: 'Bangers', cursive; font-size: 22px; letter-spacing: 2px; color: #fff; background: var(--red); border: 4px solid var(--ink); box-shadow: 4px 4px 0 var(--ink); cursor: pointer; }
+.sf-start-btn:active { transform: translate(3px,3px); box-shadow: 1px 1px 0 var(--ink); }
+.sf-start-sub { font-family: 'Comic Neue', cursive; font-weight: 700; font-size: 12px; color: rgba(0,0,0,0.5); margin-top: 6px; }
+
+/* start flow + loot overlays */
+.sf-overlay, .loot-overlay, .wd-overlay { position: fixed; inset: 0; z-index: 9000; background: rgba(10,10,30,0.88); display: flex; align-items: center; justify-content: center; padding: 16px; }
+.sf-modal, .loot-card, .wd-modal { width: 100%; max-width: 420px; max-height: 92vh; overflow-y: auto; background: var(--paper, #fffbea); border: 4px solid var(--ink); box-shadow: 6px 6px 0 var(--yellow); padding: 18px 16px; text-align: center; }
+.sf-title { font-family: 'Bangers', cursive; font-size: 28px; letter-spacing: 2px; color: var(--red); }
+.sf-sub { font-family: 'Comic Neue', cursive; font-weight: 700; font-size: 13px; color: rgba(0,0,0,0.55); margin: 2px 0 12px; }
+.sf-item { display: flex; align-items: center; gap: 12px; text-align: left; width: 100%; min-height: 52px; background: #fff; border: 3px solid var(--ink); padding: 8px 12px; margin-bottom: 8px; font-family: 'Comic Neue', cursive; font-weight: 700; font-size: 15px; cursor: pointer; box-shadow: 2px 2px 0 var(--ink); }
+.sf-item .sf-box { width: 26px; height: 26px; border: 3px solid var(--ink); background: #fff; display: flex; align-items: center; justify-content: center; font-size: 16px; flex-shrink: 0; }
+.sf-item.on { background: var(--green); }
+.sf-item.on .sf-box::after { content: '\2713'; font-weight: 900; }
+.sf-big-btn { width: 100%; min-height: 56px; margin-top: 6px; font-family: 'Bangers', cursive; font-size: 22px; letter-spacing: 2px; color: var(--ink); background: var(--yellow); border: 4px solid var(--ink); box-shadow: 4px 4px 0 var(--ink); cursor: pointer; }
+.sf-big-btn.alt { background: #fff; font-size: 16px; min-height: 48px; }
+.sf-link { background: none; border: none; text-decoration: underline; font-family: 'Comic Neue', cursive; font-weight: 700; font-size: 13px; color: rgba(0,0,0,0.5); cursor: pointer; min-height: 44px; margin-top: 4px; }
+.sf-count { font-family: 'Bangers', cursive; font-size: 140px; line-height: 1; color: var(--red); text-shadow: 5px 5px 0 var(--ink); animation: fsPop 0.5s cubic-bezier(.34,1.56,.64,1); padding: 20px 0; }
+.sf-kicker { font-family: 'Bangers', cursive; letter-spacing: 2px; font-size: 18px; color: var(--blue); }
+.sf-clock { font-family: 'Bangers', cursive; font-size: 84px; line-height: 1.05; color: var(--ink); margin: 6px 0; }
+.sf-bar { height: 18px; border: 3px solid var(--ink); background: #ddd; }
+.sf-bar-fill { height: 100%; width: 100%; background: var(--red); transition: width 1s linear; }
+.sf-weezer { display: flex; align-items: center; gap: 10px; text-align: left; margin: 14px 0 8px; }
+.sf-weezer img { width: 64px; height: 64px; border-radius: 50%; object-fit: cover; object-position: center 18%; border: 3px solid var(--yellow); animation: wsqWag 1.2s ease-in-out infinite alternate; flex-shrink: 0; }
+.sf-say { font-family: 'Comic Neue', cursive; font-weight: 700; font-size: 14px; background: #fff; border: 3px solid var(--ink); padding: 8px 10px; flex: 1; }
+
+/* loot */
+.loot-card { text-align: center; animation: fsPop 0.45s cubic-bezier(.34,1.56,.64,1); }
+.loot-kicker { font-family: 'Bangers', cursive; font-size: 30px; letter-spacing: 3px; color: var(--red); }
+.loot-emoji { font-size: 96px; line-height: 1.1; margin: 8px 0; animation: fhZoom 0.6s ease-in-out infinite alternate; }
+.loot-rarity { display: inline-block; font-family: 'Bangers', cursive; letter-spacing: 2px; font-size: 15px; color: #fff; padding: 2px 12px; border: 3px solid var(--ink); }
+.loot-name { font-family: 'Bangers', cursive; font-size: 26px; letter-spacing: 1.5px; margin: 8px 0 2px; color: var(--ink); }
+.loot-desc { font-family: 'Comic Neue', cursive; font-weight: 700; font-size: 13px; color: rgba(0,0,0,0.55); margin-bottom: 10px; }
+
+/* wardrobe */
+.wd-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin: 10px 0; }
+.wd-cell { position: relative; aspect-ratio: 1; min-height: 64px; background: #fff; border: 3px solid var(--ink); display: flex; flex-direction: column; align-items: center; justify-content: center; cursor: pointer; padding: 2px; }
+.wd-cell .wd-e { font-size: 28px; line-height: 1; }
+.wd-cell .wd-n { font-family: 'Comic Neue', cursive; font-weight: 700; font-size: 9px; line-height: 1.1; margin-top: 2px; }
+.wd-cell.locked { background: #e6e6e6; cursor: default; }
+.wd-cell.locked .wd-e { filter: grayscale(1) brightness(0.2); opacity: 0.35; }
+.wd-cell.equipped { box-shadow: 0 0 0 3px var(--yellow), 3px 3px 0 3px var(--ink); }
+
+/* quick debrief */
+.debrief-extras:not(.open) { display: none; }
+.debrief-more { width: 100%; min-height: 44px; background: none; border: 3px dashed var(--ink); font-family: 'Bangers', cursive; letter-spacing: 1.5px; font-size: 15px; cursor: pointer; margin: 4px 0 8px; }
+.debrief-modal.debrief-quick #debriefSubmit { display: none; }
+.debrief-quick-hint { font-family: 'Comic Neue', cursive; font-weight: 700; font-size: 12px; text-align: center; color: rgba(0,0,0,0.5); margin-bottom: 6px; }
+
+/* bigger tap targets for core actions */
+.complete-btn, .skip-btn, .dont-wanna-btn { min-height: 52px; }
 </style>
 </head>
 <body>
@@ -3373,6 +3488,9 @@ body::after {
           <div class="villain-name" id="villainName">JAN 9 — THE DEADLINE APPROACHES</div>
       </div>
     </div>
+
+    <!-- TODAY / FOCUS HOME (ADHD-friendly layer) -->
+    <div id="focusHome"></div>
 
     <!-- WEEZER SIDEKICK PANEL -->
     <div class="weezer-panel">
@@ -4799,7 +4917,10 @@ var state = loadState();
 var activeDate = planDays[0].date;
 var venueMode = 'outdoor';
 
-var today = new Date().toISOString().split('T')[0];
+var today = (function() {
+  var n = new Date();
+  return n.getFullYear() + '-' + String(n.getMonth() + 1).padStart(2, '0') + '-' + String(n.getDate()).padStart(2, '0');
+})();
 var todayPlan = planDays.find(function(d){ return d.date === today; });
 if (todayPlan) activeDate = today;
 else {
@@ -4985,6 +5106,9 @@ function getTotalXP() {
   // Weezer Side Quest XP: accumulated from claimed dog-mission completions
   xp += state._sideQuestXP || 0;
 
+  // Loot-drop + 5-minute-start bonuses
+  xp += state._bonusXP || 0;
+
   return xp;
 }
 
@@ -4996,16 +5120,31 @@ function getRank(xp) {
   return rank;
 }
 
-function getStreak() {
-  var streak = 0;
-  var sorted = planDays.slice().sort(function(a,b){ return b.date.localeCompare(a.date); });
-  for (var i = 0; i < sorted.length; i++) {
-    if (sorted[i].date > today) continue;
-    if (state[sorted[i].date] && (state[sorted[i].date].done || state[sorted[i].date].skipped)) streak++;
-    else break;
+// Forgiving streak: rest days count automatically, today stays open until
+// the day is over, and a missed day is covered by a shield if you have one
+// (earn a shield every 5 completed workouts, hold up to 2).
+function getStreakInfo() {
+  var streak = 0, shields = 0, doneCount = 0;
+  for (var i = 0; i < planDays.length; i++) {
+    var ds = planDays[i].date;
+    if (ds > today) break;
+    var st = state[ds];
+    var d = getDayForDate(ds) || planDays[i];
+    var ok = !!(st && (st.done || st.skipped)) || d.type === 'rest';
+    if (ds === today && !ok) break; // today is still open
+    if (ok) {
+      streak++;
+      if (st && st.done && d.type !== 'rest' && (++doneCount % 5 === 0)) shields = Math.min(2, shields + 1);
+    } else if (shields > 0) {
+      shields--; // a shield quietly covers the missed day
+    } else {
+      streak = 0;
+    }
   }
-  return streak;
+  return { streak: streak, shields: shields };
 }
+
+function getStreak() { return getStreakInfo().streak; }
 
 function getDaysUntilRace() {
   var now = new Date();
@@ -5033,7 +5172,8 @@ function renderProgress() {
 function renderHeroStrip() {
   var xp = getTotalXP();
   var rank = getRank(xp);
-  var streak = getStreak();
+  var streakInfo = getStreakInfo();
+  var streak = streakInfo.streak;
   var daysLeft = getDaysUntilRace();
 
   document.getElementById('xpValue').textContent = xp + ' XP';
@@ -5044,9 +5184,10 @@ function renderHeroStrip() {
     var flames = '';
     var flameCount = Math.min(streak, 7);
     for (var i = 0; i < flameCount; i++) flames += '<span class="streak-flame">\uD83D\uDD25</span>';
-    streakEl.innerHTML = '<span style="font-family:Comic Neue;font-weight:700;font-size:9px;color:var(--yellow);letter-spacing:1px;">' + streak + ' DAY STREAK</span> ' + flames;
+    var shieldStr = streakInfo.shields ? ' <span title="Streak shield: covers a missed day">' + new Array(streakInfo.shields + 1).join('\uD83D\uDEE1\uFE0F') + '</span>' : '';
+    streakEl.innerHTML = '<span style="font-family:Comic Neue;font-weight:700;font-size:9px;color:var(--yellow);letter-spacing:1px;">' + streak + ' DAY STREAK</span> ' + flames + shieldStr;
   } else {
-    streakEl.innerHTML = '<span style="font-family:Comic Neue;font-weight:700;font-size:9px;color:rgba(255,255,255,0.4);letter-spacing:1px;">START YOUR STREAK!</span>';
+    streakEl.innerHTML = '<span style="font-family:Comic Neue;font-weight:700;font-size:9px;color:rgba(255,255,255,0.4);letter-spacing:1px;">FRESH PAGE \u2014 DAY 1 AWAITS</span>';
   }
 
   // villainCountdown & villainClock are driven by startLiveCountdown() — don't overwrite here
@@ -5209,7 +5350,7 @@ function generateOutdoorSteps(day) {
   return steps;
 }
 
-function renderWorkout() {
+function renderWorkoutBase() {
   var day = getDayForDate(activeDate);
   var content = document.getElementById('workoutContent');
   content.innerHTML = '';
@@ -5320,7 +5461,7 @@ function renderWorkout() {
           playSfxComplete(false);
           fireActionWord(); fireConfetti(); shakeScreen(); checkAchievements(); checkMilestones();
           renderQuoteBox(true);
-          setTimeout(function(){ showDebriefModal(activeDate); }, 900);
+          afterComplete(activeDate, day);
           renderAll();
         });
       }
@@ -5566,7 +5707,7 @@ function renderWorkout() {
         playSfxComplete(isLR);
         fireActionWord(); fireConfetti(); shakeScreen(); checkAchievements(); checkMilestones();
         renderQuoteBox(true);
-        setTimeout(function(){ showDebriefModal(activeDate); }, 900);
+        afterComplete(activeDate, day);
       }
       renderAll();
     });
@@ -6796,6 +6937,7 @@ function renderAll() {
   renderWeezerSideQuest();
   renderQuoteBox(false);
   renderAdventureJournal();
+  renderFocusHome();
 }
 
 // ── IRON LIZZIE SAYS — QUOTE BOX ─────────────────────────────
@@ -6971,6 +7113,431 @@ function showAchievement(text) {
   setTimeout(function(){ toast.classList.remove('show'); }, 3500);
 }
 
+// =====================================================================
+// ADHD-FRIENDLY LAYER
+//   1. Focus mode: one card, one step at a time
+//   2. "Just start" 5-minute launch sequence + Weezer body-doubling
+//   3. Variable rewards: loot drops, wardrobe, forgiving streak shields
+//   6. Weezer companion + weekly story arcs
+// =====================================================================
+var focusMode = state._focus !== false; // default ON
+var focusAllSteps = false;
+
+var WEEK_THEMES = [
+  { emoji: '🌱', name: 'THE ORIGIN',          villain: 'Couch Gravity',     vibe: 'Anthem songs that feel like opening credits' },
+  { emoji: '🐕', name: 'SIDEKICK TRAINING',   villain: 'The Snooze Button', vibe: 'Weezer Blue Album, obviously' },
+  { emoji: '🧱', name: 'BUILDING THE BASE',   villain: 'The Doubt Goblin',  vibe: 'A podcast you only allow yourself on runs' },
+  { emoji: '🌋', name: 'THE BUILD BEGINS',    villain: 'The Hill of Doom',  vibe: '90s alt-rock' },
+  { emoji: '🦾', name: 'FORGING THE ARMOR',   villain: 'The Mile-4 Wall',   vibe: 'Big pump-up pop' },
+  { emoji: '🌪️', name: 'STORM WEEK',    villain: 'Baron Bad Weather', vibe: 'Movie soundtracks' },
+  { emoji: '⚡',         name: 'PEAK POWER',        villain: 'The Fatigue Phantom', vibe: 'Your loudest playlist' },
+  { emoji: '🏔️', name: 'THE BIG CLIMB', villain: 'The Mile-9 Monster', vibe: 'An audiobook adventure' },
+  { emoji: '🔥', name: 'PEAK WEEK',           villain: 'The Long Road',     vibe: 'Songs from your best run ever' },
+  { emoji: '🪶', name: 'THE TAPER',           villain: 'Taper Madness',     vibe: 'Calm, happy songs' },
+  { emoji: '🏁', name: 'RACE WEEK',           villain: 'The Deadline Itself', vibe: 'Victory songs only' }
+];
+
+var STICKERS = [
+  { id: 'cap',      emoji: '🧢', name: 'Dad Hat Weezer',        rarity: 'common' },
+  { id: 'shades',   emoji: '🕶️', name: 'Cool Shades',     rarity: 'common' },
+  { id: 'scarf',    emoji: '🧣', name: 'Cozy Scarf',            rarity: 'common' },
+  { id: 'bone',     emoji: '🦴', name: 'Golden Bone',           rarity: 'common' },
+  { id: 'boots',    emoji: '🥾', name: 'Tiny Trail Boots',      rarity: 'common' },
+  { id: 'bow',      emoji: '🎀', name: 'Fancy Bow',             rarity: 'common' },
+  { id: 'guitar',   emoji: '🎸', name: 'Rock Star Weezer',      rarity: 'rare' },
+  { id: 'headset',  emoji: '🎧', name: 'DJ Weezer',             rarity: 'rare' },
+  { id: 'cape',     emoji: '🦸', name: 'Super Cape',            rarity: 'rare' },
+  { id: 'astro',    emoji: '🧑‍🚀', name: 'Astro-Dachshund', rarity: 'rare' },
+  { id: 'ninja',    emoji: '🥷', name: 'Ninja Weezer',          rarity: 'epic' },
+  { id: 'wizard',   emoji: '🧙', name: 'Wizard Weezer',         rarity: 'epic' },
+  { id: 'pirate',   emoji: '🏴‍☠️', name: 'Captain Weezer', rarity: 'epic' },
+  { id: 'crown',    emoji: '👑', name: 'Royal Weezer',          rarity: 'epic' },
+  { id: 'hotdog',   emoji: '🌭', name: 'Hot Dog Weezer',        rarity: 'legendary' },
+  { id: 'medal',    emoji: '🏅', name: 'Finisher Weezer',       rarity: 'legendary' },
+  { id: 'unicorn',  emoji: '🦄', name: 'Unicorn Weezer',        rarity: 'legendary' }
+];
+var RARITY = {
+  common:    { label: 'COMMON',    color: '#7a8088', weight: 60 },
+  rare:      { label: 'RARE',      color: '#1A47B8', weight: 25 },
+  epic:      { label: 'EPIC',      color: '#8B5CF6', weight: 11 },
+  legendary: { label: 'LEGENDARY', color: '#E89B00', weight: 4 }
+};
+
+
+function getLoot() {
+  if (!state._loot) state._loot = { owned: {}, equipped: null };
+  return state._loot;
+}
+function getSticker(id) { return STICKERS.filter(function(x) { return x.id === id; })[0]; }
+
+// ---------- loot rolls ----------
+function rollLoot(day) {
+  var loot = getLoot();
+  var dry = state._dry || 0;
+  var isLong = day && day.type === 'longrun';
+  var r = Math.random();
+  var kind = 'none';
+  if (isLong || dry >= 2) kind = 'sticker';     // long runs always drop; never 3 dry rolls in a row
+  else if (r < 0.08) kind = 'crit';
+  else if (r < 0.40) kind = 'sticker';
+  else if (r < 0.60) kind = 'lucky';
+
+  var drop = { kind: kind };
+  if (kind === 'sticker') {
+    var pool = STICKERS.filter(function(x) { return !loot.owned[x.id]; });
+    if (!pool.length) { kind = drop.kind = 'lucky'; }
+    else {
+      var total = 0;
+      var weights = pool.map(function(x) {
+        var w = RARITY[x.rarity].weight * ((isLong && x.rarity !== 'common') ? 2 : 1);
+        total += w; return w;
+      });
+      var roll = Math.random() * total, pick = pool[0];
+      for (var i = 0; i < pool.length; i++) { roll -= weights[i]; if (roll <= 0) { pick = pool[i]; break; } }
+      drop.sticker = pick;
+      loot.owned[pick.id] = true;
+      if (!loot.equipped) loot.equipped = pick.id;
+    }
+  }
+  if (kind === 'crit')  { drop.xp = 25; }
+  if (kind === 'lucky') { drop.xp = [5, 10, 15][Math.floor(Math.random() * 3)]; }
+  if (drop.xp) state._bonusXP = (state._bonusXP || 0) + drop.xp;
+  state._dry = (drop.kind === 'none') ? dry + 1 : 0;
+  saveState(state);
+  return drop;
+}
+
+function playLootSfx(rarity) {
+  if (!sfxEnabled) return;
+  try {
+    var now = getAudioCtx().currentTime;
+    var notes = rarity === 'legendary' ? [523, 659, 784, 1047, 1319, 1568] : rarity === 'epic' ? [523, 659, 784, 1047, 1319] : [659, 880, 1175];
+    notes.forEach(function(f, i) { playTone(f, 0.2, 0.22, 'triangle', now + i * 0.1); });
+  } catch (e) {}
+}
+
+function showLootModal(drop, done) {
+  var ov = document.createElement('div');
+  ov.className = 'loot-overlay';
+  var emoji, kicker, name, desc, tag = '', color = 'var(--ink)';
+  if (drop.sticker) {
+    var rar = RARITY[drop.sticker.rarity];
+    emoji = drop.sticker.emoji; kicker = 'LOOT DROP!'; name = drop.sticker.name;
+    desc = 'New outfit for Weezer! Tap the wardrobe chip to put it on. (' + Object.keys(getLoot().owned).length + '/' + STICKERS.length + ' collected)';
+    tag = '<div class="loot-rarity" style="background:' + rar.color + '">' + rar.label + '</div>';
+  } else if (drop.kind === 'crit') {
+    emoji = '💥'; kicker = 'CRITICAL HIT!'; name = '+' + drop.xp + ' BONUS XP'; desc = 'Rare power surge. Weezer saw the whole thing.';
+  } else {
+    emoji = '⭐'; kicker = 'LUCKY STAR!'; name = '+' + drop.xp + ' BONUS XP'; desc = 'A little something extra for showing up.';
+  }
+  ov.innerHTML = '<div class="loot-card"><div class="loot-kicker">' + kicker + '</div><div class="loot-emoji">' + emoji + '</div>' + tag +
+    '<div class="loot-name">' + name + '</div><div class="loot-desc">' + desc + '</div>' +
+    '<button class="sf-big-btn" id="lootOk">NICE! 🐾</button></div>';
+  document.body.appendChild(ov);
+  playLootSfx(drop.sticker ? drop.sticker.rarity : 'rare');
+  if (drop.kind === 'crit' || (drop.sticker && drop.sticker.rarity !== 'common')) fireConfetti();
+  document.getElementById('lootOk').addEventListener('click', function() { ov.remove(); if (done) done(); });
+}
+
+// Called after any mission is completed: roll loot once per day, then debrief
+function afterComplete(dateStr, day) {
+  if (!state[dateStr]) state[dateStr] = {};
+  var drop = null;
+  if (!state[dateStr]._lootRolled) {
+    state[dateStr]._lootRolled = true;
+    drop = rollLoot(day);
+  }
+  setTimeout(function() {
+    if (drop && drop.kind !== 'none') {
+      showLootModal(drop, function() { renderAll(); showDebriefModal(dateStr); });
+    } else {
+      showDebriefModal(dateStr);
+    }
+  }, 900);
+}
+
+// ---------- wardrobe ----------
+function openWardrobe() {
+  if (document.querySelector('.wd-overlay')) return;
+  var loot = getLoot();
+  var ov = document.createElement('div');
+  ov.className = 'wd-overlay';
+  function draw() {
+    var owned = Object.keys(loot.owned).length;
+    var cells = STICKERS.map(function(x) {
+      if (!loot.owned[x.id]) {
+        return '<div class="wd-cell locked" style="border-color:' + RARITY[x.rarity].color + '"><div class="wd-e">' + x.emoji + '</div><div class="wd-n">???</div></div>';
+      }
+      return '<button class="wd-cell' + (loot.equipped === x.id ? ' equipped' : '') + '" data-id="' + x.id + '" style="border-color:' + RARITY[x.rarity].color + '"><div class="wd-e">' + x.emoji + '</div><div class="wd-n">' + x.name + '</div></button>';
+    }).join('');
+    ov.innerHTML = '<div class="wd-modal"><div class="sf-title">🎒 WEEZER\'S WARDROBE</div>' +
+      '<div class="sf-sub">' + owned + ' / ' + STICKERS.length + ' collected · finish workouts to find more. Tap to dress Weezer!</div>' +
+      '<div class="wd-grid">' + cells + '</div>' +
+      '<button class="sf-big-btn alt" id="wdClose">CLOSE</button></div>';
+    ov.querySelectorAll('.wd-cell[data-id]').forEach(function(b) {
+      b.addEventListener('click', function() { loot.equipped = b.dataset.id; saveState(state); playSfxStep(); draw(); renderFocusHome(); });
+    });
+    document.getElementById('wdClose').addEventListener('click', function() { ov.remove(); });
+  }
+  ov.addEventListener('click', function(e) { if (e.target === ov) ov.remove(); });
+  document.body.appendChild(ov);
+  draw();
+}
+
+// ---------- 5-minute "just start" flow with Weezer body-doubling ----------
+var START_MINUTES = 5;
+var WEEZER_CHECKINS = [
+  'Starting is the hardest part, and you already did it. 🐾',
+  'One minute in! I\'m right here with you.',
+  'Two minutes! The couch has already forgotten you.',
+  'Three minutes. You\'re basically a Galloway legend.',
+  'LAST MINUTE! Zoomies incoming! 💨'
+];
+
+function openStartFlow() {
+  if (document.querySelector('.sf-overlay')) return;
+  var dateAtStart = activeDate;
+  var day = getDayForDate(dateAtStart);
+  if (!day) return;
+  var isRun = (day.type === 'run' || day.type === 'longrun');
+  var items = isRun
+    ? ['👟 Shoes on', '💧 Water grabbed', '🎧 Music or podcast picked', '📱 Phone in pocket', '🐕 Weezer has been informed']
+    : ['👟 Workout clothes on', '💧 Water nearby', '🎧 Music or podcast picked', '🏋️ Equipment out', '🐕 Weezer has been informed'];
+
+  var ov = document.createElement('div');
+  ov.className = 'sf-overlay';
+  document.body.appendChild(ov);
+  var tick = null, wakeLock = null, countTimer = null;
+
+  function closeFlow() {
+    clearInterval(tick); clearInterval(countTimer);
+    try { if (wakeLock) wakeLock.release(); } catch (e) {}
+    ov.remove();
+  }
+
+  function stageChecklist() {
+    ov.innerHTML = '<div class="sf-modal"><div class="sf-title">🚀 LAUNCH SEQUENCE</div>' +
+      '<div class="sf-sub">Tap what\'s done. Not everything has to be checked, just go.</div>' +
+      items.map(function(t) { return '<button class="sf-item"><span class="sf-box"></span>' + t + '</button>'; }).join('') +
+      '<button class="sf-big-btn" id="sfGo">LET\'S GO →</button>' +
+      '<button class="sf-link" id="sfCancel">not right now</button></div>';
+    ov.querySelectorAll('.sf-item').forEach(function(b) {
+      b.addEventListener('click', function() { b.classList.toggle('on'); if (b.classList.contains('on')) playSfxStep(); });
+    });
+    document.getElementById('sfGo').addEventListener('click', stageCountdown);
+    document.getElementById('sfCancel').addEventListener('click', closeFlow);
+  }
+
+  function stageCountdown() {
+    var n = 3;
+    function show() {
+      ov.innerHTML = '<div class="sf-modal"><div class="sf-count">' + (n > 0 ? n : 'GO!') + '</div></div>';
+      try { var now = getAudioCtx().currentTime; playTone(n > 0 ? 440 : 880, n > 0 ? 0.15 : 0.4, 0.25, 'square', now); } catch (e) {}
+    }
+    show();
+    countTimer = setInterval(function() {
+      n--;
+      show();
+      if (n === 0) { clearInterval(countTimer); setTimeout(stageTimer, 700); }
+    }, 800);
+  }
+
+  function stageTimer() {
+    var total = START_MINUTES * 60000;
+    var endAt = Date.now() + total;
+    var lastIdx = -1;
+    try { if (navigator.wakeLock) navigator.wakeLock.request('screen').then(function(w) { wakeLock = w; }, function() {}); } catch (e) {}
+    ov.innerHTML = '<div class="sf-modal"><div class="sf-kicker">JUST ' + START_MINUTES + ' MINUTES. THEN YOU CAN QUIT.</div>' +
+      '<div class="sf-clock" id="sfClock">' + START_MINUTES + ':00</div>' +
+      '<div class="sf-bar"><div class="sf-bar-fill" id="sfBar"></div></div>' +
+      '<div class="sf-weezer"><img src="Weezer%20the%20Super%20Hero.png" alt="Weezer" /><div class="sf-say" id="sfSay"></div></div>' +
+      '<button class="sf-link" id="sfStop">stop for now</button></div>';
+    document.getElementById('sfStop').addEventListener('click', closeFlow);
+    function update() {
+      var rem = Math.max(0, endAt - Date.now());
+      var secs = Math.ceil(rem / 1000);
+      var clock = document.getElementById('sfClock');
+      if (!clock) return;
+      clock.textContent = Math.floor(secs / 60) + ':' + (secs % 60 < 10 ? '0' : '') + (secs % 60);
+      document.getElementById('sfBar').style.width = (rem / total * 100) + '%';
+      var idx = Math.min(WEEZER_CHECKINS.length - 1, Math.floor((total - rem) / 60000));
+      if (idx !== lastIdx) { lastIdx = idx; document.getElementById('sfSay').textContent = WEEZER_CHECKINS[idx]; if (idx > 0) playSfxStep(); }
+      if (rem <= 0) { clearInterval(tick); stageDone(); }
+    }
+    update();
+    tick = setInterval(update, 500);
+  }
+
+  function stageDone() {
+    try { if (wakeLock) wakeLock.release(); } catch (e) {}
+    if (!state[dateAtStart]) state[dateAtStart] = {};
+    var bonusLine = '';
+    if (!state[dateAtStart]._startBonus) {
+      state[dateAtStart]._startBonus = true;
+      state._bonusXP = (state._bonusXP || 0) + 5;
+      saveState(state);
+      renderHeroStrip();
+      bonusLine = '<div class="loot-rarity" style="background:var(--green)">+5 XP COMMITMENT BONUS</div>';
+    }
+    playSfxComplete(false); fireConfetti();
+    var canMin = !!document.getElementById('dontWannaBtn');
+    ov.innerHTML = '<div class="sf-modal"><div class="sf-title">🎉 ' + START_MINUTES + ' MINUTES DOWN!</div>' +
+      '<div class="sf-sub">You started. That\'s the whole battle.</div>' + bonusLine +
+      '<div class="sf-weezer"><img src="Weezer%20the%20Super%20Hero.png" alt="Weezer" /><div class="sf-say">Wanna keep going? I have SO much energy. (Either answer is okay.)</div></div>' +
+      '<button class="sf-big-btn" id="sfKeep">KEEP GOING 💪</button>' +
+      (canMin ? '<button class="sf-big-btn alt" id="sfMin">SWITCH TO MINIMUM MISSION</button>' : '') +
+      '<button class="sf-link" id="sfEnough">that\'s enough for now</button></div>';
+    document.getElementById('sfKeep').addEventListener('click', closeFlow);
+    document.getElementById('sfEnough').addEventListener('click', closeFlow);
+    var minBtn = document.getElementById('sfMin');
+    if (minBtn) minBtn.addEventListener('click', function() { closeFlow(); var b = document.getElementById('dontWannaBtn'); if (b) b.click(); });
+  }
+
+  stageChecklist();
+}
+
+// ---------- workout card decoration: start button + one-step-at-a-time ----------
+function renderWorkout() {
+  renderWorkoutBase();
+  decorateWorkout();
+}
+
+function decorateWorkout() {
+  var panel = document.querySelector('#workoutContent .workout-panel');
+  if (!panel) return;
+  var st = state[activeDate] || {};
+  var day = getDayForDate(activeDate);
+  if (st.done || st.skipped || !day) return;
+
+  if (day.type !== 'rest') {
+    var wrap = document.createElement('div');
+    wrap.className = 'sf-start-wrap';
+    wrap.innerHTML = '<button class="sf-start-btn" id="sfStartBtn">🚀 JUST START — ' + START_MINUTES + ' MINUTES</button>' +
+      '<div class="sf-start-sub">Only ' + START_MINUTES + ' minutes. After that you\'re allowed to quit. Weezer will keep you company.</div>';
+    var header = panel.querySelector('.panel-header');
+    header.parentNode.insertBefore(wrap, header.nextSibling);
+    document.getElementById('sfStartBtn').addEventListener('click', openStartFlow);
+  }
+
+  if (!focusMode) return;
+  var section = panel.querySelector('.steps-section');
+  var steps = panel.querySelectorAll('.step');
+  if (!section || !steps.length) return;
+
+  var doneCount = 0, firstOpen = -1;
+  steps.forEach(function(el, i) {
+    if (el.classList.contains('checked')) doneCount++;
+    else if (firstOpen < 0) firstOpen = i;
+  });
+
+  var prog = document.createElement('div');
+  prog.className = 'fs-progress';
+  prog.innerHTML = '<div class="fs-prog-text"><span>' + (firstOpen < 0 ? 'ALL STEPS DONE!' : 'STEP ' + (doneCount + 1) + ' OF ' + steps.length) + '</span>' +
+    '<button class="fs-showall" type="button">' + (focusAllSteps ? 'one at a time' : 'see all steps') + '</button></div>' +
+    '<div class="fs-prog-track"><div class="fs-prog-fill" style="width:' + Math.round(doneCount / steps.length * 100) + '%"></div></div>';
+  section.insertBefore(prog, section.firstChild);
+  prog.querySelector('.fs-showall').addEventListener('click', function() { focusAllSteps = !focusAllSteps; renderWorkout(); });
+  if (focusAllSteps) return;
+
+  panel.querySelectorAll('.steps-title').forEach(function(t) { t.classList.add('fs-hidden'); });
+  steps.forEach(function(el, i) {
+    if (i === firstOpen) el.classList.add('fs-current'); else el.classList.add('fs-hidden');
+  });
+  if (firstOpen >= 0) {
+    var hint = document.createElement('div');
+    hint.className = 'fs-hint';
+    hint.textContent = 'Tap the step when you\'ve done it';
+    steps[firstOpen].parentNode.insertBefore(hint, steps[firstOpen].nextSibling);
+  } else {
+    var all = document.createElement('div');
+    all.className = 'fs-alldone';
+    all.textContent = '✅ NICE! NOW HIT THE BIG BUTTON 👇';
+    section.appendChild(all);
+  }
+}
+
+// ---------- Today header: week arc, Weezer buddy, wardrobe, day nav ----------
+function pickStable(arr, seedStr) {
+  var h = 0;
+  for (var i = 0; i < seedStr.length; i++) h = (h * 31 + seedStr.charCodeAt(i)) % 100003;
+  return arr[h % arr.length];
+}
+
+function weezerLine(info) {
+  var st = state[activeDate] || {};
+  var day = getDayForDate(activeDate) || {};
+  var hr = new Date().getHours();
+  var seed = activeDate + Math.floor(hr / 3) + (st.done ? 'd' : '');
+  if (st.done) return pickStable(['ZOOMIES!! You did the thing!! 🎉', 'That counts. It always counts. 🐾', 'Best human. Treats for everyone. 🦴'], seed);
+  if (st.skipped) return 'Skipping is allowed. Tomorrow is a fresh page. 🐾';
+  if (day.type === 'rest') return 'Rest day! Nap with me. Rest is part of the plan. 😴';
+  if (activeDate !== today) return 'Peeking at another day? Same deal: just start for 5 minutes.';
+  if (info.streak === 0 && getCompletedCount() > 0) return 'Welcome back, hero! Streak paused, not gone. Fresh page today. 💛';
+  if (hr < 12) return pickStable(['Good morning! Ready when you are. Just 5 minutes?', 'Morning! The leash and I are ready. No pressure. 🐕'], seed);
+  if (hr < 17) return pickStable(['Hey. Hey hey. The leash is RIGHT HERE. 🐕', 'Afternoon! Perfect time for a tiny start.'], seed);
+  if (hr < 21) return 'Still plenty of time! Even 5 minutes counts. 🌅';
+  return 'Late already? A minimum mission still counts. Or rest. Both are heroic. 🌙';
+}
+
+function findTodayDate() {
+  var p = planDays.filter(function(d) { return d.date === today; })[0] || planDays.filter(function(d) { return d.date >= today; })[0] || planDays[planDays.length - 1];
+  return p.date;
+}
+
+function renderFocusHome() {
+  var el = document.getElementById('focusHome');
+  if (!el) return;
+  document.body.classList.toggle('focus-mode', focusMode);
+
+  var info = getStreakInfo();
+  var loot = getLoot();
+  var owned = Object.keys(loot.owned).length;
+  var eq = loot.equipped ? getSticker(loot.equipped) : null;
+  var st = state[activeDate] || {};
+  var wk = Math.min(11, Math.max(1, getWeekNumber()));
+  var theme = WEEK_THEMES[wk - 1];
+
+  var idx = planDays.findIndex(function(d) { return d.date === activeDate; });
+  var prevDate = idx > 0 ? planDays[idx - 1].date : null;
+  var nextDate = idx >= 0 && idx < planDays.length - 1 ? planDays[idx + 1].date : null;
+  var d = new Date(activeDate + 'T12:00:00');
+  var dayLabel = WEEK_DAYS[d.getDay()] + ' ' + MONTHS[d.getMonth()] + ' ' + d.getDate();
+
+  var mood = st.done ? 'zoom' : (activeDate === today ? 'wait' : '');
+
+  el.innerHTML =
+    '<div class="fh-theme"><div class="fh-theme-top">' + theme.emoji + ' WEEK ' + wk + ': ' + theme.name + '</div>' +
+      '<div class="fh-theme-sub">Villain: ' + theme.villain + ' · Run vibe: ' + theme.vibe + '</div></div>' +
+    '<div class="fh-buddy"><div class="fh-avatar ' + mood + '"><img src="Weezer%20the%20Super%20Hero.png" alt="Weezer" />' +
+      (eq ? '<span class="fh-costume">' + eq.emoji + '</span>' : '') + '</div>' +
+      '<div class="fh-say">' + weezerLine(info) + '</div></div>' +
+    '<div class="fh-nav"><button class="fh-nav-btn" data-act="prev"' + (prevDate ? '' : ' disabled') + ' aria-label="Previous day">‹</button>' +
+      '<div class="fh-nav-label">' + dayLabel + (activeDate === today ? ' · TODAY' : '') +
+        (activeDate !== today ? '<button data-act="today">jump to today</button>' : '') + '</div>' +
+      '<button class="fh-nav-btn" data-act="next"' + (nextDate && isMissionUnlocked(nextDate) ? '' : ' disabled') + ' aria-label="Next day">›</button></div>' +
+    '<div class="fh-chips">' +
+      '<button class="fh-chip" data-act="wardrobe">🎒 WARDROBE ' + owned + '/' + STICKERS.length + '</button>' +
+      (info.shields ? '<span class="fh-chip info" title="Each shield covers one missed day">' + new Array(info.shields + 1).join('🛡️') + ' STREAK SHIELD</span>' : '') +
+      '<button class="fh-chip quiet" data-act="focus">' + (focusMode ? '👀 SHOW EVERYTHING' : '🎯 FOCUS MODE') + '</button>' +
+    '</div>';
+}
+
+(function wireFocusHome() {
+  var el = document.getElementById('focusHome');
+  if (!el) return;
+  el.addEventListener('click', function(e) {
+    var b = e.target.closest('[data-act]');
+    if (!b || b.disabled) return;
+    var act = b.dataset.act;
+    var idx = planDays.findIndex(function(d) { return d.date === activeDate; });
+    if (act === 'wardrobe') openWardrobe();
+    else if (act === 'focus') { focusMode = !focusMode; state._focus = focusMode; saveState(state); renderAll(); window.scrollTo(0, 0); }
+    else if (act === 'prev' && idx > 0) { activeDate = planDays[idx - 1].date; focusAllSteps = false; renderAll(); }
+    else if (act === 'next' && idx < planDays.length - 1 && isMissionUnlocked(planDays[idx + 1].date)) { activeDate = planDays[idx + 1].date; focusAllSteps = false; renderAll(); }
+    else if (act === 'today') { activeDate = findTodayDate(); focusAllSteps = false; renderAll(); }
+  });
+})();
+
 // DYNAMIC CSS
 var dynamicStyles = document.createElement('style');
 dynamicStyles.textContent = '@keyframes confettiFall{0%{opacity:1;transform:translateY(0) rotate(0deg);}100%{opacity:0;transform:translateY(100vh) rotate(720deg);}}@keyframes miniPop{0%{opacity:1;transform:scale(0.5) translateY(0);}100%{opacity:0;transform:scale(1.5) translateY(-20px);}}';
@@ -7107,6 +7674,30 @@ function showDebriefModal(dateStr) {
 
   document.body.appendChild(overlay);
 
+  // QUICK MODE: one tap on a feeling saves it. Everything else is tucked
+  // behind "add details" (open by default when editing an old entry).
+  var quick = !existingEntry.ts;
+  var debriefModal = overlay.querySelector('.debrief-modal');
+  var debriefSections = overlay.querySelectorAll('.debrief-section');
+  var extras = document.createElement('div');
+  extras.className = 'debrief-extras' + (quick ? '' : ' open');
+  for (var di = 1; di < debriefSections.length; di++) extras.appendChild(debriefSections[di]);
+  var submitEl = document.getElementById('debriefSubmit');
+  submitEl.parentNode.insertBefore(extras, submitEl);
+  if (quick) {
+    debriefModal.classList.add('debrief-quick');
+    var moreBtn = document.createElement('button');
+    moreBtn.className = 'debrief-more';
+    moreBtn.textContent = '\uFF0B ADD DETAILS (optional)';
+    moreBtn.addEventListener('click', function() {
+      quick = false;
+      extras.classList.add('open');
+      debriefModal.classList.remove('debrief-quick');
+      moreBtn.remove();
+    });
+    extras.parentNode.insertBefore(moreBtn, extras);
+  }
+
   // Feel selection
   overlay.querySelectorAll('.debrief-feel-btn').forEach(function(btn) {
     btn.addEventListener('click', function() {
@@ -7114,6 +7705,7 @@ function showDebriefModal(dateStr) {
       overlay.querySelectorAll('.debrief-feel-btn').forEach(function(b){ b.classList.remove('selected'); });
       btn.classList.add('selected');
       playSfxStep();
+      if (quick) setTimeout(saveDebrief, 350);
     });
   });
 
